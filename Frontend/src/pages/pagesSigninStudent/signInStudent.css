@@ -1,0 +1,134 @@
+
+.MainSection {
+  background-color: #1e1e1e;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+.MainDiv {
+  text-align: center;
+  margin-top: 180px;
+}
+
+.textSignStud {
+  color: white;
+  font-size: 25px;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  word-wrap: break-word;
+  line-height: 35px;
+  margin-bottom: 60px;
+}
+
+.textSignStud span {
+  color: #9652c3;
+}
+
+.MainUserName {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.InputAndText {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.UserName {
+  color: #ffffff;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 5px;
+}
+
+.InputUser {
+  min-width: 350px;
+  max-width: 500px;
+  min-height: 10px;
+  border-radius: 12px;
+  padding: 8px;
+  border: none;
+  font-size: 15px;
+  outline: none;
+}
+
+.Bottnclass {
+  margin-top: 100px;
+  color: #ffffff;
+  width: 100px;
+  height: 30px;
+  background: linear-gradient(135deg, #e5e5e5 0%, #1e1e1e 100%);
+  border-radius: 10px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.Bottnclass.Filled {
+  background: linear-gradient(135deg, #5f51a9 0%, #1e1e1e 100%);
+}
+
+/* Accept Terms Page */
+
+/* Take the same class in sign in page 1 in the top this page */
+
+.addthink {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.Tostart {
+  text-align: start;
+  margin: 10px;
+}
+
+.tacbox {
+  display: flex;
+  align-items: center;
+  margin-top: 80px;
+}
+
+.checkbox {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  background-color: #e5e5e5;
+  cursor: pointer;
+  color: #b8b8b8;
+}
+
+.checkbox:checked::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  background-color: #9652c3;
+  border-radius: 50%;
+}
+
+.textCheckbox {
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  color: #b8b8b8;
+}
+
+.Bottnclass.checked {
+  background: linear-gradient(135deg, #5f51a9 0%, #1e1e1e 100%);
+}

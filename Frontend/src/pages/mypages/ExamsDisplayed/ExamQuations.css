@@ -1,0 +1,221 @@
+.MainPageDisplay {
+  background-color: #1e1e1e;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow: auto;
+  padding: 10px;
+}
+
+.MainDivDisplay {
+  display: flex;
+  flex-direction: column;
+  margin: 100px auto;
+
+}
+
+.TextContnat {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  color: white;
+  font-family: "Inter-Bold", Helvetica;
+  font-weight: 700;
+  font-size: 25px;
+  margin-bottom: 20px;
+}
+
+.MainDivContant {
+  display: flex;
+  flex-direction: column;
+  margin: 1vh auto;
+  min-width: 80vw;
+  max-width: 80vw;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.ChildDivContant {
+  display: flex;
+  padding: 15px;
+}
+
+.NumberAndQuation {
+  margin-top: 15px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: rgba(238, 238, 238, 1);
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+
+.RowButtonsDisplay {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+}
+
+.NumberOfQuatDisplay {
+  padding: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: #5f51a9;
+  color: white;
+}
+
+
+
+.ButtonsDisplay {
+  color: #5f51a9;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  opacity: 0.6;
+  text-decoration: none;
+}
+
+.ButtonsDisplay:hover {
+  opacity: 1;
+}
+
+
+
+
+.ButtonsDisplay:hover:after {
+  content: "";
+  display: block;
+  height: 1px;
+  width: 100%;
+  background-color: #5f51a9;
+  position: absolute;
+  bottom: -2px;
+  color: #5f51a9;
+}
+
+.ButtomEditQuation:hover {
+  background-color: #5f51a9;
+  color: white;
+}
+
+.QuationContant {
+  display: flex;
+  font-size: 17px;
+  font-family: "Inter-Bold", Helvetica;
+  background-color: rgb(218, 218, 218);
+  border-radius: 10px;
+  padding: 14px;
+  width: 90%;
+  margin-top: 30px;
+}
+
+
+.sectionButtons {
+  margin-top: 15px;
+  color: #5f51a9;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 25px;
+
+}
+
+
+
+.lineSepreteExamDitalies {
+  margin-top: 9px;
+  display: flex;
+  height: 1px;
+  background-color: rgb(199, 199, 199);
+  width: 100%;
+}
+
+.iconDeleteDisplay {
+  width: 15px;
+  height: 15px;
+  padding-right: 5px;
+}
+
+.answerOptional {
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+}
+
+.answerOptional .Options {
+  margin: 8px 8px;
+  padding: 5px;
+
+
+}
+
+.marginRight {
+  width: 50%;
+
+}
+
+.TypeOfQuestion {
+  margin: 10px 0px;
+  display: flex;
+  flex-direction: column;
+  color: #4d565d;
+  font-size: 15px;
+}
+
+.charactersiticQuastion {
+  margin-top: 20px;
+}
+
+.sectionApperorNot {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  transition: max-height 0.4s, opacity 0.4s ease-in-out;
+  overflow: hidden;
+}
+
+.sectionApperorNot.closeDetails {
+  max-height: 0;
+  padding: 0;
+  opacity: 0;
+
+}
+
+.sectionApperorNot.openDetails {
+  max-height: 500px;
+  opacity: 1;
+}
+
+.selected {
+  border-radius: 5px;
+  background-color: #5f51a9;
+  color: whitesmoke;
+}
+
+.inputFieldDisplayQuestion {
+  width: 60px;
+  border-radius: 5px;
+  font-size: 13px;
+
+  background-color: rgb(231, 231, 231);
+  border: none;
+  outline: none;
+
+}

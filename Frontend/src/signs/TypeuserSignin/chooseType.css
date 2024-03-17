@@ -1,0 +1,93 @@
+.MainSectionLogin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #060606;
+  width: 100vw;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.MainDivType {
+  display: flex;
+  flex-direction: row;
+  gap: 120px;
+  padding: 10px;
+}
+
+.MainBlock1,
+.MainBlock2 {
+  display: flex;
+  flex-direction: column;
+  border: 3px solid #9652c3;
+  border-radius: 12px;
+  transition: box-shadow 0.3s ease;
+}
+
+.MainBlock2 {
+  border: 3px solid #5f51a9;
+}
+
+.MainBlock1:hover,
+.MainBlock2:hover {
+  box-shadow: 0 0 15px rgba(95, 81, 169, 0.7);
+}
+
+.Block1,
+.Block2 {
+  display: flex;
+  padding: 30px 31px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.frame {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #2d2d2f;
+  border-radius: 9px;
+  height: 75px;
+  width: 78px;
+  overflow: hidden;
+}
+
+.userIcon {
+  width: 63px;
+  height: 59px;
+}
+
+.TeacherWord {
+  width: 80px;
+  height: 20px;
+  text-align: center;
+  margin-top: 20px;
+  color: white;
+  font-size: 23.62;
+  font-family: "Karla";
+  font-weight: 700;
+  word-wrap: break-word;
+}
+
+.ParagraphBlock1 {
+  text-align: center;
+  color: #dadada;
+  font-size: 17px;
+  font-family: Karla;
+  font-weight: 400;
+  word-wrap: break-word;
+}
+
+@media (max-width: 630px) {
+  .MainDivType {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 50px;
+    height: 100vh;
+  }
+  .MainSectionLogin {
+    height: 100%;
+  }
+}

@@ -1,0 +1,522 @@
+.MainSectionMultiple {
+  background-color: #1e1e1e;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow: auto;
+  padding: 10px;
+}
+
+.NextButtonBack {
+  padding-right: 10px;
+
+}
+
+.DivNextButton {
+  text-decoration: none;
+}
+
+.BackArrow {
+  transform: rotate(180deg);
+}
+
+.DivMultipleQua {
+  display: flex;
+  margin: 30px auto;
+  min-width: 650px;
+  width: 80%;
+  height: auto;
+  background-color: rgba(238, 238, 238, 1);
+  border-radius: 10px;
+}
+
+.ChildDivMultipleQua {
+  padding: 15px;
+}
+
+.NumberQuation {
+  width: 10px;
+  height: 10px;
+  background-color: #5f51a9;
+  color: #1e1e1e;
+  padding: 10px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.MainDivTypeText {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.Mult_Cho_Icon {
+  margin-right: 10px;
+  width: 30px;
+  height: 30px;
+}
+
+.TypeOfQuastion {
+  font-family: "Inter-Bold", Helvetica;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.SectionWrightQuas {
+  margin-top: 20px;
+  /* box-sizing: border-box; */
+  padding: 10px;
+  border: 1px solid #5f51a9;
+  border-radius: 10px;
+  background-color: white;
+}
+
+.featursTextArea {
+  display: flex;
+  gap: 3px;
+}
+
+.sectionOpenFeaturs {
+  display: flex;
+  flex-direction: row;
+  transition: transform 0.7s, width 0.7s;
+  overflow: hidden;
+}
+
+.sectionOpenFeaturs.open {
+  transform: translateX(0);
+  width: 100%;
+}
+
+.sectionOpenFeaturs.closed {
+  transform: translateX(-100%);
+  width: 0;
+}
+
+.featursIcons {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.textBold {
+  font-weight: bold;
+}
+
+.textItalic {
+  font-style: italic;
+}
+
+.textUnderline {
+  text-decoration: underline;
+}
+
+.textstrikethrough {
+  text-decoration: line-through;
+}
+
+.DivImage {
+  padding: 10px;
+  width: 350px;
+  height: 250px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.MessageErrorTypeImage {
+  width: fit-content;
+  height: fit-content;
+}
+
+.LineKeypord {
+  width: 1px;
+  height: auto;
+  background-color: #1e1e1e;
+}
+
+.selected {
+  background-color: #999;
+  margin-left: 2px;
+}
+
+.textareaMultCho {
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 600px;
+  max-width: 800px;
+  min-height: 100px;
+  max-height: 300px;
+  height: auto;
+  background-color: transparent;
+  padding-top: 10px;
+  border: none;
+  outline: none;
+  resize: vertical;
+  font-family: "Inter-Bold", Helvetica;
+}
+
+.textareaMultCho::placeholder {
+  font-family: "Inter-Bold", Helvetica;
+  color: #999;
+}
+
+.featurs {
+  cursor: pointer;
+}
+
+.textAreaLine {
+  height: 1px;
+  width: 100%;
+  color: #707070;
+  margin-top: 5px;
+  background-color: #707070;
+}
+
+.sectionWriteAnswer {
+  display: flex;
+  /* flex-wrap: wrap; */
+  flex-direction: column;
+  margin-top: 60px;
+}
+
+.textAddoptions {
+  color: #000000;
+  font-family: "Inter-Bold", Helvetica;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.DivAddOptions {
+  display: flex;
+  /* flex-wrap: wrap; */
+  flex-direction: column;
+  margin-top: 5px;
+  gap: 10px;
+}
+
+.textArea1ForAnswOption {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.firstRowInOptions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.NumberOptions {
+  color: #000000;
+  font-family: "Inter-Bold", Helvetica;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.CheckBoxCorrectAnswer {
+  padding-left: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.Madatory {
+  color: gray;
+  font-family: "Inter-Bold", Helvetica;
+  font-size: 16px;
+  margin-left: auto;
+}
+
+.checkBoxIfCorrect {
+  width: 15px;
+  height: 15px;
+}
+
+.answerOptionCorrect {
+  color: #000000;
+  font-family: "Inter-Bold", Helvetica;
+  font-size: 16px;
+  padding-left: 10px;
+}
+
+.AddMoreOPtionSection {
+  display: flex;
+  border: 1px solid #5f51a9;
+  border-radius: 10px;
+  min-width: 200px;
+  max-width: 400px;
+  justify-content: center;
+  cursor: pointer;
+  margin: 40px 60px;
+}
+
+.MainDivAddOption {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.AddMoreOPtionSection:hover .AddMoreOptionText {
+  color: #5f51a9;
+}
+
+.AddMoreOptionText {
+  color: #000;
+  font-family: "Inter-Bold", Helvetica;
+  font-size: 16px;
+}
+
+.IconPlus {
+  padding-right: 20px;
+  width: 22px;
+  height: 22px;
+}
+
+.questionSettingsText {
+  color: #000;
+  font-family: "Inter-Bold", Helvetica;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.blockSettings1 {
+  height: auto;
+  border: 1px solid #5f51a9;
+  border-radius: 10px;
+  background-color: white;
+}
+
+.blockSettings2 {
+  padding: 10px;
+}
+
+.pointsText {
+  color: #000;
+  font-family: "Inter-Bold", Helvetica;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+
+.numberPointsInput {
+  border: 1px solid #5f51a9;
+  margin-top: 10px;
+  width: 50px;
+  height: 20px;
+  border-radius: 5px;
+  padding: 4px;
+}
+
+.questionMarkIcon {
+  width: 15px;
+  height: 15px;
+  margin-left: 5px;
+}
+
+.numberPointsInput:focus {
+  border: 1px solid #5f51a9;
+  outline: none;
+}
+
+.numberPointsInput::-webkit-inner-spin-button,
+.numberPointsInput::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.RadomizeSection {
+  margin-top: 20px;
+}
+
+.RadmizeInput {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.InputRadioClass {
+  margin-top: 5px;
+}
+
+.textRadioRadomize {
+  margin-left: 5px;
+}
+
+.MainDivButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+}
+
+.ButtonAddNewQuastion {
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  margin: 0 auto;
+  border: 1px solid #5f51a9;
+  font-family: "Inter-Bold", Helvetica;
+  border-radius: 5px;
+  padding: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  color: white;
+  font-size: 14px;
+  margin-top: 20px;
+  background: linear-gradient(to right, #8752BC, #5F51A9);
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.ButtonAddNewQuastion:hover::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(60, 60, 60, 0.3);
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/*                                            True And False css */
+
+.sectionAnserTrueAndFalse {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.textRadioTrueandfalse {
+  color: #000;
+  font-family: "Inter-Bold", Helvetica;
+  font-size: 14px;
+  margin-left: 7px;
+}
+
+.labelTrueFalse {
+  margin-bottom: 20px;
+}
+
+.InputRadioTrueandfalse {
+  position: relative;
+  width: 15px;
+  height: 15px;
+  margin-right: 10px;
+  background-color: #e5e5e5;
+  cursor: pointer;
+  color: #b8b8b8;
+  border: 2px solid transparent;
+}
+
+.InputRadioTrueandfalse:checked::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  background-color: #5f51a9;
+  border-radius: 50%;
+  border: 1px solid #5f51a9;
+  outline: none;
+}
+
+.MainDivLabel {
+  display: flex;
+  align-items: center;
+}
+
+.sectionAnserTrueAndFalse label {
+  margin-bottom: 10px;
+}
+
+.inputTrueAndFalse {
+  background-color: white;
+  margin-bottom: 10px;
+  width: 200px;
+  height: auto;
+  border: 1px solid #5f51a9;
+  outline: none;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.settingQuastion {
+  margin-top: 20px;
+}
+
+/* ِ                                     Essay Quastion Page */
+
+/*                                    Free Text Quastion Page */
+
+.FormBolcksFree {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.textAnswerOPtion {
+  margin-top: 6px;
+  margin-bottom: 6px;
+  color: grey;
+}
+
+.inputFreeText {
+  background-color: white;
+  margin-bottom: 10px;
+  width: 200px;
+  height: 10px;
+  border: 1px solid #5f51a9;
+  outline: none;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.AddMoreOptionalFree {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  font-family: "Inter-Bold", Helvetica;
+  color: #5f51a9;
+  position: relative;
+}
+
+.AddMoreOptionalFree:hover:after {
+  content: "";
+  display: block;
+  height: 1px;
+  width: 100%;
+  background-color: #5f51a9;
+  position: absolute;
+  bottom: -2px;
+}
+
+/*                                  Fill the Gabs */
+
+.AdditonalOptional {
+  display: flex;
+  flex-direction: column;
+}

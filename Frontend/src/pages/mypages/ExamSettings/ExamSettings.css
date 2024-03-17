@@ -1,0 +1,312 @@
+.MainSectionSettings {
+  background-color: #1e1e1e;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow: auto;
+  padding: 10px;
+}
+
+.ContantMainSettings {
+  display: flex;
+  flex-direction: column;
+  margin: 100px auto;
+}
+
+.TextContnatSettings {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  color: white;
+  font-family: "Inter-Bold", Helvetica;
+  font-weight: 700;
+  font-size: 25px;
+}
+
+.ContantSettings {
+  padding: 10px;
+  min-width: 400px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.ButtonsSettings {
+  display: flex;
+  flex-direction: row;
+}
+
+.MainDivContantSettings {
+  display: flex;
+  flex-direction: column;
+  margin: 10px auto;
+
+  width: clamp(460px, 80vw, 1000px);
+  background-color: rgba(238, 238, 238, 1);
+  border-radius: 10px;
+}
+
+.sectionExamName {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 5px;
+}
+
+
+.EditExamSection {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+
+  font-family: "Inter-Bold", Helvetica;
+  font-weight: 700;
+}
+
+.inputEditExam {
+  user-select: none;
+
+  border: 1px solid #5f51a9;
+  font-family: "Inter-Bold", Helvetica;
+  outline: none;
+  border-radius: 5px;
+  width: 200px;
+  max-width: 300px;
+  padding: 5px;
+  font-size: 15px;
+  background-color: transparent;
+}
+
+.sectionExamName:hover {
+  background-color: rgb(180, 180, 180);
+  border-radius: 10px;
+}
+
+.iconFile {
+  width: 30px;
+  height: 30px;
+}
+
+
+.ContantSettingsTwo {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+}
+
+.ExamInstructTextAdd {
+  font-family: "Inter-Bold", Helvetica;
+  margin-left: 10px;
+  font-size: 18px;
+  font-weight: 700;
+  user-select: none;
+}
+
+.AddInsrationIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.sectionAddIns {
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+  margin-top: 10px;
+  width: fit-content;
+  color: #5f51a9;
+  user-select: none;
+}
+
+.sectionAddIns:hover:after {
+  content: "";
+  display: block;
+  height: 1px;
+  width: 100%;
+  background-color: #5f51a9;
+  position: absolute;
+  bottom: -2px;
+  color: #5f51a9;
+}
+
+.ExamPasswordSection {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.maginsett {
+  margin-right: 5px;
+}
+
+.AddTextIntro {
+  display: flex;
+  flex-direction: column;
+  opacity: 1;
+  margin-top: 5px;
+  max-height: 300px;
+  overflow: hidden;
+  transition: max-height 0.4s ease-in-out, opacity 0.4s;
+}
+
+.AddTextIntro.hidden {
+  max-height: 0;
+  opacity: 0;
+}
+
+
+
+.InputIntro {
+  user-select: none;
+  margin-top: 15px;
+  border: 1px solid #5f51a9;
+  font-family: "Inter-Bold", Helvetica;
+  outline: none;
+  border-radius: 5px;
+  width: 400px;
+  padding: 8px;
+  font-size: 15px;
+  background-color: transparent;
+}
+
+.ButtonSaveIntro {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  width: 100px;
+  height: 30px;
+  border: 1px solid #5f51a9;
+  font-family: "Inter-Bold", Helvetica;
+  background-color: transparent;
+  color: #1e1e1e;
+  border-radius: 5px;
+  font-weight: 700;
+}
+
+.ButtonSaveIntro:hover {
+  background-color: #5f51a9;
+  color: white;
+}
+
+.marginSettings {
+  margin-top: 10px;
+}
+
+/* section 4 */
+
+.sectionAvaliability {
+  padding: 10px;
+  min-width: 400px;
+  display: flex;
+  flex-direction: column;
+
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.scheduleTextIcon {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.avaliabilityText {
+  font-family: "Inter-Bold", Helvetica;
+  color: #1e1e1e;
+  font-weight: 700;
+  user-select: none;
+  font-size: 20px;
+  padding-left: 10px;
+}
+
+
+.sectionPutTheTime {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.RowTime {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+
+.textTime,
+.textMinutes {
+  font-family: "Inter-Bold", Helvetica;
+  color: #1e1e1e;
+  font-weight: 500;
+  user-select: none;
+}
+
+
+.inputTime {
+  margin-left: 10px;
+  width: 200px;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #5f51a9;
+  border-radius: 5px;
+  height: 20px;
+  box-shadow: none;
+  outline: none;
+  background-color: transparent;
+}
+
+
+.inputTime:focus {
+  border-color: #5f51a9;
+  box-shadow: 0 0 0 1px #5f51a9;
+
+}
+
+.marginAvaliableUntil {
+  margin-left: 11px;
+}
+
+
+
+/*                                section 5  */
+
+.sectionTimeLimit {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+
+}
+
+.inputTimeLimit {
+  margin-left: 10px;
+  width: 60px;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #5f51a9;
+  border-radius: 5px;
+  height: 10px;
+  box-shadow: none;
+  outline: none;
+  background-color: transparent;
+
+}
+
+.inputTimeLimit::-webkit-inner-spin-button,
+.inputTimeLimit::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
