@@ -2,7 +2,6 @@ from django.http import HttpResponse, JsonResponse
 import json
 
 def index(request):
-
     data = {
         'name': 'mahmoud',
     }
