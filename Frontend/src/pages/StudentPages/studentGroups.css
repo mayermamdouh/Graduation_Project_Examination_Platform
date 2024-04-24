@@ -1,0 +1,439 @@
+.MainDivStudentPage {
+    background-color: #1e1e1e;
+    width: auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    overflow: auto;
+    padding: 10px;
+}
+
+
+
+
+.containerAppBar {
+    display: flex;
+    align-items: center;
+
+    align-items: center;
+    padding: 10px;
+    background-color: #1e1e1e;
+    color: white;
+    height: 50px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 100;
+}
+
+.logoStudent {
+    display: flex;
+
+    align-items: center;
+    margin-left: 10px;
+    user-select: none;
+    width: 100px;
+    height: 50px;
+
+    margin-right: 80px;
+    margin-left: 10px;
+
+}
+
+.navAppBarStudent {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.ulAppBarStudent {
+    list-style: none;
+    padding-inline-start: 0px;
+    display: flex;
+    gap: 35px;
+    text-align: center;
+    margin-left: auto;
+}
+
+.linksAppbarStudent {
+    text-decoration: none;
+    color: white;
+    font-size: 19px;
+    padding: 9px;
+    margin-left: 14px;
+
+
+
+}
+
+
+
+.linksAppbarStudent:hover,
+.activeAppBarStudent {
+    background-color: white;
+    transition: all 0.4s;
+    border-radius: 5px;
+    color: #1e1e1e;
+
+
+}
+
+.mainUserStudent {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+
+.photoUser {
+    display: inline;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.userDropdown {
+    position: absolute;
+    border-radius: 5px;
+    top: 70px;
+    right: 20px;
+    background-color: whitesmoke;
+    box-shadow: 0 0 5px #5f51a9;
+
+    min-width: 180px;
+    display: none;
+    max-height: 0%;
+    z-index: 3;
+    opacity: 0;
+    transition: opacity 0.2s, max-height 0.2s;
+
+}
+
+.userDropdown.open {
+    max-height: 300px;
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.userDropdown.hidden {
+    opacity: 0;
+    max-height: 0;
+}
+
+.userDropdown::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    right: 25px;
+    height: 20px;
+    width: 20px;
+    border-radius: 2px;
+    background: whitesmoke;
+    transform: rotate(45deg);
+    transition: opacity 0.3s;
+}
+
+
+
+.userDropdown a {
+    border-radius: 5px;
+    /* padding: 10px; */
+    text-decoration: none;
+    color: #333;
+    transition: background-color 0.1s;
+}
+
+.NameAndPostion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 25px 10px;
+    font-weight: 500;
+}
+
+.lineNavBar {
+    background-color: grey;
+    height: 1px;
+    width: 70%;
+}
+
+.NameUserr,
+.postionUser {
+    color: #1e1e1e;
+}
+
+.postionUser {
+    font-size: 12px;
+    color: grey;
+}
+
+
+
+.LinksuserDropdown {
+    width: 89%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    margin: 1px;
+    font-weight: 400;
+
+}
+
+.LinksuserDropdown:hover {
+    /* background-color: #5f51a9; */
+    font-weight: 700;
+    color: #5f51a9;
+
+}
+
+
+@media screen and (max-width: 650px) {
+    .linksAppbarStudent {
+        font-size: 16px;
+        font-weight: 530;
+
+    }
+
+
+
+}
+
+.MianPageStudent {
+    margin: 100px auto;
+    width: auto;
+    width: clamp(400px, 80vw, 90%);
+}
+
+.MyGroupsWord {
+    margin-bottom: 30px;
+    color: white;
+    font-size: 25px;
+    margin-left: 5px;
+}
+
+
+
+.secondMianPageStudent {
+    background-color: white;
+    width: clamp(300px, 80vw, 89%);
+    height: 50px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px;
+}
+
+.groupIcon {
+    width: 30px;
+    height: 30px;
+}
+
+.NameOfGroup {
+    margin-left: 20px;
+    width: 100px;
+    font-size: 17px;
+    font-weight: 700;
+    color: #5f51a9;
+}
+
+.colorAdd {
+    color: #1e1e1e;
+}
+
+.ButtonOprnGroup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+    width: 100px;
+    height: 30px;
+    border: 1px solid #5f51a9;
+    background-color: transparent;
+    color: #1e1e1e;
+    border-radius: 5px;
+    font-weight: 700;
+
+}
+
+.ButtonOprnGroup:hover {
+    background-color: #5f51a9;
+    color: white;
+}
+
+.LinkSpecificGroup {
+    text-decoration: none;
+    margin-left: auto;
+}
+
+/*                                                      SpecificGroup page */
+
+.NameOFGroup {
+    display: flex;
+    align-items: center;
+    margin-bottom: 60px;
+    font-size: 25px;
+    color: white;
+    width: clamp(300px, 80vw, 90%);
+    padding: 10px;
+
+}
+
+.NameGroup {
+    margin-left: auto;
+}
+
+.LineStudentTest {
+    width: 95%;
+    height: 1px;
+    background-color: rgb(171, 171, 171);
+    margin: 0% auto;
+
+    /* padding: 5px; */
+}
+
+.MianPageStudentTests {
+    background-color: white;
+    width: clamp(300px, 80vw, 95%);
+
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    justify-content: flex-start;
+    padding: 10px;
+    /* box-shadow: 0px 3px 5px 0px rgba(255, 255, 255, 0.4); */
+}
+
+.firstRowStudent {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 20px 0%;
+    width: clamp(300px, 70vw, 95%);
+}
+
+.marginTop {
+    margin: 30px 0%;
+}
+
+.NameOfGroupStudent {
+    margin-left: 25px;
+    width: 100px;
+    word-wrap: break-word;
+}
+
+.NameOfGroupStudentButton {
+    text-align: center;
+    font-weight: bold;
+    width: 100px;
+    font-size: 10px;
+    cursor: pointer;
+    position: relative;
+    padding: 10px;
+    border: 1px solid #5f51a9;
+    border-radius: 10px;
+    margin-left: 5px;
+}
+
+.NameOfGroupStudentButton:hover {
+    background-color: #5f51a9;
+    color: white;
+}
+
+.classRemoveLinKcss {
+    text-decoration: none;
+}
+
+/*                      Review */
+
+
+.MianPageStudentTestsReview {
+    background-color: white;
+    width: clamp(300px, 90vw, 95%);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.makePadding {
+    /* padding: 10px; */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.firstColumn,
+.secondColumn {
+    display: flex;
+    flex-direction: column;
+}
+
+.firstColumn {
+    height: 90%;
+    width: 45%;
+    /* margin-right: auto; */
+
+}
+
+.secondColumn {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0% auto;
+}
+
+
+.LineVertical {
+    height: 90%;
+    width: 1.5px;
+    background-color: #ababab;
+
+}
+
+.NameOfInformation {
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    height: 30px;
+    margin: 10px 0%;
+
+
+
+
+}
+
+.Named {
+    color: #6A7680;
+    font-family: Inter;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    text-align: left;
+    width: 50%;
+}
+
+.theInformation {
+    color: #1e1e1e;
+    font-weight: 500;
+    margin-left: 20px;
+    width: 200px;
+}

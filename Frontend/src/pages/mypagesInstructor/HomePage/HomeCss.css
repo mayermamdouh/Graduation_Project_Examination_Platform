@@ -1,0 +1,10 @@
+.BodyHome{
+    background-color: #1e1e1e;
+        width: auto;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+        overflow: auto;
+        padding: 10px;
+}

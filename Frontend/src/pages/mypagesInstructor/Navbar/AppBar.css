@@ -1,0 +1,310 @@
+.containerAppBar {
+  display: flex;
+  align-items: center;
+
+  align-items: center;
+  padding: 10px;
+  background-color: #1e1e1e;
+  color: white;
+  height: 50px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  display: flex;
+
+  align-items: center;
+  margin-left: 10px;
+  user-select: none;
+  width: 55px;
+  height: 55px;
+
+  margin-right: 80px;
+}
+
+.navAppBar {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.ulAppBar {
+  list-style: none;
+  padding-inline-start: 0px;
+  display: flex;
+  gap: 35px;
+  text-align: center;
+  margin-left: auto;
+}
+
+.linksAppbar {
+  text-decoration: none;
+  color: white;
+  font-size: 19px;
+  padding: 5px 15px;
+}
+
+
+
+.linksAppbar:hover,
+.activeAppBar {
+  background-color: white;
+  transition: all 0.4s;
+  border-radius: 5px;
+  color: #1e1e1e;
+
+}
+
+.menu-toggle {
+  display: none;
+}
+
+.mainUser {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-right: 15px;
+}
+
+.NameUser {
+  display: inline;
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+  margin-left: 10px;
+  justify-content: flex-end;
+}
+
+.photoUser {
+  display: inline;
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.userDropdown {
+  position: absolute;
+  border-radius: 5px;
+  top: 70px;
+  right: 20px;
+  background-color: whitesmoke;
+  box-shadow: 0 0 5px #5f51a9;
+
+  min-width: 180px;
+  display: none;
+  max-height: 0%;
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 0.2s, max-height 0.2s;
+
+}
+
+.userDropdown.open {
+  max-height: 300px;
+  opacity: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.userDropdown.hidden {
+  opacity: 0;
+  max-height: 0;
+}
+
+.userDropdown::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  right: 25px;
+  height: 20px;
+  width: 20px;
+  border-radius: 2px;
+  background: whitesmoke;
+  transform: rotate(45deg);
+  transition: opacity 0.3s;
+}
+
+
+
+.userDropdown a {
+  border-radius: 5px;
+  /* padding: 10px; */
+  text-decoration: none;
+  color: #333;
+  transition: background-color 0.1s;
+}
+
+.NameAndPostion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 25px 10px;
+  font-weight: 500;
+}
+
+.lineNavBar {
+  background-color: grey;
+  height: 1px;
+  width: 70%;
+}
+
+.NameUserr,
+.postionUser {
+  color: #1e1e1e;
+}
+
+.postionUser {
+  font-size: 12px;
+  color: grey;
+}
+
+
+.menu_toggle {
+  display: none;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 30px;
+  height: 25px;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-right: 15px;
+
+}
+
+.menu_toggle .menuLine {
+  display: block;
+  min-width: 100%;
+  height: 15px;
+  background-color: #1e1e1e;
+  color: white;
+
+
+  margin-bottom: 3px;
+}
+
+.drawer {
+  position: fixed;
+  top: 70px;
+  left: -300px;
+  width: 250px;
+  height: 100%;
+  background-color: #1e1e1e;
+  transition: left 0.3s, width 0.3s;
+  /* Reduced transition time */
+  overflow: hidden;
+  z-index: 2;
+}
+
+.drawer.open {
+  left: 0;
+  width: 60%;
+}
+
+.hrDrawer {
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+}
+
+.linkDrawer {
+  text-decoration: none;
+  color: white;
+  font-size: 22px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  display: block;
+}
+
+.linkDrawer:hover {
+  background-color: rgb(226, 226, 226);
+  ;
+  color: #1e1e1e;
+  border-radius: 5px;
+}
+
+.paddingDrawer:hover {
+  background-color: rgb(226, 226, 226);
+  color: #1e1e1e;
+  border-radius: 5px;
+  margin: 5px 0px;
+}
+
+.LinksuserDropdown {
+  width: 89%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  margin: 1px;
+  font-weight: 400;
+
+}
+
+.LinksuserDropdown:hover {
+  /* background-color: #5f51a9; */
+  font-weight: 700;
+  color: #5f51a9;
+
+}
+
+
+/* .linkDrawer:hover .divDrawer {
+  color: white;
+} */
+
+@media screen and (max-width: 650px) {
+  .containerAppBar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+  }
+
+  .userDropdown::before {
+    right: 40px;
+  }
+
+  .menu_toggle {
+    display: flex;
+  }
+
+  .ulAppBar {
+    flex-direction: column;
+    gap: 10px;
+    width: auto;
+    height: auto;
+  }
+
+  .navAppBar {
+    display: none;
+    margin-right: 90px;
+  }
+
+  .logo {
+    margin-right: auto;
+  }
+
+  .mainUser {
+    margin-right: 30px;
+    margin-left: 8px;
+  }
+
+
+}
+
+
+@media screen and (min-width: 650px) {
+  .drawer {
+    display: none;
+  }
+}

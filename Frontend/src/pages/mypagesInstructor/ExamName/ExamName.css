@@ -1,0 +1,73 @@
+.MainSectionSettings {
+  background-color: #1e1e1e;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow: auto;
+  padding: 10px;
+}
+
+.ContantMainSettings {
+  display: flex;
+  flex-direction: column;
+  margin: 100px auto;
+}
+
+.TextContnatSettings {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  color: white;
+  font-family: "Inter-Bold", Helvetica;
+  font-weight: 700;
+  font-size: 25px;
+}
+
+.ContantSettings {
+  /* padding: 10px; */
+  /* min-width: 400px; */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+
+.EditExamSection {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  font-family: "Inter-Bold", Helvetica;
+  font-weight: 700;
+  width: 99%;
+}
+
+
+.inputEditExam {
+  user-select: none;
+  border: 1px solid #5f51a9;
+  font-family: "Inter-Bold", Helvetica;
+  outline: none;
+  border-radius: 5px;
+  width: 200px;
+  max-width: 300px;
+  padding: 5px;
+  font-size: 15px;
+  background-color: transparent;
+  margin-left: 5px;
+}
+
+.sectionExamName:hover {
+  background-color: rgb(180, 180, 180);
+  border-radius: 10px;
+}
+
+.paddingName {
+  padding: 20px;
+}
+

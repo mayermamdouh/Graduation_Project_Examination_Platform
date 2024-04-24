@@ -6,6 +6,7 @@
   width: 100vw;
   height: 100vh;
   flex-direction: column;
+
 }
 
 .MainDivType {
@@ -14,7 +15,6 @@
   gap: 120px;
   padding: 10px;
 }
-
 .MainBlock1,
 .MainBlock2 {
   display: flex;
@@ -30,7 +30,11 @@
 
 .MainBlock1:hover,
 .MainBlock2:hover {
-  box-shadow: 0 0 15px rgba(95, 81, 169, 0.7);
+  box-shadow: 0 0 30px rgba(95, 81, 169, 0.7);
+}
+
+.removeUnderline{
+  text-decoration: none;
 }
 
 .Block1,
@@ -41,6 +45,12 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
+}
+
+/* Targeting the links to remove underline */
+.MainBlock1 a,
+.MainBlock2 a {
+  text-decoration: none;
 }
 
 .frame {
@@ -87,6 +97,7 @@
     margin-bottom: 50px;
     height: 100vh;
   }
+
   .MainSectionLogin {
     height: 100%;
   }

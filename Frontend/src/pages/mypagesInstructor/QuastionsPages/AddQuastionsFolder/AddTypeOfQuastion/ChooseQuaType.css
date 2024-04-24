@@ -1,0 +1,197 @@
+.MainSectionQuaType {
+  background-color: #1e1e1e;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow: auto;
+  padding: 10px;
+}
+
+.Row1 {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 150px;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.DivExamName {
+  width: fit-content;
+}
+
+.InputExamName {
+  display: flex;
+  width: 250px;
+  height: 10px;
+  font-family: "Inter-Bold", Helvetica;
+  color: white;
+  border: 3px solid #9652c3;
+  padding: 8px;
+  border-radius: 10px;
+  font-size: 15px;
+  outline: none;
+  background-color: transparent;
+}
+
+.InputExamName::placeholder {
+  color: #ffffff75;
+  text-align: center;
+}
+
+.DivNextButton {
+  user-select: none;
+  width: 100px;
+  min-width: 100px;
+  height: 25px;
+  display: flex;
+  border: 3px solid #9652c3;
+  border-radius: 10px;
+  color: white;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.DivNextButton:hover {
+  box-shadow: 0px 0px 10px #9652c3;
+
+}
+
+.NextButton {
+  padding-left: 5px;
+}
+
+.ArrowClass {
+  width: 40px;
+  height: 18px;
+}
+
+.step-indicator {
+  display: flex;
+  align-items: center;
+  display: flex;
+}
+
+.step {
+  display: flex;
+  border: 2px solid white;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  color: white;
+}
+
+.active {
+  background-color: #7b1fa2;
+  color: white;
+  border: none;
+}
+
+.line {
+  height: 2px;
+  width: 40px;
+  background-color: white;
+}
+
+.DivForTypes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  gap: 15px;
+  margin-top: 200px;
+}
+
+.Box1,
+.Box2,
+.Box3,
+.Box4,
+.Box5,
+.Box6 {
+  text-decoration: none;
+  cursor: pointer;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  font-family: "Inter-Bold", Helvetica;
+}
+
+.Box1:hover,
+.Box2:hover,
+.Box3:hover,
+.Box4:hover,
+.Box5:hover,
+.Box6:hover {
+  font-weight: 600;
+}
+
+
+.Box1Content {
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 100px;
+  background-color: rgba(238, 238, 238, 1);
+  border-radius: 10px;
+  border: 1.5px solid #9652c3;
+  position: relative;
+}
+
+.Box1Content:hover {
+  box-shadow: 0px 2px 15px #9652c3;
+}
+
+.appearanceInTypeQua {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-color: #2d2d2f;
+  top: -25%;
+  left: -15%;
+  transform: rotate(45deg);
+}
+
+.textInApper {
+  position: absolute;
+  color: white;
+  font-size: 14px;
+  top: 30%;
+  left: 75%;
+  transform: rotate(-45deg);
+}
+
+.Mult_Cho_image {
+  width: 50px;
+  height: 50px;
+  display: flex;
+}
+
+.textTypeQua {
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgba(238, 238, 238, 1);
+}
+
+@media screen and (max-width: 550px) {
+  .Row1 {
+    margin-top: 100px;
+  }
+
+  .DivForTypes {
+    margin-top: 50px;
+  }
+}

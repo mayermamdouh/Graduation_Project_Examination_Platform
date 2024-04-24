@@ -8,7 +8,7 @@
 }
 
 .containerLogin {
- 
+
   display: flex;
   flex-direction: column;
   margin: auto;
@@ -95,6 +95,7 @@
 .forget-password span {
   color: #8351ba;
   cursor: pointer;
+  font-weight: 700;
 }
 
 .submit-container {
@@ -105,7 +106,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 220px;
+  width: 280px;
   height: 50px;
   color: #fff;
   background-color: #8351ba;
@@ -114,6 +115,18 @@
   font-weight: 300;
   cursor: pointer;
   font-family: "karla-Regular", helvetica;
+}
+
+.haveAccount {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.LinkLogin {
+  text-decoration: underline;
+  color: #8351ba;
+  cursor: pointer;
+  font-weight: 700;
 }
 
 .gray {
@@ -206,9 +219,10 @@
     margin-top: 5%;
     margin-left: 5%;
     margin-right: 5%;
-    min-width: 300px; /* Set a minimum width of 300 pixels */
+    min-width: 300px;
+    /* Set a minimum width of 300 pixels */
     max-width: none;
-    
+
   }
 
   .inputLogin {
@@ -219,11 +233,13 @@
 /* Media query for small screens (width less than 300px) */
 @media (max-width: 470px) {
   .submit-container {
-    flex-direction: column; /* Switch to column layout */
+    flex-direction: column;
+    /* Switch to column layout */
   }
 
   .submit {
     /* width: 200px; Make the width 100% within the column */
-    margin-bottom: 10px; /* Add some spacing between the buttons */
+    margin-bottom: 10px;
+    /* Add some spacing between the buttons */
   }
 }

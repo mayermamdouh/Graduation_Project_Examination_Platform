@@ -7,9 +7,12 @@ import OpenEyesIcon from "../../Assets/openeyes.png";
 import microsoft from "../../Assets/microsoft.svg";
 import IconGoogle from "../../Assets/google.svg";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 function SignUp() {
   const [actionPass, setActionPass] = useState(CloseEyesIcon);
+  const [userName, setUserName] = useState("");
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -17,6 +20,19 @@ function SignUp() {
     setActionPass((prevIcon) =>
       prevIcon === CloseEyesIcon ? OpenEyesIcon : CloseEyesIcon
     );
+  };
+
+  const handleCreateLocalToStoreUserInformation = () => {
+    const storedResponses =
+      JSON.parse(localStorage.getItem("userInformation")) || [];
+    const Response = {
+      userName: userName,
+      email: email,
+      password: password,
+    };
+
+    const updatedResponses = [...storedResponses, Response];
+    localStorage.setItem("userInformation", JSON.stringify(updatedResponses));
   };
 
   return (
@@ -32,10 +48,14 @@ function SignUp() {
             <input
               type="text"
               className="placeholder"
-              placeholder="Write Your UserName.."
+              placeholder="Write Your User Name.."
+              value={userName}
+              onChange={(e) => {
+                setUserName(e.target.value);
+              }}
             />
           </div>
-
+       
           <div className="inputLogin">
             <img src={EmailIcon} alt="" loading="lazy" />
             <input
@@ -73,7 +93,20 @@ function SignUp() {
           {/* <div className="submit" onClick={handleActionClick}>
             Sign UP
           </div> */}
-          <div className="submit">Sign up</div>
+          <Link to="/Home" className="removeUnderline">
+            <div
+              className="submit"
+              onClick={handleCreateLocalToStoreUserInformation}
+            >
+              Sign up
+            </div>
+          </Link>
+          <div className="haveAccount">
+            Already have an account?{" "}
+            <Link className="LinkLogin" to="/Home/Login/2">
+              Login
+            </Link>
+          </div>
         </div>
 
         <div className="BreakLine"></div>
@@ -98,7 +131,6 @@ function SignUp() {
             <div className="OptionsToLoginLine"></div>
             <div className="TextIcon">sign up with Google</div>
           </div>
-        
         </div>
       </div>
     </div>
