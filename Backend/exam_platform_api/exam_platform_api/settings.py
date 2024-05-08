@@ -41,13 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-<<<<<<< HEAD
     'rest_framework',
     'group',
     'exam',
-=======
-     "corsheaders",
->>>>>>> 7c0564b8fd8430147df677db7b77e7ac86c63621
+    'corsheaders',
 ]
 
 
