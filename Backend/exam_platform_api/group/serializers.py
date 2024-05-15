@@ -14,7 +14,7 @@ class MembershipSerializer(serializers.ModelSerializer):
 class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
-        fields = ["name", "description", "code"]
+        fields = ["id", "name", "description", "code"]
     
     def create(self, validated_data):
         user: User = self.context['request'].user
@@ -27,7 +27,7 @@ class GroupSerializer(serializers.ModelSerializer):
 class GroupSerializerListView(serializers.ModelSerializer):
     class Meta:
         model = Group
-        fields = ["name", "description", "code", "created_at", "updated_at"]
+        fields = ["id", "name", "description", "code", "created_at", "updated_at"]
 
 
 class StudentGroupSerializerListView(serializers.ModelSerializer):

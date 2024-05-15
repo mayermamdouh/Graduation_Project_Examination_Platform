@@ -3,8 +3,8 @@ from . import views
 
 
 urlpatterns = [
-    path("create/", views.GroupCreateAPIView.as_view(), name="create-group"),
-    path("view/", views.GroupListAPIView.as_view(), name="list-groups"),
+    path("", views.GroupListCreateAPIView.as_view()),
+    path("<int:pk>/", views.GroupRetrieveUpdateDestroyAPIView.as_view()),
     path("student-view/", views.StudentGroupListAPIView.as_view(), name="student-list-groups"),
     path("assign-student/", views.AssignStudentCreateAPIView.as_view(), name="assign-student"),
     path("unassign-student/", views.UnassignStudentFromGroup.as_view(), name="unassign-student"),

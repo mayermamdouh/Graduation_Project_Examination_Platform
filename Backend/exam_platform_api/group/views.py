@@ -8,19 +8,25 @@ from authentication.permissions import IsInstructor, IsStudent
 from .models import Group, Membership
 from .serializers import GroupSerializer, GroupSerializerListView, MembershipSerializer, StudentGroupSerializerListView
 from django.contrib.auth.models import User
+from django.utils import timezone
 
-class GroupCreateAPIView(CreateAPIView):
-    permission_classes = [IsInstructor]
-    queryset = Group.objects.all()
-    serializer_class = GroupSerializer
-
-class GroupListAPIView(ListAPIView):
+class GroupListCreateAPIView(generics.ListCreateAPIView):
     permission_classes = [IsInstructor]
     serializer_class = GroupSerializerListView
+
     def get_queryset(self):
         instructor = self.request.user.instructor
         queryset = Group.objects.filter(instructor=instructor)
         return queryset
+    
+    def post(self, request, *args, **kwargs):
+        self.permission_classes = [IsInstructor]
+        self.serializer_class = GroupSerializer
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 
 class StudentGroupListAPIView(ListAPIView):
     permission_classes = [IsStudent]
@@ -78,6 +84,18 @@ class GroupDestroyAPIView(generics.DestroyAPIView):
         except Group.DoesNotExist:
             return Response({"error": "Group with code {} does not exist.".format(group_code)}, status=status.HTTP_404_NOT_FOUND)
 
+class GroupRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+
+    def perform_update(self, serializer):
+        # Set the updated_at field to the current datetime
+        serializer.save(updated_at=timezone.now())
+
+    # Optionally, if you want to restrict which fields can be updated:
+    def get_serializer(self, *args, **kwargs):
+        kwargs['partial'] = True  # Allow partial updates
+        return super().get_serializer(*args, **kwargs)
 
 class UnassignStudentFromGroup(generics.DestroyAPIView):
     permission_classes = [IsInstructor, IsGroupOwner]
@@ -105,5 +123,3 @@ class UnassignStudentFromGroup(generics.DestroyAPIView):
         membership.delete()
 
         return Response({"message": "Student unassigned from group successfully."}, status=status.HTTP_200_OK)
-
-   
