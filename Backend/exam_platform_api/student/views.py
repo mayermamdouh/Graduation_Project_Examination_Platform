@@ -2,7 +2,7 @@ import datetime
 
 from django.contrib.auth.models import User
 from django.utils import timezone
-from rest_framework import status
+from rest_framework import status, generics
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 
@@ -14,7 +14,7 @@ from group.models import Membership, Group
 from group.serializers import StudentGroupSerializerListView, MembershipSerializer
 from student.permissions import IsGroupStudent
 from exam.models import ExamStatus
-from .serializers import StudentExamSerializer
+from .serializers import StudentExamSerializer, StudentJoinGroupSerializer
 
 
 class StudentGroupListAPIView(ListAPIView):
@@ -60,13 +60,13 @@ class StudentAttemptExamListAPIView(ListAPIView):
         try:
             exam = Exam.objects.get(id=pk)
         except Exam.DoesNotExist:
-            return Response("Error: Exam does not exist.", status=exam_status.HTTP_404_NOT_FOUND)
+            return Response("Error: Exam does not exist.", status=status.HTTP_404_NOT_FOUND)
 
         user: User = request.user
         student = user.student
         # check if the student is in the exam group.
         if not exam.group.filter(students=student).exists():
-            return Response("You are not a part of any exam group.", status=exam_status.HTTP_403_FORBIDDEN)
+            return Response("You are not a part of any exam group.", status=status.HTTP_403_FORBIDDEN)
 
         print(f"exam id: {exam.id}")
         now = timezone.now()
@@ -101,3 +101,20 @@ class StudentAttemptExamListAPIView(ListAPIView):
         return Response("There was an error verifying that you can enter the exam.", status=status.HTTP_400_BAD_REQUEST)
 
 
+class StudentJoinGroupCreateAPIView(generics.CreateAPIView):
+    serializer_class = StudentJoinGroupSerializer
+    permission_classes = [IsStudent]
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            code = serializer.validated_data['group_code']
+            student = request.user.student
+            if Group.objects.filter(code=code).exists():
+                group = Group.objects.get(code=code)
+                group.students.add(student)
+                return Response("Student joined group successfully.", status=status.HTTP_201_CREATED)
+            else:
+                return Response("Group Does not exist.", status=status.HTTP_400_BAD_REQUEST)
+
+        return Response("Failed to join group.", status=status.HTTP_400_BAD_REQUEST)

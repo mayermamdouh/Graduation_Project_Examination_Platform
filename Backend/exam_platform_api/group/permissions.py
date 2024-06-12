@@ -13,7 +13,6 @@ class IsGroupOwner(BasePermission):
     def has_permission(self, request: Request, view):
 
         group_id = view.kwargs.get('pk')
-        print(f"group id: {group_id}")
         group_code = request.data.get('group_code') or request.query_params.get('group_code')
         group = None
 

@@ -23,3 +23,7 @@ class StudentExamSerializer(serializers.ModelSerializer):
     class Meta:
         model = Exam
         fields = ['id', 'name', 'duration_minutes']
+
+
+class StudentJoinGroupSerializer(serializers.Serializer):
+    group_code = serializers.UUIDField()

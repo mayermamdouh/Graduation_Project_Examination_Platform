@@ -75,7 +75,7 @@ class GroupRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
         instructor = group.instructor
         students_serializer = StudentSerializer(students, many=True)
         instructor_serializer = InstructorSerializer(instructor)
-        data = [serializer.data, students_serializer.data, instructor_serializer.data]
+        data = [{"Group data": serializer.data}, {"Students": students_serializer.data}, {"Instructors": instructor_serializer.data}]
         return Response(data, status=status.HTTP_200_OK)
 
     def perform_update(self, serializer):
