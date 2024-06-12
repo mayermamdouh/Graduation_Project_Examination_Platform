@@ -25,6 +25,15 @@ class ExamResults(models.Model):
     marks = models.DecimalField(max_digits=5, decimal_places=2)
 
 
+class ExamStatus(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
+    attempted = models.BooleanField(default=False)
+    finished = models.BooleanField(default=False)
+    attempted_at = models.DateTimeField(null=True)
+    finished_at = models.DateTimeField(null=True)
+
+
 class MCQQuestion(models.Model):
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
     question = models.CharField(max_length=200)

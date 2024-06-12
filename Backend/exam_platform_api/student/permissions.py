@@ -1,12 +1,13 @@
 from rest_framework.permissions import BasePermission
-from .models import Group
+
+from group.models import Group
 
 
-class IsGroupOwner(BasePermission):
+class IsGroupStudent(BasePermission):
     """
-    Custom permission to check if the requesting user is the owner of the group.
+    Custom permission to check if the requesting user is a student of the group.
     """
-    message = 'You do not have permission to perform this action or the group does not exist'
+    message = 'You do not have permission, you are not a member of the group or the group does not exist.'
 
     def has_permission(self, request, view):
         # Retrieve the group ID from the URL (assuming it's provided as a URL parameter)
@@ -15,8 +16,7 @@ class IsGroupOwner(BasePermission):
         # Retrieve the group object based on the group ID
         try:
             group = Group.objects.get(pk=group_id)
+            student = request.user.student
+            return group.students.filter(id=student.id).exists()
         except Group.DoesNotExist:
             return False
-
-        # Check if the requesting user is the owner of the group
-        return request.user == group.instructor.user

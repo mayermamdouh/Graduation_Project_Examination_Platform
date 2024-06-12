@@ -31,22 +31,6 @@ class GroupListCreateAPIView(generics.ListCreateAPIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-class StudentGroupListAPIView(ListAPIView):
-    permission_classes = [IsStudent]
-    serializer_class = StudentGroupSerializerListView
-
-    def get_queryset(self):
-        student = self.request.user.student
-        memberships = Membership.objects.filter(student=student)
-        groups = [membership.group for membership in memberships]
-        return groups
-
-    def list(self, request, *args, **kwargs):
-        memberships = Membership.objects.filter(student=request.user.student)
-        serializer = MembershipSerializer(memberships, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-
 class AssignStudentCreateAPIView(CreateAPIView):
     permission_classes = [IsInstructor]
     serializer_class = []
@@ -79,26 +63,10 @@ class AssignStudentCreateAPIView(CreateAPIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-class GroupDestroyAPIView(generics.DestroyAPIView):
-    permission_classes = [IsInstructor, IsGroupOwner]
-    queryset = Group.objects.all()
-    serializer_class = []
-
-    def delete(self, request, *args, **kwargs):
-        group_code = self.request.POST.get('group_code')
-
-        try:
-            group = Group.objects.get(code=group_code)
-            group.delete()
-            return Response(status=status.HTTP_200_OK)
-        except Group.DoesNotExist:
-            return Response({"error": "Group with code {} does not exist.".format(group_code)},
-                            status=status.HTTP_404_NOT_FOUND)
-
-
 class GroupRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+    permission_classes = [IsInstructor, IsGroupOwner]
 
     def retrieve(self, request, *args, **kwargs):
         group: Group = self.get_object()

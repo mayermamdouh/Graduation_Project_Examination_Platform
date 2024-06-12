@@ -8,10 +8,11 @@ import uuid
 class MembershipSerializer(serializers.ModelSerializer):
     student_name = serializers.CharField(source='student.user.get_full_name', read_only=True)
     group_name = serializers.CharField(source='group.name', read_only=True)
+    group_id = serializers.PrimaryKeyRelatedField(source='group.id', read_only=True)
 
     class Meta:
         model = Membership
-        fields = ["student_name", "group_name", "joined_date"]
+        fields = ["student_name", "group_name", "joined_date", "group_id"]
 
 
 class GroupSerializer(serializers.ModelSerializer):

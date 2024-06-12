@@ -1,10 +1,11 @@
-from django.forms import model_to_dict
 from rest_framework import generics, status
 from rest_framework.request import Request
 from rest_framework.response import Response
+
 from authentication.permissions import IsInstructor, IsStudent
+from group.models import Group
 from .serializers import ExamSerializer, TrueFalseQuestionSerializer, FreeTextQuestionSerializer, \
-    FillGapsQuestionSerializer, MCQQuestionSerializer
+    FillGapsQuestionSerializer, MCQQuestionSerializer, ExamToGroupSerializer
 from .models import Exam
 
 
@@ -81,3 +82,27 @@ class ExamRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
             return Response("Permission denied", status=status.HTTP_401_UNAUTHORIZED)
         exam.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class AssignExamToGroupCreateAPIView(generics.CreateAPIView):
+    permission_classes = [IsInstructor]
+
+    def post(self, request: Request, *args, **kwargs):
+        exam_id = kwargs['pk']
+        try:
+            exam = Exam.objects.get(id=exam_id)
+        except Exam.DoesNotExist:
+            return Response({"detail": "Exam not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = ExamToGroupSerializer(data=request.data)
+        if serializer.is_valid():
+            group_code = serializer.validated_data['group_code']
+            try:
+                group: Group = Group.objects.get(code=group_code)
+            except Group.DoesNotExist:
+                return Response({"detail": "Group not found"}, status=status.HTTP_404_NOT_FOUND)
+
+            exam.group.add(group)
+            return Response({"detail": "Exam assigned to group successfully"}, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

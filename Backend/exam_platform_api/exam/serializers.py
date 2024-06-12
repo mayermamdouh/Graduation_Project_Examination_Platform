@@ -90,3 +90,7 @@ class ExamResultsSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExamResults
         fields = '__all__'
+
+
+class ExamToGroupSerializer(serializers.Serializer):
+    group_code = serializers.UUIDField()
