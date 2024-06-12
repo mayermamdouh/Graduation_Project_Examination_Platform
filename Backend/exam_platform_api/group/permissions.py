@@ -11,7 +11,9 @@ class IsGroupOwner(BasePermission):
     message = 'You do not have permission to perform this action, You are not the group instructor.'
 
     def has_permission(self, request: Request, view):
-        group_id = request.data.get('pk') or request.query_params.get('pk')
+
+        group_id = view.kwargs.get('pk')
+        print(f"group id: {group_id}")
         group_code = request.data.get('group_code') or request.query_params.get('group_code')
         group = None
 
