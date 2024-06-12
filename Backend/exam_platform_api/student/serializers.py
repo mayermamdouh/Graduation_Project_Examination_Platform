@@ -8,8 +8,10 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['username', 'email', 'first_name', 'last_name']
 
+
 class StudentSerializer(serializers.ModelSerializer):
-    user = UserSerializer
+    user = UserSerializer()
+
     class Meta:
         model = Student
         fields = ['user', 'is_student']

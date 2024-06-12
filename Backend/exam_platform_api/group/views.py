@@ -9,6 +9,9 @@ from .models import Group, Membership
 from .serializers import GroupSerializer, GroupSerializerListView, MembershipSerializer, StudentGroupSerializerListView
 from django.contrib.auth.models import User
 from django.utils import timezone
+from student.serializers import StudentSerializer
+from instructor.serializers import InstructorSerializer
+
 
 class GroupListCreateAPIView(generics.ListCreateAPIView):
     permission_classes = [IsInstructor]
@@ -18,7 +21,7 @@ class GroupListCreateAPIView(generics.ListCreateAPIView):
         instructor = self.request.user.instructor
         queryset = Group.objects.filter(instructor=instructor)
         return queryset
-    
+
     def post(self, request, *args, **kwargs):
         self.permission_classes = [IsInstructor]
         self.serializer_class = GroupSerializer
@@ -31,17 +34,24 @@ class GroupListCreateAPIView(generics.ListCreateAPIView):
 class StudentGroupListAPIView(ListAPIView):
     permission_classes = [IsStudent]
     serializer_class = StudentGroupSerializerListView
+
     def get_queryset(self):
         student = self.request.user.student
         memberships = Membership.objects.filter(student=student)
         groups = [membership.group for membership in memberships]
         return groups
 
+    def list(self, request, *args, **kwargs):
+        memberships = Membership.objects.filter(student=request.user.student)
+        serializer = MembershipSerializer(memberships, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
 class AssignStudentCreateAPIView(CreateAPIView):
     permission_classes = [IsInstructor]
     serializer_class = []
     queryset = []
-    
+
     def post(self, request, *args, **kwargs):
         # Verify that the provided group code exists
         group_code = request.data.get('group_code')
@@ -53,10 +63,10 @@ class AssignStudentCreateAPIView(CreateAPIView):
         student = get_object_or_404(Student, user__email=email)
         print("got passed the database lookup")
         if student is None:
-            return Response({"Error: " : "no such student exists"}, status.HTTP_404_NOT_FOUND)
+            return Response({"Error: ": "no such student exists"}, status.HTTP_404_NOT_FOUND)
 
         if group.students.filter(user__email=email).exists():
-            return Response({"Error: " : "Student is already a member."}, status.HTTP_400_BAD_REQUEST)
+            return Response({"Error: ": "Student is already a member."}, status.HTTP_400_BAD_REQUEST)
         # Add the student to the group
         group.students.add(student)
 
@@ -67,7 +77,7 @@ class AssignStudentCreateAPIView(CreateAPIView):
         serializer = MembershipSerializer(membership)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    
+
 
 class GroupDestroyAPIView(generics.DestroyAPIView):
     permission_classes = [IsInstructor, IsGroupOwner]
@@ -76,17 +86,29 @@ class GroupDestroyAPIView(generics.DestroyAPIView):
 
     def delete(self, request, *args, **kwargs):
         group_code = self.request.POST.get('group_code')
-        
+
         try:
             group = Group.objects.get(code=group_code)
             group.delete()
             return Response(status=status.HTTP_200_OK)
         except Group.DoesNotExist:
-            return Response({"error": "Group with code {} does not exist.".format(group_code)}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "Group with code {} does not exist.".format(group_code)},
+                            status=status.HTTP_404_NOT_FOUND)
+
 
 class GroupRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+
+    def retrieve(self, request, *args, **kwargs):
+        group: Group = self.get_object()
+        serializer = GroupSerializerListView(group)
+        students = group.students.all()
+        instructor = group.instructor
+        students_serializer = StudentSerializer(students, many=True)
+        instructor_serializer = InstructorSerializer(instructor)
+        data = [serializer.data, students_serializer.data, instructor_serializer.data]
+        return Response(data, status=status.HTTP_200_OK)
 
     def perform_update(self, serializer):
         # Set the updated_at field to the current datetime
@@ -96,6 +118,7 @@ class GroupRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     def get_serializer(self, *args, **kwargs):
         kwargs['partial'] = True  # Allow partial updates
         return super().get_serializer(*args, **kwargs)
+
 
 class UnassignStudentFromGroup(generics.DestroyAPIView):
     permission_classes = [IsInstructor, IsGroupOwner]
@@ -109,12 +132,11 @@ class UnassignStudentFromGroup(generics.DestroyAPIView):
         # Get the student ID from the request data
         student_email = request.data.get('student_email')
 
-
         group = get_object_or_404(Group, code=group_code)
 
-         # Check if the student is assigned to the group
+        # Check if the student is assigned to the group
         try:
-            membership = Membership.objects.get(group=group,  student__user__email=student_email)
+            membership = Membership.objects.get(group=group, student__user__email=student_email)
         except Membership.DoesNotExist:
             return Response({"error": "The student is not assigned to this group."}, status=status.HTTP_400_BAD_REQUEST)
 

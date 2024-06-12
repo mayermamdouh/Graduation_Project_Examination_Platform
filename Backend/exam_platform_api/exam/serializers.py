@@ -1,30 +1,45 @@
+import logging
+
 from rest_framework import serializers
-from .models import Exam, ExamResults, Question, Choice
+from .models import Exam, ExamResults, MCQQuestion, FillGapsQuestion, FreeTextQuestion, TrueFalseQuestion
 from instructor.models import Instructor
 from student.models import Student
 from group.models import Group
 from instructor.serializers import InstructorSerializer
 from student.serializers import StudentSerializer
 from group.serializers import GroupSerializer
+from .models import MCQQuestion, TrueFalseQuestion, FillGapsQuestion, FreeTextQuestion
 
 
-class ChoiceSerializer(serializers.ModelSerializer):
+class MCQQuestionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Choice
-        fields = ['choice_text', 'is_correct']
+        model = MCQQuestion
+        fields = '__all__'
 
-class QuestionSerializer(serializers.ModelSerializer):
-    choices = ChoiceSerializer(many=True, required=False)
 
+class FillGapsQuestionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Question
-        fields = ['question_text', 'question_type', 'correct_answer', 'choices']
+        model = FillGapsQuestion
+        fields = '__all__'
+
+
+class FreeTextQuestionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FreeTextQuestion
+        fields = '__all__'
+
+
+class TrueFalseQuestionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TrueFalseQuestion
+        fields = '__all__'
+
 
 class ExamSerializer(serializers.ModelSerializer):
-    questions = QuestionSerializer(many=True, required=False)
     instructor = InstructorSerializer(required=False)
     student = StudentSerializer(many=True, required=False)
     group = GroupSerializer(many=True, required=False)
+    questions = serializers.JSONField(required=False)
 
     class Meta:
         model = Exam
@@ -37,15 +52,41 @@ class ExamSerializer(serializers.ModelSerializer):
         validated_data['instructor'] = instructor
         exam = Exam.objects.create(**validated_data)
         for question_data in questions_data:
-            choices_data = question_data.pop('choices', [])
-            question = Question.objects.create(exam=exam, **question_data)
-            for choice_data in choices_data:
-                Choice.objects.create(question=question, **choice_data)
+            question_type = question_data.pop('question_type')
+            if question_type == "mcq":
+                MCQQuestion.objects.create(exam=exam, **question_data)
+            elif question_type == "fill_gaps":
+                FillGapsQuestion.objects.create(exam=exam, **question_data)
+            elif question_type == "free_text":
+                FreeTextQuestion.objects.create(exam=exam, **question_data)
+            elif question_type == "true_false":
+                TrueFalseQuestion.objects.create(exam=exam, **question_data)
+            else:
+                print("error no exam question is created!!")
         return exam
+
+    def to_representation(self, instance: Exam):
+        data = super().to_representation(instance)
+
+        mcqquestions = MCQQuestion.objects.filter(exam=instance)
+        data['mcqquestions'] = MCQQuestionSerializer(mcqquestions, many=True).data
+
+        fillgapsquestions = FillGapsQuestion.objects.filter(exam=instance)
+        data['fillgapsquestions'] = FillGapsQuestionSerializer(fillgapsquestions, many=True).data
+
+        freetextquestions = FreeTextQuestion.objects.filter(exam=instance)
+        data['freetextquestions'] = FreeTextQuestionSerializer(freetextquestions, many=True).data
+
+        truefalsequestions = TrueFalseQuestion.objects.filter(exam=instance)
+        data['truefalsequestions'] = TrueFalseQuestionSerializer(truefalsequestions, many=True).data
+
+        return data
+
 
 class ExamResultsSerializer(serializers.ModelSerializer):
     exam = ExamSerializer()
     student = StudentSerializer()
+
     class Meta:
         model = ExamResults
         fields = '__all__'

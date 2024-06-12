@@ -4,5 +4,5 @@ from . import views
 
 urlpatterns = [
     path("", views.ExamListCreateAPIView.as_view()),
-    #path("/<int:pk>/", ),
+    path("<int:pk>/", views.ExamRetrieveUpdateDestroyView.as_view())
 ]

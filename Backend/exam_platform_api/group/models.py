@@ -21,6 +21,7 @@ class Group(models.Model):
         # Call the superclass's delete method to delete the group
         super().delete(*args, **kwargs)
 
+
 class Membership(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     group = models.ForeignKey(Group, on_delete=models.CASCADE)

@@ -4,18 +4,21 @@ from django.contrib.auth.models import User
 from instructor.models import Instructor
 import uuid
 
+
 class MembershipSerializer(serializers.ModelSerializer):
     student_name = serializers.CharField(source='student.user.get_full_name', read_only=True)
     group_name = serializers.CharField(source='group.name', read_only=True)
+
     class Meta:
         model = Membership
-        fields = ["student_name","group_name","joined_date"]
+        fields = ["student_name", "group_name", "joined_date"]
+
 
 class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
         fields = ["id", "name", "description", "code"]
-    
+
     def create(self, validated_data):
         user: User = self.context['request'].user
         instructor: Instructor = user.instructor
@@ -24,6 +27,7 @@ class GroupSerializer(serializers.ModelSerializer):
         group = Group.objects.create(**validated_data)
         return group
 
+
 class GroupSerializerListView(serializers.ModelSerializer):
     class Meta:
         model = Group
@@ -31,7 +35,7 @@ class GroupSerializerListView(serializers.ModelSerializer):
 
 
 class StudentGroupSerializerListView(serializers.ModelSerializer):
-    membership = MembershipSerializer()
+
     class Meta:
         model = Group
-        fields = ["name", "description", "membership"]
+        fields = ["name", "description"]
