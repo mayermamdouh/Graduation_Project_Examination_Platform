@@ -27,3 +27,7 @@ class StudentExamSerializer(serializers.ModelSerializer):
 
 class StudentJoinGroupSerializer(serializers.Serializer):
     group_code = serializers.UUIDField()
+
+
+class StudentExamSubmissionSerializer(serializers.Serializer):
+    questions = serializers.JSONField()

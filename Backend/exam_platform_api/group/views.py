@@ -2,6 +2,9 @@ from django.shortcuts import get_object_or_404
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.generics import CreateAPIView, ListAPIView
+
+from exam.models import Exam
+from exam.serializers import SimpleExamSerializer
 from .permissions import IsGroupOwner
 from student.models import Student
 from authentication.permissions import IsInstructor, IsStudent
@@ -75,7 +78,9 @@ class GroupRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
         instructor = group.instructor
         students_serializer = StudentSerializer(students, many=True)
         instructor_serializer = InstructorSerializer(instructor)
-        data = [{"Group data": serializer.data}, {"Students": students_serializer.data}, {"Instructors": instructor_serializer.data}]
+        exams = Exam.objects.filter(group=group)
+        exam_serializer = SimpleExamSerializer(exams, many=True)
+        data = [{"Group data": serializer.data}, {"Students": students_serializer.data}, {"Instructors": instructor_serializer.data}, {"Exams": exam_serializer.data}]
         return Response(data, status=status.HTTP_200_OK)
 
     def perform_update(self, serializer):

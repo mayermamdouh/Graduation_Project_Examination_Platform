@@ -1,3 +1,4 @@
+from django.contrib.auth.hashers import make_password, check_password
 from django.db import models
 from instructor.models import Instructor
 from student.models import Student
@@ -16,10 +17,27 @@ class Exam(models.Model):
     started = models.BooleanField(default=False)
     finished = models.BooleanField(default=False)
     max_marks = models.IntegerField(default=100)
-    graded = models.BooleanField(default=False)
+    password = models.CharField(max_length=1024, null=True, blank=True)
+
+    def set_password(self, raw_password):
+        if raw_password:
+            passw = make_password(raw_password)
+            self.password = passw
+        else:
+            self.password = None
+        try:
+            self.save()
+        except Exception as e:
+            print(f"Error saving password: {e}")
+
+    def check_password(self, raw_password) -> bool:
+        if self.password is None:
+            # No password set, automatically return True
+            return True
+        return check_password(raw_password, self.password)
 
 
-class ExamResults(models.Model):
+class ExamResult(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
     marks = models.DecimalField(max_digits=5, decimal_places=2)
@@ -60,3 +78,27 @@ class TrueFalseQuestion(models.Model):
     question = models.CharField(max_length=200)
     points = models.DecimalField(max_digits=4, decimal_places=2)
     correct_answer = models.BooleanField()
+
+
+class MCQQuestionSubmission(models.Model):
+    question = models.ForeignKey(MCQQuestion, on_delete=models.CASCADE)
+    answer = models.JSONField()
+    points = models.DecimalField(max_digits=4, decimal_places=2, default=0.0)
+
+
+class FillGapsQuestionSubmission(models.Model):
+    question = models.ForeignKey(FillGapsQuestion, on_delete=models.CASCADE)
+    answer = models.JSONField()
+    points = models.DecimalField(max_digits=4, decimal_places=2, default=0.0)
+
+
+class FreeTextQuestionSubmission(models.Model):
+    question = models.ForeignKey(FreeTextQuestion, on_delete=models.CASCADE)
+    answer = models.JSONField()
+    points = models.DecimalField(max_digits=4, decimal_places=2, default=0.0)
+
+
+class TrueFalseQuestionSubmission(models.Model):
+    question = models.ForeignKey(TrueFalseQuestion, on_delete=models.CASCADE)
+    answer = models.BooleanField()
+    points = models.DecimalField(max_digits=4, decimal_places=2, default=0.0)

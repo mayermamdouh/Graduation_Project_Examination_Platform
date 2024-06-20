@@ -69,9 +69,18 @@ class ExamRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
         exam = self.get_object()
         if exam.instructor != instructor:
             return Response("Permission denied", status=status.HTTP_401_UNAUTHORIZED)
+        exam_password = request.data.pop("password", None)
+
+        if exam_password is not None:
+            exam.password = exam.set_password(raw_password=exam_password)
+            exam.save()
+
         serializer = ExamSerializer(exam, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
+            exam.refresh_from_db()
+            if exam_password is not None:
+                exam.set_password(raw_password=exam_password)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
