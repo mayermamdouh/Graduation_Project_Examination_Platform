@@ -38,25 +38,25 @@ class TrueFalseQuestionSerializer(serializers.ModelSerializer):
 class McqQuestionStudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = MCQQuestion
-        fields = ['question', 'points', 'answer_options', 'exam']
+        fields = ['id', 'question', 'points', 'answer_options', 'exam']
 
 
 class FillGapsQuestionStudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = FillGapsQuestion
-        fields = ['question', 'points', 'exam']
+        fields = ['id','question', 'points', 'exam']
 
 
 class FreeTextQuestionStudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = FreeTextQuestion
-        fields = ['question', 'points', 'exam']
+        fields = ['id','question', 'points', 'exam']
 
 
 class TrueFalseQuestionStudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = TrueFalseQuestion
-        fields = ['question', 'points', 'exam']
+        fields = ['id','question', 'points', 'exam']
 
 
 class ExamSerializer(serializers.ModelSerializer):
