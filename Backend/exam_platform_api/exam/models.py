@@ -18,6 +18,7 @@ class Exam(models.Model):
     finished = models.BooleanField(default=False)
     max_marks = models.IntegerField(default=100)
     password = models.CharField(max_length=1024, null=True, blank=True)
+    review = models.BooleanField(default=False)
 
     def set_password(self, raw_password):
         if raw_password:
@@ -37,12 +38,6 @@ class Exam(models.Model):
         return check_password(raw_password, self.password)
 
 
-class ExamResult(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
-    marks = models.DecimalField(max_digits=5, decimal_places=2)
-
-
 class ExamStatus(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
@@ -50,6 +45,18 @@ class ExamStatus(models.Model):
     finished = models.BooleanField(default=False)
     attempted_at = models.DateTimeField(null=True)
     finished_at = models.DateTimeField(null=True)
+
+
+class ExamSubmission(models.Model):
+    exam_status = models.ForeignKey(ExamStatus, on_delete=models.CASCADE)
+    new_tab = models.IntegerField(default=0)
+
+
+class CheatingCase(models.Model):
+    time_spent_cheating = models.FloatField(default=0.0)
+    time_no_person_present = models.FloatField(default=0.0)
+    image = models.ImageField()
+    submission = models.ForeignKey(ExamSubmission, related_name='cheating_cases', on_delete=models.CASCADE)
 
 
 class MCQQuestion(models.Model):

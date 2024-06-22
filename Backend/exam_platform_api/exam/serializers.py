@@ -1,7 +1,7 @@
 import logging
 
 from rest_framework import serializers
-from .models import Exam, ExamResult, MCQQuestion, FillGapsQuestion, FreeTextQuestion, TrueFalseQuestion
+from .models import Exam, MCQQuestion, FillGapsQuestion, FreeTextQuestion, TrueFalseQuestion
 from instructor.models import Instructor
 from student.models import Student
 from group.models import Group
@@ -33,6 +33,30 @@ class TrueFalseQuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = TrueFalseQuestion
         fields = '__all__'
+
+
+class McqQuestionStudentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MCQQuestion
+        fields = ['question', 'points', 'answer_options', 'exam']
+
+
+class FillGapsQuestionStudentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FillGapsQuestion
+        fields = ['question', 'points', 'exam']
+
+
+class FreeTextQuestionStudentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FreeTextQuestion
+        fields = ['question', 'points', 'exam']
+
+
+class TrueFalseQuestionStudentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TrueFalseQuestion
+        fields = ['question', 'points', 'exam']
 
 
 class ExamSerializer(serializers.ModelSerializer):
@@ -87,15 +111,6 @@ class SimpleExamSerializer(serializers.ModelSerializer):
     class Meta:
         model = Exam
         fields = ['id', 'name', 'duration_minutes']
-
-
-class ExamResultsSerializer(serializers.ModelSerializer):
-    exam = ExamSerializer()
-    student = StudentSerializer()
-
-    class Meta:
-        model = ExamResult
-        fields = '__all__'
 
 
 class ExamToGroupSerializer(serializers.Serializer):

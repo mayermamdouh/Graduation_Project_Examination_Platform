@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from exam.models import Exam
+from exam.models import Exam, CheatingCase
 from .models import Student
 from django.contrib.auth.models import User
 
@@ -31,3 +31,10 @@ class StudentJoinGroupSerializer(serializers.Serializer):
 
 class StudentExamSubmissionSerializer(serializers.Serializer):
     questions = serializers.JSONField()
+    new_tab = serializers.IntegerField(default=0)
+
+
+class CheatingCaseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CheatingCase
+        fields = '__all__'

@@ -7,14 +7,16 @@ from rest_framework.generics import ListAPIView, get_object_or_404
 from rest_framework.response import Response
 
 from authentication.permissions import IsStudent
-from exam.models import Exam, MCQQuestion, FillGapsQuestion, FreeTextQuestion, TrueFalseQuestion
+from exam.models import Exam, MCQQuestion, FillGapsQuestion, FreeTextQuestion, TrueFalseQuestion, ExamSubmission
 from exam.serializers import MCQQuestionSerializer, FillGapsQuestionSerializer, FreeTextQuestionSerializer, \
-    TrueFalseQuestionSerializer
+    TrueFalseQuestionSerializer, McqQuestionStudentSerializer, FillGapsQuestionStudentSerializer, \
+    FreeTextQuestionStudentSerializer, TrueFalseQuestionStudentSerializer
 from group.models import Membership, Group
 from group.serializers import StudentGroupSerializerListView, MembershipSerializer
 from student.permissions import IsGroupStudent
 from exam.models import ExamStatus
-from .serializers import StudentExamSerializer, StudentJoinGroupSerializer, StudentExamSubmissionSerializer
+from .serializers import StudentExamSerializer, StudentJoinGroupSerializer, StudentExamSubmissionSerializer, \
+    CheatingCaseSerializer
 from group.models import Membership
 from exam.models import MCQQuestionSubmission, FillGapsQuestionSubmission, FreeTextQuestionSubmission, \
     TrueFalseQuestionSubmission
@@ -101,20 +103,28 @@ class StudentAttemptExamCreateAPIView(generics.CreateAPIView):
             freetextquestions = FreeTextQuestion.objects.filter(exam=exam)
             truefalsequestions = TrueFalseQuestion.objects.filter(exam=exam)
 
-            exam_status = ExamStatus.objects.create(exam=exam, student=student)
-            exam_status.attempted = True
-            exam_status.attempted_at = datetime.datetime.now()
-            exam_status.finished_at = exam_status.attempted_at + datetime.timedelta(minutes=exam.duration_minutes)
-            exam_status.save()
+            if not ExamStatus.objects.filter(exam=exam, student=student).exists():
+                exam_status = ExamStatus.objects.create(exam=exam, student=student)
+                exam_status.attempted = True
+                exam_status.attempted_at = datetime.datetime.now()
+                exam_status.finished_at = exam_status.attempted_at + datetime.timedelta(minutes=exam.duration_minutes)
+                exam_status.save()
+            else:
+                print("no additional exam status is created")
 
-            mcqquestionsserializer = MCQQuestionSerializer(mcqquestions, many=True)
-            fillgapsquestionsserializer = FillGapsQuestionSerializer(fillgapsquestions, many=True)
-            freetextquestionsserializer = FreeTextQuestionSerializer(freetextquestions, many=True)
-            truefalsequestionsserializer = TrueFalseQuestionSerializer(truefalsequestions, many=True)
+            mcqquestionsserializer = McqQuestionStudentSerializer(mcqquestions, many=True)
+            fillgapsquestionsserializer = FillGapsQuestionStudentSerializer(fillgapsquestions, many=True)
+            freetextquestionsserializer = FreeTextQuestionStudentSerializer(freetextquestions, many=True)
+            truefalsequestionsserializer = TrueFalseQuestionStudentSerializer(truefalsequestions, many=True)
             examstudentserializer = StudentExamSerializer(exam)
 
-            data = [examstudentserializer.data, mcqquestionsserializer.data, fillgapsquestionsserializer.data,
-                    freetextquestionsserializer.data, truefalsequestionsserializer.data]
+            data = {
+                "exam_details": examstudentserializer.data,
+                "mcq_questions": mcqquestionsserializer.data,
+                "fill_gaps_questions": fillgapsquestionsserializer.data,
+                "free_text_questions": freetextquestionsserializer.data,
+                "true_false_questions": truefalsequestionsserializer.data
+            }
 
             return Response(data, status=status.HTTP_200_OK)
 
@@ -157,21 +167,34 @@ class StudentSubmitExamCreateAPIView(generics.CreateAPIView):
         if not exam.student.filter(id=student.id).exists():
             return Response("Error: Student does not take this exam", status=status.HTTP_400_BAD_REQUEST)
 
-        exam_status: ExamStatus = get_object_or_404(ExamStatus, exam=exam, student=student)
-        exam_status.finished = True
-        exam_status.save()
         serializer = StudentExamSubmissionSerializer(data=request.data)
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+        new_tab = serializer.data.pop('new_tab', None)
         questions = serializer.data.pop('questions', None)
+
+        exam_status: ExamStatus = ExamStatus.objects.filter(exam=exam, student=student).last()
+        if exam_status.finished:
+            return Response("You have already submitted this exam", status=status.HTTP_400_BAD_REQUEST)
+
+        if ExamSubmission.objects.filter(exam_status=exam_status, new_tab=new_tab).exists():
+            exam_submission = ExamSubmission.objects.get(exam_status=exam_status, new_tab=new_tab)
+        else:
+            exam_submission = ExamSubmission.objects.create(exam_status=exam_status, new_tab=new_tab)
+            exam_submission.refresh_from_db()
+
+        exam_status.finished = True
+        exam_status.finished_at = timezone.now()
+        exam_status.save()
+
         for question in questions:
             question_type = question.pop('question_type', None)
             if question_type == "mcq":
                 pk = question.pop('id', None)
                 answer = question.pop('answer', None)
                 question = MCQQuestion.objects.get(id=pk)
-                MCQQuestionSubmission.objects.create(question=question, answer=answer)
+                obj = MCQQuestionSubmission.objects.create(question=question, answer=answer)
 
             elif question_type == "fill_gaps":
                 pk = question.pop('id', None)
@@ -195,3 +218,39 @@ class StudentSubmitExamCreateAPIView(generics.CreateAPIView):
                 print("Invalid question type")
 
         return Response("OK", status=status.HTTP_200_OK)
+
+
+class StudentCheatingCaseCreateAPIView(generics.CreateAPIView):
+    permission_classes = [IsStudent]
+    serializer_class = CheatingCaseSerializer
+
+    def post(self, request, *args, **kwargs):
+        pk = kwargs.get('pk')
+        student = request.user.student
+
+        if not Exam.objects.filter(id=pk).exists():
+            return Response("Exam does not exist", status=status.HTTP_400_BAD_REQUEST)
+        exam = Exam.objects.get(id=pk)
+
+        if not ExamStatus.objects.filter(exam=exam, student=student).exists():
+            return Response("Student have not attempted this exam yet", status=status.HTTP_400_BAD_REQUEST)
+
+        exam_status = ExamStatus.objects.get(student=student, exam=exam)
+
+        submission = None
+        if ExamSubmission.objects.filter(exam_status=exam_status).exists():
+            submission = ExamSubmission.objects.get(exam_status=exam_status)
+        else:
+            submission = ExamSubmission.objects.create(exam_status=exam_status)
+            submission.refresh_from_db()
+
+        data = request.data.copy()
+        data['submission'] = submission.id
+
+        # Combine data and files
+        serializer = self.get_serializer(data=data)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        self.perform_create(serializer)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
