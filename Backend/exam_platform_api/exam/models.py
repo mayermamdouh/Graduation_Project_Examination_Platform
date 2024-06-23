@@ -89,23 +89,27 @@ class TrueFalseQuestion(models.Model):
 
 class MCQQuestionSubmission(models.Model):
     question = models.ForeignKey(MCQQuestion, on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
     answer = models.JSONField()
     points = models.DecimalField(max_digits=4, decimal_places=2, default=0.0)
 
 
 class FillGapsQuestionSubmission(models.Model):
     question = models.ForeignKey(FillGapsQuestion, on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
     answer = models.JSONField()
     points = models.DecimalField(max_digits=4, decimal_places=2, default=0.0)
 
 
 class FreeTextQuestionSubmission(models.Model):
     question = models.ForeignKey(FreeTextQuestion, on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
     answer = models.JSONField()
     points = models.DecimalField(max_digits=4, decimal_places=2, default=0.0)
 
 
 class TrueFalseQuestionSubmission(models.Model):
     question = models.ForeignKey(TrueFalseQuestion, on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
     answer = models.BooleanField()
     points = models.DecimalField(max_digits=4, decimal_places=2, default=0.0)

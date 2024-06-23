@@ -19,6 +19,20 @@ class StudentSerializer(serializers.ModelSerializer):
         fields = ['user', 'is_student']
 
 
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'last_login', 'date_joined']
+
+
+class StudentProfileSerializer(serializers.ModelSerializer):
+    user = UserProfileSerializer()
+
+    class Meta:
+        model = Student
+        fields = ['user', 'is_student']
+
+
 class StudentExamSerializer(serializers.ModelSerializer):
     class Meta:
         model = Exam

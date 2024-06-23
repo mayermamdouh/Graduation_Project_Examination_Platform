@@ -1,7 +1,8 @@
 import logging
 
 from rest_framework import serializers
-from .models import Exam, MCQQuestion, FillGapsQuestion, FreeTextQuestion, TrueFalseQuestion
+from .models import Exam, MCQQuestion, FillGapsQuestion, FreeTextQuestion, TrueFalseQuestion, MCQQuestionSubmission, \
+    FillGapsQuestionSubmission, FreeTextQuestionSubmission, TrueFalseQuestionSubmission, CheatingCase
 from instructor.models import Instructor
 from student.models import Student
 from group.models import Group
@@ -17,10 +18,26 @@ class MCQQuestionSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class MCQQuestionSubmissionSerializer(serializers.ModelSerializer):
+    question = MCQQuestionSerializer(read_only=True)
+
+    class Meta:
+        model = MCQQuestionSubmission
+        fields = ['question', 'answer']
+
+
 class FillGapsQuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = FillGapsQuestion
         fields = '__all__'
+
+
+class FillGapsQuestionSubmissionSerializer(serializers.ModelSerializer):
+    question = FillGapsQuestionSerializer(read_only=True)
+
+    class Meta:
+        model = FillGapsQuestionSubmission
+        fields = ['question', 'answer']
 
 
 class FreeTextQuestionSerializer(serializers.ModelSerializer):
@@ -29,10 +46,26 @@ class FreeTextQuestionSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class FreeTextQuestionSubmissionSerializer(serializers.ModelSerializer):
+    question = FreeTextQuestionSerializer(read_only=True)
+
+    class Meta:
+        model = FreeTextQuestionSubmission
+        fields = ['question', 'answer']
+
+
 class TrueFalseQuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = TrueFalseQuestion
         fields = '__all__'
+
+
+class TrueFalseQuestionSubmissionSerializer(serializers.ModelSerializer):
+    question = TrueFalseQuestionSerializer(read_only=True)
+
+    class Meta:
+        model = TrueFalseQuestionSubmission
+        fields = ['question', 'answer']
 
 
 class McqQuestionStudentSerializer(serializers.ModelSerializer):
@@ -44,19 +77,19 @@ class McqQuestionStudentSerializer(serializers.ModelSerializer):
 class FillGapsQuestionStudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = FillGapsQuestion
-        fields = ['id','question', 'points', 'exam']
+        fields = ['id', 'question', 'points', 'exam']
 
 
 class FreeTextQuestionStudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = FreeTextQuestion
-        fields = ['id','question', 'points', 'exam']
+        fields = ['id', 'question', 'points', 'exam']
 
 
 class TrueFalseQuestionStudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = TrueFalseQuestion
-        fields = ['id','question', 'points', 'exam']
+        fields = ['id', 'question', 'points', 'exam']
 
 
 class ExamSerializer(serializers.ModelSerializer):
@@ -119,3 +152,17 @@ class ExamToGroupSerializer(serializers.Serializer):
 
 class ExamSubmissionSerializer(serializers.Serializer):
     questions = serializers.JSONField()
+
+
+class StudentGroupExamsListSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+
+class ExamStudentSubmissionSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+
+class ExamCheatingCaseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CheatingCase
+        fields = ['image', 'time_spent_cheating', 'time_no_person_present']

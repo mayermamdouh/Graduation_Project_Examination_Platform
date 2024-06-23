@@ -194,25 +194,34 @@ class StudentSubmitExamCreateAPIView(generics.CreateAPIView):
                 pk = question.pop('id', None)
                 answer = question.pop('answer', None)
                 question = MCQQuestion.objects.get(id=pk)
-                obj = MCQQuestionSubmission.objects.create(question=question, answer=answer)
+                try:
+                    # Ensure you are passing the correct instances
+                    MCQQuestionSubmission.objects.create(
+                        question=question,  # Ensure this is an MCQQuestion instance
+                        answer=answer,  # Ensure this is a valid answer (e.g., JSON serializable)
+                        student=student  # Ensure this is a Student instance
+                    )
+                except Exception as e:
+                    # Print the error message for debugging
+                    print(f"Error creating MCQQuestionSubmission: {e}")
 
             elif question_type == "fill_gaps":
                 pk = question.pop('id', None)
                 answer = question.pop('answer', None)
                 question = FillGapsQuestion.objects.get(id=pk)
-                FillGapsQuestionSubmission.objects.create(question=question, answer=answer)
+                FillGapsQuestionSubmission.objects.create(question=question, answer=answer, student=student)
 
             elif question_type == "free_text":
                 pk = question.pop('id', None)
                 answer = question.pop('answer', None)
                 question = FreeTextQuestion.objects.get(id=pk)
-                FreeTextQuestionSubmission.objects.create(question=question, answer=answer)
+                FreeTextQuestionSubmission.objects.create(question=question, answer=answer, student=student)
 
             elif question_type == "true_false":
                 pk = question.pop('id', None)
                 answer = question.pop('answer', None)
                 question = TrueFalseQuestion.objects.get(id=pk)
-                TrueFalseQuestionSubmission.objects.create(question=question, answer=answer)
+                TrueFalseQuestionSubmission.objects.create(question=question, answer=answer, student=student)
 
             else:
                 print("Invalid question type")

@@ -3,8 +3,8 @@ from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.generics import CreateAPIView, ListAPIView
 
-from exam.models import Exam
-from exam.serializers import SimpleExamSerializer
+from exam.models import Exam, ExamStatus
+from exam.serializers import SimpleExamSerializer, StudentGroupExamsListSerializer
 from .permissions import IsGroupOwner
 from student.models import Student
 from authentication.permissions import IsInstructor, IsStudent
@@ -12,7 +12,7 @@ from .models import Group, Membership
 from .serializers import GroupSerializer, GroupSerializerListView, MembershipSerializer, StudentGroupSerializerListView
 from django.contrib.auth.models import User
 from django.utils import timezone
-from student.serializers import StudentSerializer
+from student.serializers import StudentSerializer, StudentProfileSerializer
 from instructor.serializers import InstructorSerializer
 
 
@@ -118,3 +118,44 @@ class UnassignStudentFromGroup(generics.DestroyAPIView):
         membership.delete()
 
         return Response({"message": "Student unassigned from group successfully."}, status=status.HTTP_200_OK)
+
+
+class StudentExamsGroupListAPIView(ListAPIView):
+    permission_classes = [IsInstructor]
+    serializer_class = StudentGroupExamsListSerializer
+
+    def list(self, request, *args, **kwargs):
+        instructor = request.user.instructor
+        group_id = self.kwargs.get('pk')
+        group: Group = Group.objects.get(id=group_id)
+        if not instructor == group.instructor:
+            return Response("You are not the group instructor", status=status.HTTP_403_FORBIDDEN)
+
+        serializer = self.get_serializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        student_email = serializer.validated_data.get('email')
+        student_user = User.objects.get(email=student_email)
+        student = student_user.student
+
+        if not group.students.filter(id=student.id).exists():
+            return Response("Student is not a part of this group", status=status.HTTP_400_BAD_REQUEST)
+
+        all_exams = Exam.objects.filter(student=student, group=group, instructor=instructor)
+
+        exams_list = []
+        for exam in all_exams:
+            if ExamStatus.objects.filter(exam=exam, student=student).exists():
+                exam_status = ExamStatus.objects.get(exam=exam, student=student)
+                if exam_status.finished:
+                    exams_list.append(exam)
+
+        exam_serializer = SimpleExamSerializer(exams_list, many=True)
+        student_profile = StudentProfileSerializer(student, many=False)
+        data = {
+            'Student': student_profile.data,
+            'Exams': exam_serializer.data
+        }
+
+        return Response(data, status=status.HTTP_200_OK)
