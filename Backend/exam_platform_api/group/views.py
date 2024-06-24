@@ -120,11 +120,11 @@ class UnassignStudentFromGroup(generics.DestroyAPIView):
         return Response({"message": "Student unassigned from group successfully."}, status=status.HTTP_200_OK)
 
 
-class StudentExamsGroupListAPIView(ListAPIView):
+class StudentExamsGroupCreateAPIView(CreateAPIView):
     permission_classes = [IsInstructor]
     serializer_class = StudentGroupExamsListSerializer
 
-    def list(self, request, *args, **kwargs):
+    def create(self, request, *args, **kwargs):
         instructor = request.user.instructor
         group_id = self.kwargs.get('pk')
         group: Group = Group.objects.get(id=group_id)

@@ -36,7 +36,7 @@ class StudentProfileSerializer(serializers.ModelSerializer):
 class StudentExamSerializer(serializers.ModelSerializer):
     class Meta:
         model = Exam
-        fields = ['id', 'name', 'duration_minutes']
+        fields = ['id', 'name', 'duration_minutes', 'review', 'starting_date', 'finishing_date']
 
 
 class StudentJoinGroupSerializer(serializers.Serializer):

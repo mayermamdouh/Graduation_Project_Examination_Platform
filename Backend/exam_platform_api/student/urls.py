@@ -9,5 +9,9 @@ urlpatterns = [
     path("exam/<int:pk>/", views.StudentAttemptExamCreateAPIView.as_view()),
     path("exam/<int:pk>/submit/", views.StudentSubmitExamCreateAPIView.as_view()),
     path("group/join/", views.StudentJoinGroupCreateAPIView.as_view()),
-    path("exam/<int:pk>/cheating-case/", views.StudentCheatingCaseCreateAPIView.as_view())
-] + static(settings.STATIC_URL, document_root=settings.MEDIA_ROOT)
+    path("exam/<int:pk>/cheating-case/", views.StudentCheatingCaseCreateAPIView.as_view()),
+    path("exam/<int:pk>/review/", views.StudentExamReviewListAPIView.as_view())
+]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+

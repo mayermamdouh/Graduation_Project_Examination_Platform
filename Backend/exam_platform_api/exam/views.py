@@ -10,7 +10,8 @@ from student.serializers import StudentProfileSerializer
 from .serializers import ExamSerializer, TrueFalseQuestionSerializer, FreeTextQuestionSerializer, \
     FillGapsQuestionSerializer, MCQQuestionSerializer, ExamToGroupSerializer, StudentGroupExamsListSerializer, \
     SimpleExamSerializer, ExamStudentSubmissionSerializer, ExamCheatingCaseSerializer, MCQQuestionSubmissionSerializer, \
-    FillGapsQuestionSubmissionSerializer, FreeTextQuestionSubmissionSerializer, TrueFalseQuestionSubmissionSerializer
+    FillGapsQuestionSubmissionSerializer, FreeTextQuestionSubmissionSerializer, TrueFalseQuestionSubmissionSerializer, \
+    ExamStudentSubmissionCorrectSerializer, SimpleQuestionSerializer
 from .models import Exam, ExamStatus, MCQQuestion, FillGapsQuestion, FreeTextQuestion, TrueFalseQuestion, \
     MCQQuestionSubmission, FillGapsQuestionSubmission, FreeTextQuestionSubmission, TrueFalseQuestionSubmission, \
     ExamSubmission
@@ -124,10 +125,11 @@ class AssignExamToGroupCreateAPIView(generics.CreateAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class ExamStudentSubmissionListAPIView(ListAPIView):
+class ExamStudentSubmissionCreateAPIView(generics.CreateAPIView):
     permission_classes = [IsInstructor]
     serializer_class = ExamStudentSubmissionSerializer
-    def list(self, request, *args, **kwargs):
+
+    def create(self, request, *args, **kwargs):
         exam_id = kwargs.get('pk')
         if not Exam.objects.filter(id=exam_id).exists():
             return Response("Exam not found", status=status.HTTP_404_NOT_FOUND)
@@ -148,15 +150,18 @@ class ExamStudentSubmissionListAPIView(ListAPIView):
                 break
 
         if student_exam_group is None:
-            return Response("Student is not a part of any of this exam groups, No submission is available", status=status.HTTP_400_BAD_REQUEST)
+            return Response("Student is not a part of any of this exam groups, No submission is available",
+                            status=status.HTTP_400_BAD_REQUEST)
 
         if not ExamStatus.objects.filter(student=student, exam=exam).exists():
-            return Response("Student has not taken this exam yet, no submission is available", status=status.HTTP_400_BAD_REQUEST)
+            return Response("Student has not taken this exam yet, no submission is available",
+                            status=status.HTTP_400_BAD_REQUEST)
 
         exam_status = ExamStatus.objects.get(student=student, exam=exam)
 
         if not exam_status.finished:
-            return Response("student has not yet finished his attempt, no submission is available", status=status.HTTP_400_BAD_REQUEST)
+            return Response("student has not yet finished his attempt, no submission is available",
+                            status=status.HTTP_400_BAD_REQUEST)
 
         exam_mcq_questions = MCQQuestion.objects.filter(exam_id=exam.id)
         exam_fillgaps_questions = FillGapsQuestion.objects.filter(exam_id=exam.id)
@@ -190,11 +195,14 @@ class ExamStudentSubmissionListAPIView(ListAPIView):
 
         mcq_question_serializer = MCQQuestionSubmissionSerializer(many=True, instance=student_mcq_answers)
 
-        fillgaps_question_serializer = FillGapsQuestionSubmissionSerializer(many=True, instance=student_fillgaps_answers)
+        fillgaps_question_serializer = FillGapsQuestionSubmissionSerializer(many=True,
+                                                                            instance=student_fillgaps_answers)
 
-        freetext_question_serializer = FreeTextQuestionSubmissionSerializer(many=True, instance=student_freetext_answers)
+        freetext_question_serializer = FreeTextQuestionSubmissionSerializer(many=True,
+                                                                            instance=student_freetext_answers)
 
-        truefalse_question_serializer = TrueFalseQuestionSubmissionSerializer(many=True, instance=student_truefalse_answers)
+        truefalse_question_serializer = TrueFalseQuestionSubmissionSerializer(many=True,
+                                                                              instance=student_truefalse_answers)
 
         data = {
             "MCQ Questions": mcq_question_serializer.data,
@@ -205,3 +213,86 @@ class ExamStudentSubmissionListAPIView(ListAPIView):
         }
 
         return Response(data=data, status=status.HTTP_200_OK)
+
+
+class ExamStudentSubmissionCorrectCreateAPIView(generics.CreateAPIView):
+    permission_classes = [IsInstructor]
+
+    def create(self, request, *args, **kwargs):
+        exam_id = kwargs.get('pk')
+        if not Exam.objects.filter(id=exam_id).exists():
+            return Response("Exam not found", status=status.HTTP_404_NOT_FOUND)
+
+        serializer = ExamStudentSubmissionCorrectSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        student_email = serializer.validated_data.get('email')
+        student_user = User.objects.get(email=student_email)
+        student = student_user.student
+
+        exam = Exam.objects.get(id=exam_id)
+        student_exam_group = None
+
+        for group in exam.group.all():
+            if group.students.filter(id=student.id).exists():
+                student_exam_group = group
+                break
+
+        if student_exam_group is None:
+            return Response("Student is not a part of any of this exam groups, No submission is available",
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        instructor = request.user.instructor
+        if not instructor == student_exam_group.instructor:
+            return Response("You are not the group instructor", status=status.HTTP_403_FORBIDDEN)
+
+        if not ExamStatus.objects.filter(student=student, exam=exam).exists():
+            return Response("Student has not taken this exam yet, no submission is available",
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        exam_status = ExamStatus.objects.get(student=student, exam=exam)
+
+        if not exam_status.finished:
+            return Response("student has not yet finished his attempt, no submission is available",
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        mcq_questions = serializer.validated_data.get('mcq_questions')
+        fillgaps_questions = serializer.validated_data.get('fillgaps_questions')
+        freetext_questions = serializer.validated_data.get('freetext_questions')
+        truefalse_questions = serializer.validated_data.get('truefalse_questions')
+
+        mcq_questions_data = SimpleQuestionSerializer(mcq_questions, many=True).data
+        fillgaps_questions_data = SimpleQuestionSerializer(fillgaps_questions, many=True).data
+        freetext_questions_data = SimpleQuestionSerializer(freetext_questions, many=True).data
+        truefalse_questions_data = SimpleQuestionSerializer(truefalse_questions, many=True).data
+
+        for question in mcq_questions_data:
+            question_id = question.get('id', None)
+            grade = question.get('grade')
+            question_submission = MCQQuestionSubmission.objects.get(question_id=question_id, student=student)
+            question_submission.points = grade
+            question_submission.save()
+
+        for question in fillgaps_questions_data:
+            question_id = question.get('id', None)
+            grade = question.get('grade')
+            question_submission = FillGapsQuestionSubmission.objects.get(question_id=question_id, student=student)
+            question_submission.points = grade
+            question_submission.save()
+
+        for question in freetext_questions_data:
+            question_id = question.get('id', None)
+            grade = question.get('grade')
+            question_submission = FreeTextQuestionSubmission.objects.get(question_id=question_id, student=student)
+            question_submission.points = grade
+            question_submission.save()
+
+        for question in truefalse_questions_data:
+            question_id = question.get('id', None)
+            grade = question.get('grade')
+            question_submission = TrueFalseQuestionSubmission.objects.get(question_id=question_id, student=student)
+            question_submission.points = grade
+            question_submission.save()
+
+        return Response("Corrected successfully", status=status.HTTP_200_OK)
