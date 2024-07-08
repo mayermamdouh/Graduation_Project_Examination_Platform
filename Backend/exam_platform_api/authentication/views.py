@@ -14,6 +14,9 @@ from instructor.models import Instructor
 from django.contrib.auth.models import User
 from .serializers import LoginFormSerializer
 
+from student.serializers import StudentSerializer
+from instructor.serializers import InstructorSerializer
+
 
 @api_view(['POST'])
 def user_signup(request: HttpRequest):
@@ -26,19 +29,29 @@ def user_signup(request: HttpRequest):
         serializer = None
         if user is not None:
             print("attempting to log in..")
-            login(request, user)
             print("logged in!")
             print(form.cleaned_data["type"])
             if form.cleaned_data["type"] == "student":
                 Student.objects.create(user=user, is_student=True)
-                serializer = StudentUserSerializer(user)
+                serializer = StudentSerializer(user.student)
             elif form.cleaned_data["type"] == "instructor":
                 Instructor.objects.create(user=user, is_instructor=True)
-                serializer = InstructorUserSerializer(user)
+                serializer = InstructorSerializer(user.instructor)
         else:
             return Response({"Error:" "User is not found and couldn't authenticate for some reason"})
 
-        return Response(serializer.data, status=HTTP_201_CREATED)
+        refresh = RefreshToken.for_user(user)
+        access_token = str(refresh.access_token)
+        refresh_token = str(refresh)
+        print(refresh)
+
+        response_data = {
+            'data': serializer.data,
+            'access_token': access_token,
+            'refresh_token': refresh_token
+        }
+
+        return Response(response_data, status=HTTP_201_CREATED)
     else:
         return Response(form.errors)
 
