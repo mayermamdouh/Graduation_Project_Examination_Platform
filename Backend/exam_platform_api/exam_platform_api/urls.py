@@ -21,6 +21,7 @@ from django.urls import include, path
 from exam_platform_api import settings
 
 urlpatterns = [
+    path('', include('core.urls')),
     path('admin/', admin.site.urls),
     path('student/', include("student.urls")),
     path('instructor/', include("instructor.urls")),
