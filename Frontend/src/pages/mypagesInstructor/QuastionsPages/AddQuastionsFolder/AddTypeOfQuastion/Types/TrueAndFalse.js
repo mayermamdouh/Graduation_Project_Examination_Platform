@@ -4,13 +4,11 @@ import Arrow_Right from "../../../../../../Assets/Arrow_Right.svg";
 import True_False_Icon from "../../../../../../Assets/True_False_Icon.png";
 import questionMark from "../../../../../../Assets/questionMark.png";
 import Editor from "../../../../component/TextAreaComponent/Editor";
-import {  useState } from "react";
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { StepIndicator } from "../../../../component/file";
 
 function TrueAndFalse() {
-
-
   const { search } = useLocation();
   const params = new URLSearchParams(search);
   const index = params.get("index");
@@ -23,13 +21,10 @@ function TrueAndFalse() {
     selectedItem ? selectedItem.question : ""
   );
   const [selectedAnswerValue, setSelectedAnswerVlaue] = useState(
-    selectedItem ? selectedItem.selectedAnswer : ""
+    selectedItem ? selectedItem.correct_answers : ""
   );
   const [PointsValue, setPointsValue] = useState(
-    selectedItem ? selectedItem.pointsValue : ""
-  );
-  const [RandomizeValue, setRandomizeValue] = useState(
-    selectedItem ? selectedItem.randomizeValue : ""
+    selectedItem ? selectedItem.points : ""
   );
  
 
@@ -47,23 +42,15 @@ function TrueAndFalse() {
       return;
     }
 
-    const allAnswerOptions = [];
-    const inputValuee = document.getElementsByClassName("GetValue");
-    for (let i = 0; i < inputValuee.length; i++) {
-      const element = inputValuee[i];
-      const inputValue = element.value.trim();
-      if (inputValue !== "") {
-        allAnswerOptions.push(inputValue);
-      }
-    }
+    
+
 
     const response = {
-      type: "True False",
-      question: textArea1Value,
-      selectedAnswer: selectedAnswerValue,
-      pointsValue: PointsValue,
-      randomizeValue: RandomizeValue,
-      answerOptions: allAnswerOptions,
+      question_type: "True False",
+      question: textArea1Value.replace(/<[^>]+>/g, ""),
+      correct_answers: selectedAnswerValue,
+      points: PointsValue,
+     
     };
 
     let updatedResponses = [...storedResponses];
@@ -93,20 +80,20 @@ function TrueAndFalse() {
     setPointsValue(e.target.value);
   };
 
-  const handleRandomizeChange = (e) => {
-    setRandomizeValue(e.target.value);
-  };
+  // const handleRandomizeChange = (e) => {
+  //   setRandomizeValue(e.target.value);
+  // };
 
-   const handleEditorChange = (value) => {
-     setTextArea1Value(value);
-   };
+  const handleEditorChange = (value) => {
+    setTextArea1Value(value);
+  };
 
   return (
     <>
       <section className="MainSectionMultiple">
         <div className="MainDivMultiple">
           <div className="Row1">
-            <Link to="/Home/ExamName/AddQuaType" className="DivNextButton">
+            <Link to="/ExamName/AddQuaType" className="DivNextButton">
               <img className="ArrowClass BackArrow" src={Arrow_Right} alt="" />
               <div className="NextButtonBack">Back</div>
             </Link>
@@ -209,15 +196,15 @@ function TrueAndFalse() {
                       />
                     </div>
                     <div className="RadomizeSection">
-                      <div className="pointsText">
+                      {/* <div className="pointsText">
                         Randomize Answers{" "}
                         <img
                           className="questionMarkIcon"
                           src={questionMark}
                           alt=""
                         ></img>
-                      </div>
-                      <div className="RadmizeInput">
+                      </div> */}
+                      {/* <div className="RadmizeInput">
                         <label>
                           <div>
                             <div className="MainDivLabel">
@@ -246,7 +233,7 @@ function TrueAndFalse() {
                             <span className="textRadioRadomize">no</span>
                           </div>
                         </label>
-                      </div>
+                      </div> */}
                     </div>
                     <div className="classRadomize"></div>
                   </div>
@@ -256,7 +243,7 @@ function TrueAndFalse() {
           </div>
           <div className="MainDivButton">
             <Link
-              to="/Home/ExamName/AddQuaType/ExamQuations"
+              to="/ExamName/AddQuaType/ExamQuations"
               className="ButtonAddNewQuastion"
               onClick={saveResponse}
             >

@@ -2,9 +2,9 @@
   margin: 0;
   padding: 0;
   overflow: auto;
-  height: 100%;
-  width: 100%;
-  background: #1e1e1e no-repeat;
+  background: #060606 no-repeat;
+  width: 100vw;
+  height: 100vh;
 }
 
 .containerLogin {
@@ -12,15 +12,17 @@
   display: flex;
   flex-direction: column;
   margin: auto;
-  margin-top: 10%;
+  /* margin-top: 10%; */
   background-color: #fff;
   padding-bottom: 30px;
-  min-width: 300px;
+  min-width: 350px;
   max-width: 600px;
   border-radius: 10px;
   margin-bottom: 70px;
 }
-
+.notunsderline{
+  text-decoration: none;
+}
 .Header {
   display: flex;
   flex-direction: column;
@@ -62,25 +64,26 @@
 
 .inputLogin img {
   margin: 0 30px;
+  width: 25px;
+  height: 25px;
 }
 
 .inputLogin input {
   height: 20px;
   width: 400px;
-  margin-right: 20px;
+ 
   background: transparent;
   border: none;
   outline: none;
   font-size: 17px;
   color: #797979;
-  flex: 1;
+
 }
 
 .eyes {
-  color: #8351ba;
-  width: 25px;
-  height: 25px;
   margin-left: auto;
+  width: 20px;
+  height: 25px;
   cursor: pointer;
 }
 
@@ -123,10 +126,15 @@
 }
 
 .LinkLogin {
-  text-decoration: underline;
+  text-decoration: none;
   color: #8351ba;
   cursor: pointer;
   font-weight: 700;
+  padding-bottom: 1px;
+}
+
+.LinkLogin:hover{
+  border-bottom: 1.5px solid #8351ba;
 }
 
 .gray {
@@ -216,10 +224,10 @@
 
 @media (max-width: 600px) {
   .containerLogin {
-    margin-top: 5%;
+    /* margin-top: 5%; */
     margin-left: 5%;
     margin-right: 5%;
-    min-width: 300px;
+    min-width: 350px;
     /* Set a minimum width of 300 pixels */
     max-width: none;
 
@@ -243,3 +251,17 @@
     /* Add some spacing between the buttons */
   }
 }
+.pooostionDiv {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 100px;
+}
+.postionmessage{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+

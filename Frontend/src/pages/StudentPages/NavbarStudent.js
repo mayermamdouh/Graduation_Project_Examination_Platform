@@ -3,6 +3,7 @@ import PhotoUser from "../../Assets/photoUser.png";
 import logo from "../../Assets/logo.png";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 function NavBarStudent() {
      const [isUserDropdownOpen, setUserDropdownOpen] = useState(false);
@@ -10,6 +11,29 @@ function NavBarStudent() {
      const handleToggleUserDropdown = () => {
        setUserDropdownOpen(!isUserDropdownOpen);
      };
+
+
+  const handleSignOut = async (e) => {
+    try {
+      const response = await axios.post(
+        `http://127.0.0.1:8000/auth/signout/`,
+        {}
+        // { headers: getAuthHeaders() }
+      );
+
+      if (response.status === 200 || response.status === 201) {
+        console.log("Sign out successful:", response.data);
+        localStorage.clear();
+
+        window.location.href = "/userType";
+        window.history.pushState(null, "", window.location.href);
+      } else {
+        console.error("Failed to sign out");
+      }
+    } catch (error) {
+      console.error("Error during sign out:", error.message);
+    }
+  };
   return (
     <>
       <header className="containerAppBar">
@@ -34,9 +58,9 @@ function NavBarStudent() {
               Settings
             </Link>
             <div className="lineNavBar"></div>
-            <Link className="LinksuserDropdown" to="/logout">
+            <div className="LinksuserDropdown" onClick={handleSignOut}>
               Logout
-            </Link>
+            </div>
           </div>
         </div>
       </header>

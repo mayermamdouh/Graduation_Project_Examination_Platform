@@ -2,35 +2,34 @@
 
 .sectionExamDetails {
     background-color: #1e1e1e;
-    width: 100vw;
+    width: auto;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
     overflow: auto;
     padding: 10px;
-
 }
 
 /* Main style */
 
-
-
-.MainPageExamDetails {
-    margin: 100px 0%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-
-}
-
 .MainDivOfPageExamDetails {
     display: flex;
-    align-items: flex-start;
     flex-direction: column;
+    margin: 100px auto;
+    width: clamp(300px, 85vw, 90%);
+}
 
+.MainPageExamDetails {
 
+    background-color: #1e1e1e;
+    width: auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    overflow: auto;
+    padding: 10px;
 }
 
 .stepHome {
@@ -42,9 +41,13 @@
     margin-bottom: 50px;
 }
 
-
 .MainDivAllExamsDetalis {
-    width: clamp(460px, 80vw, 1000px);
+
+
+    display: flex;
+    flex-direction: column;
+    /* margin: 10px auto; */
+    width: clamp(300px, 90vw, 100%);
     background-color: whitesmoke;
     border-radius: 10px;
     padding: 10px;
@@ -57,20 +60,21 @@
     font-family: "Inter-Bold", Helvetica;
     font-size: 18px;
     font-weight: 700;
-    margin: 10px;
+    width: 90%;
+    gap: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
-.marginDetalies {
+/* .marginDetalies {
     margin-bottom: 6px;
-}
+} */
 
 .lineSepreteDetails {
     width: 100%;
     height: 1.5px;
-    margin-top: 10px;
-    margin-bottom: 20px;
-    background-color: #1e1e1e;
-    background-color: gray;
+    background-color: rgb(185, 185, 185);
 }
 
 .hightAssigendUser {
@@ -79,6 +83,7 @@
 
 .AddmarginBotton {
     margin-bottom: 70px;
+
 }
 
 .RowExamDetails {
@@ -95,13 +100,14 @@
 
 .RowTwo {
     margin-top: 30px;
-    gap: 10px;
+    gap: 5px;
     align-items: center;
 }
 
 .NumberOfQuastion {
     user-select: none;
-    color: rgb(118, 118, 118);
+    color: rgb(159, 159, 159);
+    margin-left: auto;
 }
 
 .AssignColor {
@@ -117,13 +123,9 @@
     border: none;
 }
 
-.PreviweColor {
-    margin-left: auto;
-    background-color: transparent;
-    color: #1e1e1e;
-}
 
-.PreviweColor:hover,
+
+
 .EditButtonDetails:hover {
     background-color: #5f51a9;
     color: white;
@@ -137,8 +139,8 @@
     justify-content: center;
     cursor: pointer;
     user-select: none;
-    width: 100px;
-    height: 30px;
+    width: 98px;
+    height: 28px;
     border: 1px solid #5f51a9;
     font-family: "Inter-Bold", Helvetica;
     background-color: transparent;
@@ -151,19 +153,7 @@
 
 }
 
-/* .EditButtonDetails:hover::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(60, 60, 60, 0.3);
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-} */
+
 
 .EditIcon {
     padding: 0px 4px;
@@ -182,4 +172,43 @@
 .sectionExamNameDetails:hover {
     background-color: rgb(214, 214, 214);
     border-radius: 5px;
+}
+
+
+
+.loader {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #5f51a9;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 2s linear infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.numberGroup {
+    width: 25px;
+    height: 25px;
+    background-color: rgb(220, 220, 220);
+    padding: 5px;
+    border-radius: 50%;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: row;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }

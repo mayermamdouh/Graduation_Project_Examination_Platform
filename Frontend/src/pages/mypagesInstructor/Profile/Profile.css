@@ -18,6 +18,7 @@
     border-radius: 50%;
     cursor: pointer;
     border: 2px solid white;
+    /* padding: 5px; */
 }
 
 .profileImage img {
@@ -25,6 +26,7 @@
     height: 100%;
     border-radius: 50%;
     object-fit: cover;
+
 }
 
 .UserName {
@@ -34,7 +36,10 @@
     font-size: clamp(16px, 4vw, 25px);
     font-weight: 600;
     font-family: 'Inter', sans-serif;
+    color: white;
 }
+
+.paddingggg {}
 
 .profileImage:hover {
     opacity: 0.6;

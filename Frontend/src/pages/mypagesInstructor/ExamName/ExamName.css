@@ -13,6 +13,7 @@
   display: flex;
   flex-direction: column;
   margin: 100px auto;
+
 }
 
 .TextContnatSettings {
@@ -26,12 +27,9 @@
 }
 
 .ContantSettings {
-  /* padding: 10px; */
-  /* min-width: 400px; */
   display: flex;
   flex-direction: row;
   align-items: center;
-
   flex-wrap: wrap;
   gap: 5px;
 }
@@ -44,7 +42,7 @@
   align-items: center;
   font-family: "Inter-Bold", Helvetica;
   font-weight: 700;
-  width: 99%;
+  width: 100%;
 }
 
 
@@ -54,10 +52,11 @@
   font-family: "Inter-Bold", Helvetica;
   outline: none;
   border-radius: 5px;
-  width: 200px;
+  width: 150px;
   max-width: 300px;
   padding: 5px;
-  font-size: 15px;
+  font-size: 12px;
+  font-weight: bold;
   background-color: transparent;
   margin-left: 5px;
 }
@@ -69,5 +68,5 @@
 
 .paddingName {
   padding: 20px;
+  width: clamp(300px, 60vw, 1000px);
 }
-

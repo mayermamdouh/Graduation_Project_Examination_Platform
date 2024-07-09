@@ -1,5 +1,5 @@
 import "./ExamQuations.css";
-import Arrow_Right from "../../../Assets/Arrow_Right.svg";
+// import Arrow_Right from "../../../Assets/Arrow_Right.svg";
 import Arrow_Down from "../../../Assets/iconDownArrow.png";
 import deleteIcon from "../../../Assets/iconDeleteColor.svg";
 import editIcon from "../../../Assets/iconEditColor.svg";
@@ -7,15 +7,26 @@ import editIcon from "../../../Assets/iconEditColor.svg";
 // import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { StepIndicator } from "../component/file";
+
+import axios from "axios";
+import { getAuthHeaders } from "../../mypagesInstructor/component/file";
 
 function AllExamQuation() {
   //////////////////////////////////////////////////////////////////////////////////
   const [showDetailsArray, setShowDetailsArray] = useState(false);
   const [showDetails, setshowDetails] = useState(false);
-
+  const [message, setMessage] = useState("");
   ///////////////////////////////////////////////////////////////////////////////////////////
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        setMessage("");
+      }, 4000);
 
+      // Cleanup the timer if the component unmounts
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
   const [getData, setGetData] = useState([]);
 
   useEffect(() => {
@@ -43,6 +54,7 @@ function AllExamQuation() {
 
   ////////////////////////////////////////////////////
   const parsedData = JSON.parse(localStorage.getItem("userResponses"));
+
   const removeItemByIndex = (index) => {
     if (index >= 0 && index < getData.length) {
       const newData = [...getData];
@@ -68,19 +80,98 @@ function AllExamQuation() {
     setIsEditOpen(!isEditOpen);
   };
 
+  console.log("parsedData: ", parsedData);
+
+  const handleCreateExam = async () => {
+    if (parsedData.length !== 0 && parsedData[0].name) {
+      const questionTypeMap = {
+        "Multiple Choice": "mcq",
+        Essay: "free_text",
+      };
+
+      const examData = {
+        name: parsedData[0].name,
+
+        questions: parsedData[0].questions.map((q) => {
+          const questionType =
+            questionTypeMap[q.question_type] ||
+            q.question_type.toLowerCase().replace(" ", "_");
+          const baseQuestion = {
+            question_type: questionType,
+            question: q.question,
+            points: parseFloat(q.points),
+          };
+
+          switch (questionType) {
+            case "mcq":
+              return {
+                ...baseQuestion,
+                answer_options: q.answer_options,
+                correct_answers: q.correct_answers,
+              };
+            case "fill_gaps":
+              return {
+                ...baseQuestion,
+                correct_answers: q.correct_answers,
+              };
+            case "true_false":
+              return {
+                ...baseQuestion,
+                correct_answer: q.correct_answers === "True",
+              };
+            case "free_text":
+              return baseQuestion;
+            default: // For any other types, if any
+              return baseQuestion;
+          }
+        }),
+      };
+
+      // Retrieve auth tokens from localStorage
+      const authTokens = localStorage.getItem("authTokens")
+        ? JSON.parse(localStorage.getItem("authTokens"))
+        : null;
+
+      // Extract the access token
+      const accessToken = authTokens ? authTokens.access : null;
+
+      try {
+        const response = await axios.post(
+          `http://127.0.0.1:8000/exam/`,
+          examData,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+
+        if (response.status === 200 || response.status === 201) {
+          setMessage("Exam created successfully");
+          localStorage.removeItem("userResponses");
+          window.location.href = "/Exams";
+        } else {
+          console.log("Failed to create exam, status code:", response.status);
+        }
+      } catch (error) {
+        console.error("Error creating exam:", error.message);
+        if (error.response) {
+          console.error("Response data:", error.response.data);
+        }
+      }
+    } else if (parsedData.length === 0) {
+      setMessage("No questions found in the exam");
+    } else {
+      setMessage("Exam name not found!");
+    }
+  };
+
+  console.log("parsedData: ", parsedData);
+
   return (
     <>
       <div className="MainPageDisplay">
-        <div className="Row1">
-          <div className="MainDivButton"></div>
-
-          <StepIndicator />
-
-          <div className="DivNextButton">
-            <div className="NextButton">Next</div>
-            <img className="ArrowClass" src={Arrow_Right} alt=""></img>
-          </div>
-        </div>
         <div className="MainDivDisplay">
           <div className="TextContnat">All Exam questions </div>
 
@@ -95,7 +186,7 @@ function AllExamQuation() {
                     <span
                       dangerouslySetInnerHTML={{
                         __html: element.question.replace(
-                          /comp/g,
+                          /blank/g,
                           '<input type="text" class="inputFieldDisplayQuestion" placeholder="Complete" readOnly />'
                         ),
                       }}
@@ -118,16 +209,16 @@ function AllExamQuation() {
                     Answer
                   </div>
                   <Link
-                    to={`/Home/ExamName/AddQuaType/${
-                      element.type === "Multiple Choice"
+                    to={`/ExamName/AddQuaType/${
+                      element.question_type === "Multiple Choice"
                         ? "MultipleChoice"
-                        : element.type === "Fill Gaps"
+                        : element.question_type === "Fill Gaps"
                         ? "FillGabs"
-                        : element.type === "Essay"
+                        : element.question_type === "Essay"
                         ? "Essay"
-                        : element.type === "Free Text"
+                        : element.question_type === "Free Text"
                         ? "FreeText"
-                        : element.type === "True False"
+                        : element.question_type === "True False"
                         ? "Trueandfalse"
                         : ""
                     }?index=${index}`}
@@ -166,46 +257,53 @@ function AllExamQuation() {
                 >
                   <div className="charactersiticQuastion">
                     <div className="TypeOfQuestion">
-                      Question Type: {element.type}
+                      Question Type: {element.question_type}
                     </div>
-                    {element.randomizeValue && (
+
+                    {element.points && (
                       <>
                         {" "}
                         <div className="TypeOfQuestion">
-                          Randomize Answers: {element.randomizeValue}
-                        </div>
-                      </>
-                    )}
-                    {element.pointsValue && (
-                      <>
-                        {" "}
-                        <div className="TypeOfQuestion">
-                          Points: {element.pointsValue}
+                          Points: {element.points}
                         </div>
                       </>
                     )}
                   </div>
-
-                  {element.answerOptions &&
-                    element.answerOptions.length > 0 && (
-                      <ul className="answerOptional">
-                        <div className="lineSepreteExamDitalies marginRight"></div>
-                        {element.answerOptions.map((choice, choiceindex) => (
-                          <div
-                            key={choiceindex}
-                            className={`Options ${
-                              choice === element.selectedAnswer ||
-                              element.selectedAnswer?.includes(choice)
-                                ? "selected"
-                                : ""
-                            }`}
-                          >
-                            {String.fromCharCode(65 + choiceindex)}:{" "}
-                            {choice.replace(/<[^>]*>?/gm, "")}
-                          </div>
-                        ))}
-                      </ul>
-                    )}
+                  {element.answer_options &&
+                  element.answer_options.length > 0 ? (
+                    <ul className="answerOptional">
+                      <div className="lineSepreteExamDitalies marginRight"></div>
+                      {element.answer_options.map((choice, choiceindex) => (
+                        <div
+                          key={choiceindex}
+                          className={`Options ${
+                            choice === element.correct_answers ||
+                            element.correct_answers?.includes(choice)
+                              ? "selected"
+                              : ""
+                          }`}
+                        >
+                          {String.fromCharCode(65 + choiceindex)}:{" "}
+                          {choice.replace(/<[^>]*>?/gm, "")}
+                        </div>
+                      ))}
+                    </ul>
+                  ) : (
+                    <div>
+                      {Array.isArray(element?.correct_answers)
+                        ? element.correct_answers.map((ele, index) => (
+                            <div className="marginAnswer" key={index}>
+                              {" "}
+                              {`Answer ${index + 1}`}: {ele}
+                            </div>
+                          ))
+                        : element?.correct_answers && (
+                            <div className="marginAnswer">
+                              {`Answer`} : {element?.correct_answers}{" "}
+                            </div>
+                          )}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -215,15 +313,23 @@ function AllExamQuation() {
             <div className="MainDivContant">
               <div className="NumberAndQuation">No Questions added yet</div>
             </div>
-          )} 
-
-          <Link
-            to="/Home/ExamName/AddQuaType"
-            // onClick={getExamQuasions}
-            className="ButtonAddNewQuastion"
-          >
-            + Add a new quastion
-          </Link>
+          )}
+          {message ? <div className="messages">{message}</div> : ""}
+          <div className="Buttons">
+            <Link
+              to="/ExamName/AddQuaType"
+              // onClick={getExamQuasions}
+              className="ButtonsAddNewQuestionAndCreateExam marginRight"
+            >
+              + Add a new quastion
+            </Link>
+            <div
+              className="ButtonsAddNewQuestionAndCreateExam marignleft"
+              onClick={handleCreateExam}
+            >
+              Create Exam
+            </div>
+          </div>
         </div>
       </div>
     </>

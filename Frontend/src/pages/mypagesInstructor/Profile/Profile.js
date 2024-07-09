@@ -1,26 +1,18 @@
 import "./Profile.css";
-import defaultImage from "../../../Assets/iconPerson.png";
+import defaultImage from "../../../Assets/usericonn.png";
 import { useEffect, useState } from "react";
 import CloseEyesIcon from "../../../Assets/closeeyes.png";
 import OpenEyesIcon from "../../../Assets/openeyes.png";
+import axios from "axios";
+import { getAuthHeaders } from "../component/file";
+import Navbar from "../Navbar/AppBar";
 // import axios from "axios";
 function ProfilePage() {
   const [profileImage, setProfileImage] = useState("");
 
   const [getData, setGetData] = useState([]);
 
-  useEffect(() => {
-    const storedData = localStorage.getItem("userInformation");
-    if (storedData) {
-      const parsedData = JSON.parse(storedData);
 
-      setGetData(parsedData[0]);
-    } else {
-      setGetData([]);
-    }
-  }, []);
-
-  console.log(getData);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -48,12 +40,42 @@ function ProfilePage() {
       prevIcon === CloseEyesIcon ? OpenEyesIcon : CloseEyesIcon
     );
   };
-  // const handleChangeFirstName = (e) => {
-  //   setfirstName(e.target.value);
-  // };
+//  http://127.0.0.1:8000/profile/
+  const handleViewUserData = async (e) => {
+    // setShowLoader(true);
+     const authTokens = localStorage.getItem("authTokens")
+       ? JSON.parse(localStorage.getItem("authTokens"))
+       : null;
 
+     // Extract the access token
+     const accessToken = authTokens ? authTokens.access : null;
+    //  console.log("", accessToken);
+    try {
+      const response = await axios.get(`http://127.0.0.1:8000/profile/`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      if (response.status === 200 || response.status === 201) {
+        setGetData(response.data);
+      
+      } else {
+        console.error("Failed to View Group");
+      }
+    } catch (error) {
+      console.error("Error View Group:", error.message);
+    }
+  };
+
+  useEffect(() => {
+    handleViewUserData();
+  },[]);
+console.log("getData: ", getData);
   return (
     <>
+      <Navbar />
       <div className="ProfilePage">
         <label className="profileImage">
           <input
@@ -62,13 +84,15 @@ function ProfilePage() {
             style={{ display: "none" }}
             onChange={handleFileChange}
           />
-          <img className="" src={profileImage || defaultImage} alt="" />
+          <img
+            className="paddingggg"
+            src={profileImage || defaultImage}
+            alt=""
+          />
         </label>
 
         <div>
-          <div className="UserName">
-            {getData.firstName + " " + getData.lastName}
-          </div>
+          <div className="UserName">{getData.username}</div>
 
           <div className="MainDivProfile">
             <div className="MainContantProfile">
@@ -78,7 +102,7 @@ function ProfilePage() {
                   <input
                     className="inputsPRofile"
                     type="text"
-                    defaultValue={getData.firstName}
+                    defaultValue={getData.first_name}
                     onChange={(e) => {
                       setfirstName(e.target.value);
                     }}
@@ -90,7 +114,7 @@ function ProfilePage() {
                   <input
                     className="inputsPRofile"
                     type="text"
-                    defaultValue={getData.lastName}
+                    defaultValue={getData.last_name}
                     onChange={(e) => {
                       setlastName(e.target.value);
                     }}
@@ -114,7 +138,6 @@ function ProfilePage() {
                   <div className="NameOfField">Old password</div>
                   <div className="sectionPassword">
                     <input className="inputsPRofile" type={"password"} />
-                  
                   </div>
                 </div>
                 <div className="item_4">

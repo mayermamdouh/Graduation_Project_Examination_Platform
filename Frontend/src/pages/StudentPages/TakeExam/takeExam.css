@@ -1,0 +1,447 @@
+.MainDivPage {
+    background-color: #1e1e1e;
+    width: auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    overflow: auto;
+    padding: 10px;
+}
+
+.MainPageExam {
+    display: flex;
+    flex-direction: column;
+    margin: 50px auto;
+    align-items: center;
+    justify-content: center;
+    width: clamp(300px, 90vw, 95%);
+
+}
+
+.WarningStudent {
+    padding: 10px;
+    background-color: rgb(252, 75, 75);
+    border-radius: 5px;
+    margin-bottom: 20px;
+    color: white;
+    user-select: none;
+}
+
+.firstRow {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    /* justify-content: space-between; */
+    gap: 20px;
+}
+
+.Timer {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    gap: 10px;
+    font-size: 20px;
+    width: 100%;
+}
+
+.timeicon {
+    width: 40px;
+    height: 40px;
+}
+
+.boxData {
+    padding: 10px;
+    border: 1px solid #9652c3;
+    width: clamp(150px, 12vw, 20%);
+    height: 90px;
+    border-radius: 5px;
+    color: white;
+    font-size: 22px;
+
+}
+
+.marks {
+    margin-top: 5px;
+    font-size: 17px;
+    color: #b9b9b9;
+}
+
+.flagrow {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 16px;
+    cursor: pointer;
+    width: fit-content;
+    padding-bottom: 3px;
+}
+
+.flagrow:hover {
+
+    border-bottom: 1px solid #9652c3;
+}
+
+.flag {
+    margin-right: 5px;
+    width: 15px;
+    height: 15px;
+}
+
+.drawer-container {
+    position: fixed;
+    top: 0;
+    right: -350px;
+    top: 15%;
+    width: 350px;
+    height: auto;
+    background-color: #fff;
+    box-shadow: 0 0 10px #1e1e1e;
+    transition: right 0.3s ease-in-out;
+    border-radius: 10px;
+    /* overflow-y:scroll; */
+}
+
+.drawer-container.open {
+    right: 0;
+    margin-right: 5px;
+}
+
+.toggle-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 350px;
+    z-index: 999;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.arrows {
+    width: 20px;
+    height: 20px;
+}
+
+.drawer-content {
+    padding: 10px;
+
+}
+
+.Questions {
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 3px;
+}
+
+.linedrawer {
+    background-color: #ababab;
+    height: 1px;
+    width: 100%;
+}
+
+.numberOfQuestion {
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-width: 100%;
+}
+
+.questioncontent {
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    width: 20px;
+    height: 20px;
+    padding: 10px;
+    background-color: #e9e9e9;
+    border-radius: 10px;
+    border: 1px solid #cdcdcd;
+}
+
+.buttondiv {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.buttonFinishAttempt {
+    margin-top: 20px;
+    cursor: pointer;
+    background-color: #9652c3;
+    color: white;
+    outline: none;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+}
+
+
+.ButtonsBackNext {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 130px;
+
+}
+
+.buttonBack {
+    padding: 7px 40px;
+    cursor: pointer;
+    border: 1px solid white;
+    border-radius: 10px;
+    background-color: #9652c3;
+    color: white;
+
+    position: relative;
+    outline: none;
+
+
+}
+
+.buttonBack:hover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(60, 60, 60, 0.3);
+    border-radius: 5px;
+
+}
+
+.QuestionContent {
+    width: 100%;
+    margin-top: 40px;
+    padding: 10px;
+}
+
+.questionDetails {
+    width: 100%;
+}
+
+.questionContent {
+    font-size: 25px;
+    color: white;
+}
+
+.activeDrawer {
+    background-color: #9652c3;
+    color: white;
+}
+
+.activeFlag {
+    background-color: rgb(255, 56, 56);
+    color: white;
+}
+
+.answersMultiple {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin-left: 20px;
+}
+
+.answerOption {
+    width: clamp(200px, 50vw, 55%);
+    background-color: transparent;
+    color: white;
+    border: 1px solid #9652c3;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.answercontent {
+    font-size: 20px;
+    margin-left: 20px;
+    width: 100%;
+    cursor: pointer;
+}
+
+
+.checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid white;
+    border-radius: 3px;
+    position: relative;
+
+}
+
+.checkbox:checked::before {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 100%;
+    font-size: 14px;
+    line-height: 1;
+    text-align: center;
+    background-color: #9652c3;
+}
+
+
+
+
+.radio {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid white;
+    border-radius: 50%;
+
+    position: relative;
+
+}
+
+
+.radio:checked::before {
+
+    content: '';
+    width: 10px;
+    height: 10px;
+    background-color: #9652c3;
+    border-radius: 50%;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
+
+
+.FillTheGapsSection {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.inputFillGaps {
+    width: 300px;
+    background-color: transparent;
+    color: white;
+    border: 1px solid #9652c3;
+    margin-left: 20px;
+    outline: none;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.FreeTextSection {
+    margin-top: 30px;
+}
+
+.textArea {
+    margin-left: 20px;
+    margin-top: 30px;
+    width: clamp(300px, 50vw, 55%);
+}
+
+.TrueFalseSection {
+    margin-left: 20px;
+    margin-top: 30px;
+
+
+}
+
+.textalign {
+    display: flex;
+    align-items: center;
+    height: auto;
+    margin-bottom: 20px;
+    width: fit-content;
+}
+
+.valueTrueFalse {
+    cursor: pointer;
+    margin-left: 20px;
+    font-size: 20px;
+    color: white;
+}
+
+.checkboxOption,
+.radioOption {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.Answered {
+    background-color: rgb(0, 164, 0);
+    color: white;
+}
+
+.Attentioned {
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+
+
+.indexNotAnswered {
+    font-weight: bold;
+    font-size: 18px;
+
+}
+
+.questionCss {
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+    gap: 5px;
+    font-weight: bold;
+
+
+}
+
+.lineSeprate {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: #9652c3;
+    width: 100%;
+    height: 1px;
+}
+
+.containerAiModel{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+
+}
+
+.input_video{
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+

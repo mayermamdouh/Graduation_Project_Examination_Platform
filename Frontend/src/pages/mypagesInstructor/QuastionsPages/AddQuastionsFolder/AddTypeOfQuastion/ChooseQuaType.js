@@ -18,7 +18,7 @@ function ChoosesQuaType() {
           </div>
           <div className="DivForTypes">
             <Link
-              to="/Home/ExamName/AddQuaType/MultipleChoice"
+              to="/ExamName/AddQuaType/MultipleChoice"
               className="Box1"
             >
               <div className="Box1Content">
@@ -29,20 +29,8 @@ function ChoosesQuaType() {
               </div>
               <div className="textTypeQua"> Multiple choice</div>
             </Link>
-            {/* <div className="Box2">
-              <div className="Box1Content">
-                <div className="appearanceInTypeQua">
-                  <div className="textInApper">B</div>
-                </div>
-                <img
-                  className="Mult_Cho_image"
-                  src={Match_Answer_Icon}
-                  alt=""
-                ></img>
-              </div>
-              <div className="textTypeQua"> Match answer</div>
-            </div> */}
-            <Link to="/Home/ExamName/AddQuaType/FillGabs" className="Box3">
+           
+            <Link to="/ExamName/AddQuaType/FillGabs" className="Box3">
               <div className="Box1Content">
                 <div className="appearanceInTypeQua">
                   <div className="textInApper">C</div>
@@ -51,16 +39,7 @@ function ChoosesQuaType() {
               </div>
               <div className="textTypeQua"> Fill the gaps</div>
             </Link>
-            <Link to="/Home/ExamName/AddQuaType/FreeText" className="Box4">
-              <div className="Box1Content">
-                <div className="appearanceInTypeQua">
-                  <div className="textInApper">D</div>
-                </div>
-                <img className="Mult_Cho_image" src={Free_Tect_Icon} alt="" />
-              </div>
-              <div className="textTypeQua"> Free text</div>
-            </Link>
-            <Link to="/Home/ExamName/AddQuaType/Essay" className="Box5">
+            <Link to="/ExamName/AddQuaType/Essay" className="Box5">
               <div className="Box1Content">
                 <div className="appearanceInTypeQua">
                   <div className="textInApper">E</div>
@@ -69,7 +48,7 @@ function ChoosesQuaType() {
               </div>
               <div className="textTypeQua"> Essay </div>
             </Link>
-            <Link to="/Home/ExamName/AddQuaType/Trueandfalse" className="Box6">
+            <Link to="/ExamName/AddQuaType/Trueandfalse" className="Box6">
               <div className="Box1Content">
                 <div className="appearanceInTypeQua">
                   <div className="textInApper">G</div>
