@@ -60,7 +60,6 @@ const extractInputValues = () => {
   const allAnswerOptions = [];
   const inputValueElements = document.getElementsByClassName("inputFreeText");
 
-  // Check if input value elements exist
   if (inputValueElements) {
     for (let i = 0; i < inputValueElements.length; i++) {
       const inputValue = inputValueElements[i].value.trim();
@@ -75,6 +74,9 @@ const extractInputValues = () => {
   return allAnswerOptions;
 };
 
+   const stripHtmlTags = (html) => {
+     return html.replace(/<\/?p>/g, "");
+   };
 
 const saveResponse = () => {
   const storedResponses =
@@ -87,10 +89,10 @@ const saveResponse = () => {
 
   // Create the response object
   const response = {
-    type: "Free Text",
-    question: textArea1Value,
-    pointsValue: PointsValue,
-    answerOptions: allAnswerOptions,
+    question_type: "Free Text",
+    question: textArea1Value.replace(/<[^>]+>/g, ""),
+    points: PointsValue,
+    correct_answers: allAnswerOptions.map(stripHtmlTags),
   };
   let updatedResponses = [...storedResponses];
   if (selectedItem) {
@@ -147,7 +149,7 @@ const saveResponse = () => {
       <section className="MainSectionMultiple">
         <div className="MainDivMultiple">
           <div className="Row1">
-            <Link to="/Home/ExamName/AddQuaType" className="DivNextButton">
+            <Link to="/ExamName/AddQuaType" className="DivNextButton">
               <img className="ArrowClass BackArrow" src={Arrow_Right} alt="" />
               <div className="NextButtonBack">Back</div>
             </Link>
@@ -279,7 +281,7 @@ const saveResponse = () => {
               {" "}
               <div className="MainDivButton">
                 <Link
-                  to="/Home/ExamName/AddQuaType/ExamQuations"
+                  to="/ExamName/AddQuaType/ExamQuations"
                   className="ButtonAddNewQuastion"
                   onClick={saveResponse}
                 >
@@ -292,7 +294,7 @@ const saveResponse = () => {
               {" "}
               <div className="MainDivButton">
                 <Link
-                  to="/Home/ExamName/AddQuaType/ExamQuations"
+                  to="/ExamName/AddQuaType/ExamQuations"
                   className="ButtonAddNewQuastion"
                   onClick={saveResponse}
                 >

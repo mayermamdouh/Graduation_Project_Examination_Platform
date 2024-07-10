@@ -3,6 +3,8 @@ import "./AppBar.css";
 import { Link, useLocation } from "react-router-dom";
 import PhotoUser from "../../../Assets/photoUser.png";
 import logo from "../../../Assets/logo.png";
+import { handleSignOut } from "../../mypagesInstructor/component/file";
+
 
 function Navbar() {
   const location = useLocation();
@@ -18,6 +20,8 @@ function Navbar() {
   const handleToggleUserDropdown = () => {
     setUserDropdownOpen(!isUserDropdownOpen);
   };
+ 
+
   return (
     <>
       <header className="containerAppBar">
@@ -30,17 +34,32 @@ function Navbar() {
         <div className={`drawer ${isDrawerOpen ? "open" : ""}`}>
           <div className="bodyDrawer">
             <div className="linksDrawer">
-              <Link to="#Home" className="linkDrawer paddingDrawer">
+              {/* <Link
+                to="/"
+                className={`linkDrawer   ${
+                  isStepActive("/") ? "activeDrawer" : ""
+                }`}
+              >
                 <div className="divDrawer">Home</div>
-              </Link>
+              </Link> */}
 
               <hr className="hrDrawer" />
-              <Link to="#About" className="linkDrawer paddingDrawer">
+              <Link
+                to="/Exams"
+                className={`linkDrawer   ${
+                  isStepActive("/Exams") ? "activeDrawer" : ""
+                }`}
+              >
                 <div className="divDrawer">Exams</div>
               </Link>
               <hr className="hrDrawer" />
 
-              <Link to="#Content Us" className="linkDrawer paddingDrawer">
+              <Link
+                to="/groups"
+                className={`linkDrawer   ${
+                  isStepActive("/groups") ? "activeDrawer" : ""
+                }`}
+              >
                 <div className="divDrawer"> Groups</div>
               </Link>
             </div>
@@ -53,16 +72,16 @@ function Navbar() {
         <img className="logo" alt="" src={logo}></img>
         <nav className="navAppBar">
           <ul className="ulAppBar">
-            <li className="liAppBar">
+            {/* <li className="liAppBar">
               <Link
-                to="/Home"
+                to="/"
                 className={`linksAppbar ${
-                  isStepActive("/Home") ? "activeAppBar" : ""
+                  isStepActive("/") ? "activeAppBar" : ""
                 }`}
               >
                 Home
               </Link>
-            </li>
+            </li> */}
             <li className="liAppBar">
               <Link
                 to="/Exams"
@@ -88,7 +107,11 @@ function Navbar() {
         <div className="mainUser" onClick={handleToggleUserDropdown}>
           <img src={PhotoUser} className="photoUser" alt="" loading="lazy" />
 
-          <div className={`userDropdown ${isUserDropdownOpen ? " open" : ""}`}>
+          <div
+            className={`userDropdownTeacher ${
+              isUserDropdownOpen ? " open" : ""
+            }`}
+          >
             <div className="NameAndPostion">
               <div className="NameUserr">Dr Ahmed</div>
               <div className="postionUser">instructor</div>
@@ -102,9 +125,9 @@ function Navbar() {
               Settings
             </Link>
             <div className="lineNavBar"></div>
-            <Link className="LinksuserDropdown" to="/logout">
+            <div className="LinksuserDropdown" onClick={handleSignOut}>
               Logout
-            </Link>
+            </div>
           </div>
         </div>
       </header>

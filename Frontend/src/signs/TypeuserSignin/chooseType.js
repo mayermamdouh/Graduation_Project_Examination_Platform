@@ -7,8 +7,11 @@ function TypeLoginPage() {
     <>
       <section className="MainSectionLogin">
         <div className="MainDivType">
-          <Link to="/Home/Login/2
-          " className="removeUnderline">
+          <Link
+            to="/userType/SignIn?type=instructor
+          "
+            className="removeUnderline"
+          >
             <div className="MainBlock1">
               <div className="Block1">
                 <div className="frame">
@@ -22,7 +25,7 @@ function TypeLoginPage() {
               </div>
             </div>
           </Link>
-          <Link to="" className="removeUnderline">
+          <Link to="/userType/SignIn?type=student" className="removeUnderline">
             <div className="MainBlock2">
               <div className="Block2">
                 <div className="frame">

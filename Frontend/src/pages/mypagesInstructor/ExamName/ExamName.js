@@ -28,13 +28,13 @@ function ExamSettings() {
     setExamName(editExamNameValue);
   };
 
-  localStorage.clear("userResponses");
+  // localStorage.clear("userResponses");
   const examId = uuidv4();
   const handleCreateLocalToStoreQuaestion = () => {
     const storedResponses =
       JSON.parse(localStorage.getItem("userResponses")) || [];
     const Response = {
-      examName: examName,
+      name: examName,
       examId: examId,
     };
     console.log(examId);
@@ -50,7 +50,7 @@ function ExamSettings() {
           <StepIndicator />
 
           <Link
-            to="/Home/ExamName/AddQuaType"
+            to="/ExamName/AddQuaType"
             className="DivNextButton"
             onClick={handleCreateLocalToStoreQuaestion}
           >

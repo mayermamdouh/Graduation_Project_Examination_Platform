@@ -1,30 +1,43 @@
 // HomePage.js
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import "./ExamsCss.css";
 import Link_icon from "../../../Assets/iconLink.png";
 import file_icon from "../../../Assets/file-icon.svg";
 import schedule_icon from "../../../Assets/schedule_icon.png";
-
 import icon_time from "../../../Assets/icon_time.svg";
-
+import icon_review from "../../../Assets/iconsreview.png";
 import icon_intro from "../../../Assets/icon_intro.png";
 import icon_password from "../../../Assets/icon_password.png";
-import groupIcon from "../../../Assets/groupIcon.png";
+import groupIcon from "../../../Assets/icongroupwhite.png";
 import iconPlus from "../../../Assets/iconPlus.svg";
+import iconGrade from "../../../Assets/iconGrade.png";
 import iconDone from "../../../Assets/iconDone.png";
 import Navbar from "../Navbar/AppBar";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { getAuthHeaders } from "../component/file";
 
 function Exams() {
   const location = useLocation();
 
   const searchParams = new URLSearchParams(location.search);
+  const exam_idd = searchParams.get("exam_id");
 
-  const Assigned = searchParams.get("Exam_id");
+  const [exam_id, setExamId] = useState();
+
   const [AssigendVriable, setAssigendVriable] = useState(
-    Assigned ? true : false
+    exam_idd ? true : false
   );
+  const navigate = useNavigate();
+  const authTokens = localStorage.getItem("authTokens")
+    ? JSON.parse(localStorage.getItem("authTokens"))
+    : null;
+  useEffect(() => {
+    if (!authTokens) {
+      navigate("/userType");
+    } 
+  }, []);
 
   const [valueSearchEngin, setvalueSearchEngin] = useState("");
   const [isAllExams, setIsAllExams] = useState(AssigendVriable ? false : true);
@@ -41,44 +54,46 @@ function Exams() {
   const [isAssignStep2, setIsAssignStep2] = useState(
     AssigendVriable ? true : false
   );
-
   const [isAssignStep3, setIsAssignStep3] = useState(false);
   const [isAssignStep4, setIsAssignStep4] = useState(false);
 
   const removeExamIdFromUrl = () => {
     const searchParams = new URLSearchParams(location.search);
-    if (searchParams.has("Exam_id")) {
-      searchParams.delete("Exam_id");
-      // const newSearch = searchParams.toString();
-      // const newUrl = `${window.location.pathname}${
-      //   newSearch ? `?${newSearch}` : ""
-      // }`;
-      // window.history.pushState({}, "", newUrl);
+    if (searchParams.has("exam_id")) {
+      searchParams.delete("exam_id");
     }
   };
-  // console.log(
-  //   isAssignStep1,
-  //   isAssignStep2,
-  //   isAssignStep3,
-  //   isAssignStep4,
-  //   AssigendVriable
-  // );
+
+  
   const [isWantIntro, setIsWantIntro] = useState(false);
   const [isWantPass, setIsWantPass] = useState(false);
-  const [editExamIntroValue, setEditExamIntroValue] = useState("");
+  const [isWantGrades, setIsWantGrades] = useState(false);
+  const [editExamDescriptionValue, setEditExamDescriptionValue] = useState("");
   const [editExamPassValue, setEditExamPassValue] = useState("");
+  const [editExamGradesValue, setEditExamGradesValue] = useState("");
   const [isWantSchedule, setIsWantSchedule] = useState(false);
+  // time avalabilty
   const [fromDate, setFromDate] = useState("");
+  const [untilDate, setUntilDate] = useState("");
   const [isWantTimeLimit, setIsWantTimeLimit] = useState(false);
+  const [isWanStudentReview, setIsWantStudentReview] = useState(false);
   const [sectionGroups, setSectionGroups] = useState(false);
   const [removeButtonGroup, setRemoveButtonGroup] = useState(true);
+  const [Exams, setExams] = useState([]);
 
-  const [untilDate, setUntilDate] = useState("");
   const [untilTimeLimit, setuntilTimeLimit] = useState("");
-  const handleAssignExam = () => {
+
+  const handleAssignExam = (examId) => {
     setIsAssignStep1(false);
     setIsAssignStep2(true);
+    const newUrl = `${window.location.origin}${window.location.pathname}?exam_id=${examId}`;
+    window.history.replaceState({ path: newUrl }, "", newUrl);
+    setExamId(examId);
   };
+  //  useEffect(() => {
+
+  //  }, [isAssignStep2]);
+
   const AddBoxToRightIntroductionn = () => {
     setIsWantIntro(!isWantIntro);
   };
@@ -86,41 +101,31 @@ function Exams() {
   const AddBoxToRightPassword = () => {
     setIsWantPass(!isWantPass);
   };
-  const handleIntroValue = (e) => {
-    setEditExamIntroValue(e.target.value);
-  };
 
-  const handleAddButtonIntro = () => {
-    if (editExamIntroValue !== "") {
-      setIsWantIntro(!isWantIntro);
-    }
+  const AddBoxToRightGrades = () => {
+    setIsWantGrades(!isWantGrades);
+  };
+  const handleIntroValue = (e) => {
+    setEditExamDescriptionValue(e.target.value);
   };
 
   const handlePassValue = (e) => {
     setEditExamPassValue(e.target.value);
   };
-
-  const handleAddButtonPass = () => {
-    if (editExamPassValue) {
-      setIsWantPass(!isWantPass);
-    }
+  const handleGradesValue = (e) => {
+    setEditExamGradesValue(e.target.value);
   };
 
   const AddBoxToRightSchedule = () => {
     setIsWantSchedule(!isWantSchedule);
   };
-  const handleSetButtonAvalibility = () => {
-    if (fromDate !== "" && untilDate !== "") {
-      setIsWantSchedule(!isWantSchedule);
-    }
-  };
+
   const AddBoxToRightTimeLimit = () => {
     setIsWantTimeLimit(!isWantTimeLimit);
   };
-  const handleSetButtonTimeLimit = () => {
-    if (untilTimeLimit !== "") {
-      setIsWantTimeLimit(!isWantTimeLimit);
-    }
+
+  const AddBoxStudentReview = () => {
+    setIsWantStudentReview(!isWanStudentReview);
   };
 
   const handleSendLink = () => {
@@ -128,11 +133,9 @@ function Exams() {
     setIsAssignStep1(false);
     setIsAssignStep2(false);
   };
+
   const handleSaveSettings = () => {
-    setIsAssignStep1(false);
-    setIsAssignStep2(false);
-    setIsAssignStep3(false);
-    setIsAssignStep4(true);
+    handleUpdateExam();
   };
 
   const handleAddSectionGroups = () => {
@@ -140,16 +143,186 @@ function Exams() {
     setRemoveButtonGroup(false);
   };
 
-  const [isChecked1, setIsChecked1] = useState(false);
-
-  const handleItemClick1 = () => {
-    setIsChecked1(!isChecked1);
+  const handleNextGroup = () => {
+    setIsAssignStep3(true);
+    setIsAssignStep1(false);
+    setIsAssignStep2(false);
   };
 
-  const [isChecked2, setIsChecked2] = useState(false);
+  const [selectedGroup, setSelectedGroup] = useState(null);
+  const handleCheckboxChange = (groupCode) => {
+    if (selectedGroup === groupCode) {
+      setSelectedGroup(null);
+    } else {
+      setSelectedGroup(groupCode);
+    }
+  };
 
-  const handleItemClick2 = () => {
-    setIsChecked2(!isChecked2);
+  useEffect(() => {
+    handleViewExams();
+  }, []);
+
+  const [showLoader, setShowLoader] = useState(false);
+// console.log("", Exams);
+  const handleViewExams = async (e) => {
+    setShowLoader(true);
+    try {
+      const response = await axios.get(`http://127.0.0.1:8000/exam/`, {
+        headers: getAuthHeaders(),
+      });
+
+      if (response.status === 200 || response.status === 201) {
+        setExams(response.data);
+        setShowLoader(false);
+      } else {
+        console.error("Failed to View Group");
+      }
+    } catch (error) {
+      console.error("Error View Group:", error.message);
+    }
+  };
+  // console.log("Exams: ", Exams);
+  const [valueReviewOrNot, setValueReviewOrNot] = useState("");
+  const handleTrueFalseChange = (e) => {
+    setValueReviewOrNot(e.target.value);
+  };
+
+  const [GroupsDetails, setGroupsDetails] = useState([]);
+  const handleViewGroups = async () => {
+    try {
+      const response = await axios.get("http://127.0.0.1:8000/group/", {
+        headers: getAuthHeaders(),
+      });
+
+      if (response.status === 200 || response.status === 201) {
+        setGroupsDetails(response.data);
+      } else {
+        console.error("Failed to View Group");
+      }
+    } catch (error) {
+      console.error("Error View Group:", error.message);
+    }
+  };
+
+  useEffect(() => {
+    handleViewGroups();
+  }, []);
+
+  const [message, setMessage] = useState("");
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        setMessage("");
+      }, 4000);
+
+      // Cleanup the timer if the component unmounts
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
+
+  const handleUpdateExam = async (e) => {
+    if (
+      editExamGradesValue === "" ||
+      untilTimeLimit === "" ||
+      untilDate === "" ||
+      fromDate === ""
+    ) {
+      let missingValues = "";
+      if (editExamGradesValue === "") {
+        missingValues += "Exam Total Grades, ";
+      }
+      if (untilTimeLimit === "") {
+        missingValues += "Time Limit, ";
+      }
+      if (untilDate === "") {
+        missingValues += "Avaliable Until, ";
+      }
+      if (fromDate === "") {
+        missingValues += "Avaliable From, ";
+      }
+      missingValues = missingValues.replace(/,\s*$/, "");
+      setMessage(`Some required values ${missingValues} are missing.`);
+    } else {
+      const payload = {
+        description: editExamDescriptionValue,
+        password: editExamPassValue,
+        starting_date: new Date(fromDate).toISOString(),
+        finishing_date: new Date(untilDate).toISOString(),
+        duration_minutes: parseInt(untilTimeLimit, 10),
+        max_marks: parseInt(editExamGradesValue, 10),
+        review: valueReviewOrNot,
+      };
+      // Retrieve auth tokens from localStorage
+      const authTokens = localStorage.getItem("authTokens")
+        ? JSON.parse(localStorage.getItem("authTokens"))
+        : null;
+
+      // Extract the access token
+      const accessToken = authTokens ? authTokens.access : null;
+      try {
+        const response = await axios.put(
+          `http://127.0.0.1:8000/exam/${exam_idd ? exam_idd : exam_id}/`,
+          payload,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        if (response.status === 200 || response.status === 201) {
+          setMessage("Exam update success");
+          handleAssignExamApi();
+        } else {
+          console.log("Failed to update group");
+        }
+      } catch (error) {
+        console.error("Error updating group:", error.message);
+        if (error.response) {
+          console.error("Response data:", error.response.data);
+        }
+      }
+    }
+  };
+
+  const handleAssignExamApi = async () => {
+    // console.log('selected group:',selectedGroup)
+    if (selectedGroup) {
+      const formData = new FormData();
+      formData.append("group_code", selectedGroup);
+       const authTokens = localStorage.getItem("authTokens")
+         ? JSON.parse(localStorage.getItem("authTokens"))
+         : null;
+
+       // Extract the access token
+       const accessToken = authTokens ? authTokens.access : null;
+      try {
+        const response = await axios.post(
+          `http://127.0.0.1:8000/exam/${exam_idd ? exam_idd : exam_id}/group/`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+
+        if (response.status === 200 || response.status === 201) {
+          setMessage("Exam Assigned successfully");
+          setIsAssignStep1(false);
+          setIsAssignStep2(false);
+          setIsAssignStep3(false);
+          setIsAssignStep4(true);
+        } else {
+          console.error("Failed to assign exam to group");
+        }
+      } catch (error) {
+        console.error("Error assigning exam to group:", error.message);
+      }
+    } else {
+      setMessage("No group code available to assign exam.");
+    }
   };
 
   return (
@@ -158,6 +331,7 @@ function Exams() {
       <div className="BodyExams">
         <div className="MainPage">
           <div className="MainDivOfPage">
+            {message ? <div className="messages">{message}</div> : ""}
             <div className="stepHomee">
               <div
                 className={`ItemOne ${
@@ -209,7 +383,7 @@ function Exams() {
               >
                 Question Bank
               </div>
-              <div className="ItemThere">Files</div>
+
               <div className="ItemFour">Ai Detection</div>
             </div>
             <div
@@ -222,7 +396,7 @@ function Exams() {
                   value={valueSearchEngin}
                   onChange={(e) => setvalueSearchEngin(e.target.value)}
                 ></input>
-                <Link to="/Home/ExamName" className="removeUnderline">
+                <Link to="/ExamName" className="removeUnderline">
                   {" "}
                   <div className="sectionButtonNewExam">
                     <div className="iconPlueNewExam">+</div>
@@ -230,25 +404,45 @@ function Exams() {
                   </div>
                 </Link>
               </div>
-              <div className="lineSeprete"></div>
-              <div className="RowAllExamsOne">
-                <div className="sectionExamNameHome">
-                  <img className="iconFile" alt="" src={file_icon}></img>
-                  <div className="ExamNameDiv">Exam name</div>
+              {showLoader ? (
+                <div className="loaderrr">
+                  <div className="loader"></div>
                 </div>
-
-                <div className="twoButton">
-                  <Link
-                    to="/Exams/ExamDetails"
-                    className="sectionButtonNewExam"
-                  >
-                    Open
-                  </Link>
-                  {/* <div className="sectionButtonNewExam"> Edit Exam </div>
-                  <div className="sectionButtonNewExam"> Attempts </div> */}
-                </div>
-              </div>
+              ) : (
+                <>
+                  {Exams.length > 0 ? (
+                    <>
+                      {Exams.map((exam, index) => (
+                        <div key={index}>
+                          <div className="lineSeprete"></div>
+                          <div className="RowAllExamsOne">
+                            <div className="sectionExamNameHome">
+                              <img
+                                className="iconFile"
+                                alt=""
+                                src={file_icon}
+                              ></img>
+                              <div className="ExamNameDiv">{exam.name}</div>
+                            </div>
+                            <div className="twoButton">
+                              <Link
+                                to={`/Exams/ExamDetails?exam_id=${exam.id}`}
+                                className="sectionButtonNewExam"
+                              >
+                                Open
+                              </Link>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </>
+                  ) : (
+                    <div className="noExamsAdd">No exams added yet</div>
+                  )}
+                </>
+              )}
             </div>
+
             <div
               className={`MainDivAllExams ${
                 isQuestionBank ? "appear" : "hidden"
@@ -336,20 +530,29 @@ function Exams() {
                   isAssignStep1 ? "appaer" : "hidden"
                 }`}
               >
+                {/* exam_id=28 */}
                 <div className="statmentAssign">Select a Exam to Assign it</div>
-                <div className="MainDivAllExams ">
-                  <div className="sectionDisplayEA">
-                    <div className="rowAssignText">
-                      <div className="nameOfExam">Exam Name</div>
-                      <div
-                        className="assignText"
-                        onClick={() => handleAssignExam()}
-                      >
-                        Assign this Exam
+                {Exams.length > 0 ? (
+                  <>
+                    {Exams.map((exam, index) => (
+                      <div className="MainDivAllExams " key={index}>
+                        <div className="sectionDisplayEA">
+                          <div className="rowAssignText">
+                            <div className="nameOfExam">{exam.name}</div>
+                            <div
+                              className="assignText"
+                              onClick={() => handleAssignExam(exam.id)}
+                            >
+                              Assign this Exam
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </div>
+                    ))}
+                  </>
+                ) : (
+                  <div className="NoExams">No exams created yet</div>
+                )}
               </div>
               <div
                 className={`sectionsIsAssignStep1 ${
@@ -396,7 +599,7 @@ function Exams() {
                       </div>
                       <div className="sentLinkText sendTheOne">
                         Group members will log in and have access to all the
-                        tests Created in this Group.
+                        exams created in this group.
                       </div>
                     </div>
 
@@ -423,40 +626,39 @@ function Exams() {
                       }`}
                     >
                       <div>- Select Groups</div>
-                      <div className="groups">
-                        <div
-                          className="itemInGroups"
-                          onClick={handleItemClick1}
-                        >
-                          <input
-                            type="checkbox"
-                            checked={isChecked1}
-                            readOnly
-                            className="checkBoxIfCorrect"
-                          ></input>
-                          <div>Name of Group 1</div>
-                        </div>
-                        <div
-                          className="itemInGroups"
-                          onClick={handleItemClick2}
-                        >
-                          <input
-                            type="checkbox"
-                            className="checkBoxIfCorrect"
-                            checked={isChecked2}
-                            readOnly
-                          ></input>
-                          <div>Name of Group 2</div>
-                        </div>
-                        <div className="wordCreateGrpup">
-                          + Create New Group
-                        </div>
-                        <div className="LineAssignLink"></div>
+                      {GroupsDetails.length > 0 ? (
+                        <>
+                          {GroupsDetails.map((group, index) => (
+                            <div className="groups" key={index}>
+                              <div className="itemInGroups">
+                                <label className="label">
+                                  <input
+                                    type="checkbox"
+                                    id={`checkbox-${index}`}
+                                    checked={selectedGroup === group.code}
+                                    onChange={() =>
+                                      handleCheckboxChange(group.code)
+                                    }
+                                    className="checkBoxIfCorrect"
+                                  />
 
-                        <div className="NextButton">
-                          <div readOnly className="secTwoButton">
-                            Next
-                          </div>
+                                  <div>{group.name}</div>
+                                </label>
+                              </div>
+                            </div>
+                          ))}
+                        </>
+                      ) : (
+                        "Don't have any groups"
+                      )}
+                      <div className="wordCreateGrpup">+ Create New Group</div>
+                      <div className="NextButton">
+                        <div
+                          readOnly
+                          className="secTwoButton"
+                          onClick={handleNextGroup}
+                        >
+                          Next
                         </div>
                       </div>
                     </div>
@@ -469,12 +671,13 @@ function Exams() {
                 }`}
               >
                 <div className="MainDivAssignStep3">
-                  <div className="MainDivContantSettings">
+                  <div className="MainDivContantSettings margindown">
                     <div className="ContantSettingsTwo">
                       <div className="scheduleTextIcon">
                         <img className="iconFile" src={icon_intro} alt=""></img>
                         <div className="avaliabilityText">
-                          Exam Introduction
+                          Exam Description{" "}
+                          <span className="optionalFields">(optional)</span>
                         </div>
                       </div>
                       <div
@@ -487,7 +690,7 @@ function Exams() {
                           alt=""
                         ></img>
                         <div className="ExamInstructTextAdd">
-                          Add Introduction
+                          Add Description
                         </div>
                       </div>
                       <div
@@ -496,21 +699,21 @@ function Exams() {
                         }`}
                       >
                         <input
-                          value={editExamIntroValue}
+                          value={editExamDescriptionValue}
                           className="InputIntro"
                           placeholder="Write Your Intro..."
                           onChange={handleIntroValue}
                         ></input>
-                        <button
+                        {/* <button
                           className="ButtonSaveIntro marginSettings"
                           onClick={handleAddButtonIntro}
                         >
                           Add
-                        </button>
+                        </button> */}
                       </div>
                     </div>
                   </div>
-                  <div className="MainDivContantSettings">
+                  <div className="MainDivContantSettings margindown">
                     <div className="ExamPasswordSection">
                       <div className="scheduleTextIcon">
                         <img
@@ -518,7 +721,10 @@ function Exams() {
                           src={icon_password}
                           alt=""
                         ></img>
-                        <div className="avaliabilityText">Exam Password</div>
+                        <div className="avaliabilityText">
+                          Exam Password{" "}
+                          <span className="optionalFields">(optional)</span>
+                        </div>
                       </div>
                       <div
                         className="sectionAddIns"
@@ -536,21 +742,15 @@ function Exams() {
                       >
                         <input
                           value={editExamPassValue}
-                          className="InputIntro"
+                          className="InputIntro width"
                           placeholder="Write Your Password..."
                           onChange={handlePassValue}
                         ></input>
-                        <button
-                          className="ButtonSaveIntro marginSettings"
-                          onClick={handleAddButtonPass}
-                        >
-                          Add
-                        </button>
                       </div>
                     </div>
                   </div>
 
-                  <div className="MainDivContantSettings">
+                  <div className="MainDivContantSettings margindown">
                     <div className="sectionAvaliability">
                       <div className="scheduleTextIcon">
                         <img
@@ -558,7 +758,10 @@ function Exams() {
                           src={schedule_icon}
                           alt=""
                         ></img>
-                        <div className="avaliabilityText">Avaliability</div>
+                        <div className="avaliabilityText">
+                          Avaliability{" "}
+                          <span className="optionalFields">(Mandatory)</span>
+                        </div>
                       </div>
 
                       <div
@@ -601,21 +804,24 @@ function Exams() {
                               onChange={(e) => setUntilDate(e.target.value)}
                             ></input>
                           </div>
-                          <button
+                          {/* <button
                             className="ButtonSaveIntro marginSettings"
                             onClick={handleSetButtonAvalibility}
                           >
                             Set
-                          </button>
+                          </button> */}
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div className="MainDivContantSettings">
+                  <div className="MainDivContantSettings margindown">
                     <div className="sectionAvaliability">
                       <div className="scheduleTextIcon">
                         <img className="iconFile" src={icon_time} alt=""></img>
-                        <div className="avaliabilityText">Time Limit</div>
+                        <div className="avaliabilityText">
+                          Time Limit
+                          <span className="optionalFields"> (Mandatory)</span>
+                        </div>
                       </div>
 
                       <div
@@ -645,17 +851,116 @@ function Exams() {
                             onChange={(e) => setuntilTimeLimit(e.target.value)}
                           ></input>
                         </div>
-                        <button
-                          className="ButtonSaveIntro marginSettings"
-                          onClick={handleSetButtonTimeLimit}
-                        >
-                          Set
-                        </button>
                       </div>
                     </div>
                   </div>
+                  <div className="MainDivContantSettings margindown">
+                    <div className="sectionAvaliability">
+                      <div className="scheduleTextIcon">
+                        <img
+                          className="iconFile"
+                          src={icon_review}
+                          alt=""
+                        ></img>
+                        <div className="avaliabilityText">
+                          Student Review Result
+                          <span className="optionalFields"> (Mandatory)</span>
+                        </div>
+                      </div>
+
+                      <div
+                        className="sectionAddIns"
+                        onClick={() => AddBoxStudentReview()}
+                      >
+                        <img
+                          src={iconPlus}
+                          className="AddInsrationIcon"
+                          alt=""
+                        ></img>
+                        <div className="ExamInstructTextAdd">Review</div>
+                      </div>
+                      <div
+                        className={`AddTextIntro ${
+                          isWanStudentReview ? "" : "hidden"
+                        }`}
+                      >
+                        <div className="TrueFalseSetting">
+                          <div className="textalignSetting">
+                            <input
+                              type="radio"
+                              value="True"
+                              id={`answer_true`}
+                              className="radiosetting"
+                              checked={valueReviewOrNot === "True"}
+                              onChange={(e) => handleTrueFalseChange(e)}
+                            />
+                            <label
+                              htmlFor={`answer_true`}
+                              className="valueTrueFalsesetting"
+                            >
+                              Review
+                            </label>
+                          </div>
+                          <div className="textalignSetting">
+                            <input
+                              type="radio"
+                              value="False"
+                              id={`answer_false`}
+                              className="radiosetting"
+                              checked={valueReviewOrNot === "False"}
+                              onChange={(e) => handleTrueFalseChange(e)}
+                            />
+                            <label
+                              htmlFor={`answer_false`}
+                              className="valueTrueFalsesetting"
+                            >
+                              Not Review
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="MainDivContantSettings margindown">
+                    <div className="sectionAvaliability">
+                      <div className="scheduleTextIcon">
+                        <img className="iconFile" src={iconGrade} alt=""></img>
+                        <div className="avaliabilityText">
+                          Exam Total Grades
+                          <span className="optionalFields"> (Mandatory)</span>
+                        </div>
+                      </div>
+
+                      <div
+                        className="sectionAddIns"
+                        onClick={() => AddBoxToRightGrades()}
+                      >
+                        <img
+                          src={iconPlus}
+                          className="AddInsrationIcon"
+                          alt=""
+                        ></img>
+                        <div className="ExamInstructTextAdd">Grades</div>
+                      </div>
+
+                      <div
+                        className={`AddTextIntro ${
+                          isWantGrades ? "" : "hidden"
+                        }`}
+                      >
+                        <input
+                          value={editExamGradesValue}
+                          className="InputIntro width"
+                          placeholder="Write Total Grades..."
+                          onChange={handleGradesValue}
+                          type="number"
+                        ></input>
+                      </div>
+                    </div>
+                  </div>
+                  {message ? <div className="messages">{message}</div> : ""}
                   <div className="sectionButton" onClick={handleSaveSettings}>
-                    <div className="textButtonsave">Save</div>
+                    <div className="textButtonsave">Assign</div>
                   </div>
                 </div>
               </div>
@@ -671,26 +976,25 @@ function Exams() {
                         <img className="iconDone" src={iconDone} alt=""></img>
                         <div className="textGive">
                           {" "}
-                          Your Exam is ready to give!
+                          Your Exam is Assigned to Group Successfully!
                         </div>
-                        <div className="examNamesection">
+                        {/* <div className="examNamesection">
                           <img
                             className="iconExamName"
                             src={file_icon}
                             alt=""
                           ></img>
-                          <div>Exam Name </div>
-                        </div>
-                        <div className="textGive">
-                          {" "}
-                          Use the Link below to give access to your Exam.
-                        </div>
-                        <input
-                          value="https://en.wikipedia.org/wiki/Local_outlier_factor"
-                          className="linkContant"
-                          type="text"
-                          readOnly
-                        ></input>
+                          <div>
+                            {Exams.map((exam, index) => (
+                              <div key={index}>
+                                {(exam.id === exam_id ||
+                                  exam.id === exam_idd) && (
+                                  <div className="nameExams">{exam.name}</div>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        </div> */}
                       </div>
                     </div>
                   </div>

@@ -15,7 +15,6 @@
 .containerAppBar {
     display: flex;
     align-items: center;
-
     align-items: center;
     padding: 10px;
     background-color: #1e1e1e;
@@ -33,8 +32,8 @@
     align-items: center;
     margin-left: 10px;
     user-select: none;
-    width: 100px;
-    height: 50px;
+    width: 120px;
+    height: 30px;
 
     margin-right: 80px;
     margin-left: 10px;
@@ -241,7 +240,7 @@
 
 .NameOfGroup {
     margin-left: 20px;
-    width: 100px;
+    width: 200px;
     font-size: 17px;
     font-weight: 700;
     color: #5f51a9;
@@ -288,6 +287,7 @@
     color: white;
     width: clamp(300px, 80vw, 90%);
     padding: 10px;
+    font-size: 30px;
 
 }
 
@@ -321,32 +321,38 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-evenly;
-    margin: 20px 0%;
-    width: clamp(300px, 70vw, 95%);
+    justify-content: space-around;
+    margin: 15px 0%;
+    gap: 5px;
+    width: clamp(300px, 70vw, 100%);
 }
+
+
 
 .marginTop {
     margin: 30px 0%;
 }
 
 .NameOfGroupStudent {
-    margin-left: 25px;
-    width: 100px;
+
     word-wrap: break-word;
+    /* margin-left: 20px; */
+    width: 200px;
+    font-size: 17px;
+
 }
 
 .NameOfGroupStudentButton {
     text-align: center;
     font-weight: bold;
-    width: 100px;
+    width: clamp(40px, 8vw, 100px);
     font-size: 10px;
     cursor: pointer;
-    position: relative;
+
     padding: 10px;
     border: 1px solid #5f51a9;
     border-radius: 10px;
-    margin-left: 5px;
+
 }
 
 .NameOfGroupStudentButton:hover {
@@ -356,20 +362,71 @@
 
 .classRemoveLinKcss {
     text-decoration: none;
+    width: 100px;
 }
+
+.examsTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.examsTable th,
+.examsTable td {
+
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.examsTable th {
+    background-color: #f2f2f2;
+    color: #5f51a9;
+}
+
+.NameOfGroupStudentButton {
+    display: inline-block;
+    padding: 10px 12px;
+    text-decoration: none;
+
+    border-radius: 10px;
+    color: #1e1e1e;
+}
+
+
+.NameOfGroupStudentButton:hover {
+    background-color: #45398e;
+}
+
+.buttonOpenExam {
+    border-radius: 10px;
+    width: 100px;
+    padding: 5px;
+    background-color: transparent;
+    color: white;
+    border: 1px solid #8752BC;
+    cursor: pointer;
+}
+
+.buttonOpenExam:hover {
+
+    background-color: #8752BC;
+}
+
 
 /*                      Review */
 
 
-.MianPageStudentTestsReview {
+.MianPageStudentTestsReview1 {
     background-color: white;
     width: clamp(300px, 90vw, 95%);
     border-radius: 10px;
+    height: 250px;
     display: flex;
     flex-direction: row;
     padding: 10px;
     justify-content: center;
     align-items: center;
+
 }
 
 .makePadding {
@@ -394,7 +451,6 @@
 }
 
 .secondColumn {
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -406,7 +462,6 @@
     height: 90%;
     width: 1.5px;
     background-color: #ababab;
-
 }
 
 .NameOfInformation {
@@ -415,10 +470,6 @@
     flex-direction: row;
     height: 30px;
     margin: 10px 0%;
-
-
-
-
 }
 
 .Named {
@@ -426,8 +477,7 @@
     font-family: Inter;
     font-size: 15px;
     font-style: normal;
-    font-weight: 500;
-    text-align: left;
+    font-weight: 550;
     width: 50%;
 }
 
@@ -436,4 +486,412 @@
     font-weight: 500;
     margin-left: 20px;
     width: 200px;
+    word-wrap: break-word;
+}
+
+.marginTopReview {
+    margin-top: 70px;
+}
+
+.divAllQuestion {
+    padding: 20px;
+}
+
+.MyGroupsWordReview {
+    margin-bottom: 30px;
+    margin-left: 20px;
+    margin-right: 70px;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+}
+
+.AllQuestion {
+    cursor: pointer;
+    font-weight: 600;
+    font-size: clamp(9px, 16px, 20px);
+    padding: 10px;
+    user-select: none;
+}
+
+.MianPageStudentTestsReview2 {
+    background-color: white;
+    width: clamp(300px, 90vw, 95%);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    transition: opacity 0.6s ease, height 0.6s ease;
+    height: auto;
+    padding: 10px;
+    overflow-y: hidden;
+
+}
+
+.MianPageStudentTestsReview2.Hidden {
+    opacity: 0;
+    height: 0;
+}
+
+.MianPageStudentTestsReview2.Appear {
+    opacity: 1;
+    height: auto;
+
+}
+
+.selectedReview {
+    padding-top: 7px;
+    padding-bottom: 7px;
+    color: #5f51a9;
+    border-bottom: 1px solid #5f51a9;
+}
+
+
+
+
+/* /////////////////////////////////////////////////////////////// */
+
+.MainDivContantReview {
+    display: flex;
+    flex-direction: column;
+    margin: 1vh auto;
+    min-width: 65vw;
+    max-width: 85vw;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.NumberAndQuationReview {
+    margin-top: 15px;
+    padding: 10px;
+    display: flex;
+    width: 97%;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background-color: rgba(238, 238, 238, 1);
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+
+.RowButtonsDisplayReview {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+
+
+}
+
+
+
+
+.ButtonsDisplayReview {
+    color: #5f51a9;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    opacity: 0.6;
+    text-decoration: none;
+}
+
+.ButtonsDisplayReview:hover {
+    opacity: 1;
+}
+
+
+
+
+.ButtonsDisplayReview:hover:after {
+    content: "";
+    display: block;
+    height: 1px;
+    width: 100%;
+    background-color: #5f51a9;
+    position: absolute;
+    bottom: -2px;
+    color: #5f51a9;
+}
+
+
+
+.QuationContantReview {
+    display: flex;
+    font-size: 17px;
+    font-family: "Inter-Bold", Helvetica;
+    background-color: rgb(218, 218, 218);
+    border-radius: 10px;
+    padding: 14px;
+    width: 90%;
+    margin-top: 30px;
+}
+
+
+.sectionButtonsReview {
+    margin-top: 15px;
+    color: #5f51a9;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 25px;
+
+
+}
+
+
+
+.lineSepreteExamDitaliesReview {
+    margin-top: 9px;
+    display: flex;
+    height: 1px;
+    background-color: rgb(199, 199, 199);
+    width: 100%;
+}
+
+.iconDeleteDisplayReview {
+    width: 15px;
+    height: 15px;
+    padding-right: 5px;
+}
+
+.answerOptionalReview {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+}
+
+.answerOptionalReview .Options {
+    margin: 8px 8px;
+    padding: 5px;
+
+
+}
+
+.marginRightReview {
+    width: 50%;
+
+}
+
+.TypeOfQuestionReview {
+    margin: 10px 0px;
+    display: flex;
+    flex-direction: column;
+    color: #6A7680;
+    font-family: Inter;
+    font-size: 15px;
+    font-weight: 550;
+}
+
+.charactersiticQuastionReview {
+    font-weight: 550;
+    margin-left: auto;
+    color: #868686;
+}
+
+.sectionApperorNotReview {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    transition: max-height 0.4s, opacity 0.4s ease-in-out;
+    /* overflow: hidden; */
+    /* margin-top: 20px; */
+}
+
+.sectionApperorNotReview.closeDetails {
+    max-height: 0;
+    padding: 0;
+    opacity: 0;
+
+}
+
+.sectionApperorNotReview.openDetails {
+    max-height: 500px;
+    opacity: 1;
+
+}
+
+.selectedReview2 {
+    border-radius: 5px;
+    background-color: #357a32;
+    color: whitesmoke;
+}
+
+.inputFieldDisplayQuestionReview {
+    width: 60px;
+    border-radius: 5px;
+    font-size: 13px;
+
+    background-color: rgb(231, 231, 231);
+    border: none;
+    outline: none;
+
+}
+
+.QuestionNumber {
+    display: flex;
+    flex-direction: row;
+    font-weight: 550;
+    font-size: 13px;
+    padding: 10px;
+    background-color: #5f51a9;
+    color: white;
+    border-radius: 10px;
+}
+
+.BlockInputCode {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 50px;
+}
+
+.InputFeild {
+    width: 220px;
+    outline: none;
+    padding: 3px;
+    margin-left: 5px;
+    border: 1px solid #5f51a9;
+    border-radius: 5px;
+}
+
+.ButtonJoin {
+
+    color: white;
+    background-color: transparent;
+    border: 1px solid #5f51a9;
+    width: 100px;
+    border-radius: 5px;
+    padding: 5px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.ButtonJoin:hover {
+    background-color: #5f51a9;
+}
+
+.NoGroup {
+    background-color: white;
+    color: #1e1e1e;
+    padding: 10px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 10px;
+}
+
+.CorrectAnswer {
+    border-radius: 5px;
+    background-color: #357a32;
+    color: whitesmoke;
+}
+
+.WrongAnswer {
+    border-radius: 5px;
+    background-color: rgb(255, 46, 46);
+    color: whitesmoke;
+}
+
+.CorrectAnswerDisplay {
+    margin-top: 20px;
+}
+
+.postion {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.aimodel {
+    height: 300px;
+    width: 300px;
+
+}
+
+/* /////////////////////// */
+
+video {
+    clear: both;
+    display: block;
+    transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+}
+
+section {
+    opacity: 1;
+    transition: opacity 500ms ease-in-out;
+}
+
+header,
+footer {
+    clear: both;
+}
+
+.removed {
+    display: none;
+}
+
+.invisible {
+    opacity: 0.2;
+}
+
+.note {
+    font-style: italic;
+    font-size: 130%;
+}
+
+.videoView,
+.detectOnClick {
+    position: relative;
+    float: left;
+    width: 48%;
+    margin: 2% 1%;
+    cursor: pointer;
+}
+
+.output_canvas {
+    transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+}
+
+.detectOnClick img {
+    width: 100%;
+}
+
+.boxToWritePassword {
+    width: clamp(40px, 8vw, 100px);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+
+}
+
+.passwordword {
+    font-weight: bold;
+}
+
+.Inputpassexam {
+    user-select: none;
+    border: 1px solid #5f51a9;
+    font-family: "Inter-Bold", Helvetica;
+    outline: none;
+    width: clamp(80px, 20vw, 250px);
+    height: 10px;
+    border-radius: 5px;
+    padding: 8px;
+    font-size: 13px;
+    background-color: white;
 }

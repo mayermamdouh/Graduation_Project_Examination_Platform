@@ -29,13 +29,11 @@
 .EditExamSectionGroup {
     display: flex;
     flex-direction: row;
-
     align-items: center;
     font-family: "Inter-Bold", Helvetica;
     font-weight: 700;
     width: 100%;
-
-    justify-content: space-between;
+    /* flex-wrap: wrap; */
 
 }
 
@@ -110,19 +108,11 @@
     height: 20px;
 }
 
-.lineBettenIt {
-    height: 100%;
-    width: 13px;
-    background-color: gray;
-    display: block;
-
-    padding: 1px;
-    transform: rotate(90deg);
-
-}
 
 .addPadding {
     padding: 10px;
+    overflow: hidden;
+    margin: 10px;
 }
 
 .groupMembersRow {
@@ -130,6 +120,9 @@
     align-items: center;
     flex-direction: row;
     color: #5f51a9;
+    font-weight: 600;
+    font-size: 17px;
+
 }
 
 .groupMemberNumber {
@@ -149,8 +142,10 @@
 .GroupMembersContant {
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-weight: bold;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    margin: 15px 0%;
 }
 
 
@@ -159,11 +154,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
+    gap: 5px;
     overflow: hidden;
     max-height: 0;
     opacity: 0;
     transition: max-height 0.3s ease, opacity 0.3s ease;
+
 
 }
 
@@ -181,17 +177,18 @@
 }
 
 .blockAddMember {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-top: 20px;
-    width: 100%;
-    width: clamp(400px, 80vw, 50%);
-    height: 100px;
+    width: clamp(250px, 30vw, 50%);
     border: 1.5px solid rgb(173, 173, 173);
     border-radius: 10px;
+    height: 120px;
 
 }
 
 .howToAddStudent {
-    height: 85%;
     padding: 10px;
     color: #1e1e1e;
     display: flex;
@@ -203,13 +200,13 @@
 }
 
 .secionAddUser {
+    padding-top: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
     height: 30px;
-
-
+    gap: 5px;
 }
 
 .inputEmailUser {
@@ -217,6 +214,7 @@
     border: 1px solid #5f51a9;
     border-radius: 4px;
     height: 20px;
+    font-size: 12px;
     padding: 4px;
 }
 
@@ -239,6 +237,7 @@
     background-color: rgba(0, 0, 0, 0.5);
     transition: opacity 0.6s;
 
+
 }
 
 .modal-content {
@@ -246,9 +245,22 @@
     margin: 20% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 40%;
+    width: 50%;
     border-radius: 10px;
+
 }
+
+.modal-contentGradeAnswers {
+    background-color: #1e1e1e;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 10px;
+    max-height: 80vh;
+    overflow-y: auto;
+    width: clamp(330px, 80vw, 100%);
+}
+
 
 .close {
     color: #aaa;
@@ -264,13 +276,13 @@
     cursor: pointer;
 }
 
-.button-container {
+.button-container-Exams {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
 }
 
-.button-container button {
+.button-container-Exams button {
     padding: 10px 20px;
     cursor: pointer;
     display: flex;
@@ -292,7 +304,570 @@
     color: #1e1e1e;
 }
 
-.button-container button:hover {
+.button-container-Exams button:hover {
     background-color: #5f51a9;
     color: white;
 }
+
+.personIcon {
+    width: 25px;
+    height: 25px;
+}
+
+.MainDivContantGroup {
+    display: flex;
+    flex-direction: column;
+    width: clamp(300px, 90vw, 100%);
+    background-color: whitesmoke;
+    border-radius: 10px;
+    transition: opacity 0.6s ease, height 0.6s ease;
+    height: auto;
+    overflow-y: hidden;
+}
+
+.MainDivContantGroup.Hidden {
+    opacity: 0;
+    height: 0;
+}
+
+.MainDivContantGroup.Appear {
+    opacity: 1;
+    height: auto;
+
+}
+
+
+.lineSepreteGroup {
+    width: 100%;
+    height: 1px;
+    background-color: #b8b8b8;
+}
+
+.marginTopGroup {
+    margin-top: 10px;
+}
+
+.MyGroupsWordReviewGroup {
+    margin-bottom: 30px;
+    margin-left: 20px;
+    margin-right: 70px;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 40px;
+    /* justify-content: space-between; */
+}
+
+.marginTopReviewGroup {
+    margin-top: 70px;
+}
+
+.AllTakenAndExamsGroup1,
+.AllTakenAndExamsGroup2 {
+    cursor: pointer;
+    font-weight: 600;
+    font-size: clamp(9px, 16px, 20px);
+    padding-top: 7px;
+    padding-bottom: 7px;
+    user-select: none;
+
+}
+
+.AllTakenAndExamsGroup2 {
+    margin-right: auto;
+}
+
+.selectedReviewGroup {
+
+    color: #5f51a9;
+    border-bottom: 1px solid #5f51a9;
+}
+
+.ColorGroup {
+    background-color: #3cb27a;
+    color: white;
+    border: none;
+}
+
+/*                          Result User In Group                                         */
+
+.MainDivStudentPageGroup {
+    background-color: #1e1e1e;
+    width: auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    overflow: auto;
+    padding: 10px;
+    overflow-x: hidden;
+}
+
+.maginTopGroup {
+    margin-top: 60px;
+}
+
+
+
+
+
+
+
+.MianPageStudentGroup {
+    margin: 100px auto;
+    width: auto;
+    width: clamp(400px, 80vw, 90%);
+}
+
+.MyGroupsWordGroup {
+    margin-bottom: 30px;
+    color: white;
+    font-size: 25px;
+    margin-left: 5px;
+}
+
+
+/*                      Review */
+
+.MianPageStudentTestsGroup {
+    background-color: rgba(238, 238, 238, 1);
+    width: clamp(300px, 90vw, 100%);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    /* padding: 10px; */
+    height: auto;
+
+}
+
+.makePaddingGroup {
+    /* padding: 10px; */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+
+}
+
+.firstColumnGroup,
+.secondColumnGroup {
+    display: flex;
+    flex-direction: column;
+
+
+
+}
+
+.firstColumnGroup {
+    height: 90%;
+    width: 45%;
+
+
+}
+
+.ThirdColumn {
+    /* height: 100%; */
+    width: 45%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.secondColumnGroup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+}
+
+
+.LineVerticalGroup {
+    height: 90%;
+    width: 1.5px;
+    background-color: #c4c4c4;
+}
+
+.NameOfInformationGroup {
+    /* width: auto; */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 20px;
+    margin: 20px calc(2vw);
+}
+
+
+.profileImageGroup {
+    margin: 20px auto;
+    width: clamp(100px, 30vw, 180px);
+    height: clamp(100px, 30vw, 180px);
+    border-radius: 50%;
+    border: 3px solid white;
+}
+
+.profileImageGroup img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+
+.functionsUser {
+    margin: 15px 0%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    margin-left: 28px;
+    font-size: clamp(14px, 2vw, 15px);
+
+}
+
+.functionsAdd,
+.functionDelete {
+    color: #5f51a9;
+    cursor: pointer;
+    height: 17px;
+    user-select: none;
+}
+
+
+.functionsAdd:hover::after,
+.functionDelete:hover::after {
+    content: "";
+    display: block;
+    border-bottom: 1px solid #5f51a9;
+}
+
+.LineVertica {
+    height: 20px;
+    width: 1px;
+    background-color: #5f51a9;
+}
+
+.NamedGroup {
+    color: #6A7680;
+    font-family: Inter;
+    font-size: clamp(10px, 2vw, 15px);
+    font-style: normal;
+    font-weight: 550;
+    width: 50%;
+
+}
+
+.theInformationGroup {
+    color: #1e1e1e;
+    font-weight: 500;
+    font-size: clamp(7px, 2.5vw, 15px);
+    margin-left: 20px;
+    word-wrap: break-word;
+    width: calc(10vw + 70px);
+    max-width: 300px;
+
+}
+
+
+
+.marginTopReviewGroup {
+    margin-top: 70px;
+}
+
+
+
+.MyGroupsWordReviewGroup {
+    margin-bottom: 30px;
+    margin-left: 20px;
+    margin-right: 70px;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+
+.makeEdit {
+    width: 130px;
+}
+
+
+/*                                  user Grade And Result */
+
+.MianPageStudentTestsReview1Group {
+    background-color: white;
+    width: clamp(300px, 80vw, 95%);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    overflow-y: hidden;
+
+}
+
+.MianPageStudentTestsReview2Group {
+    background-color: white;
+    width: clamp(300px, 70vw, 95%);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    overflow-y: hidden;
+
+}
+
+.divAllQuestionGroup {
+    padding: 10px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.MainDivContantReviewGroup {
+    display: flex;
+    flex-direction: column;
+    margin: 1vh auto;
+    min-width: 40vw;
+    max-width: 80vw;
+    border-radius: 10px;
+    padding: 10px;
+    overflow: hidden;
+}
+
+.makePaddingGroup2 {
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    overflow: hidden;
+
+
+}
+
+.close2 {
+
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close2:hover,
+.close2:focus {
+    color: #5f51a9;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/*                                       Exam Result  */
+
+.ExamAndGroupName {
+    display: flex;
+    flex-direction: column;
+    color: #1e1e1e;
+    font-size: 17px;
+    font-weight: 600;
+    /* gap: 20px; */
+    background-color: whitesmoke;
+    border-radius: 10px;
+    margin-bottom: 50px;
+    width: clamp(300px, 80vw, 100%);
+
+}
+
+.Padding {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.ExamName,
+.GroupName {
+    gap: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+}
+
+.groupMembersRowExam {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    color: #5f51a9;
+    font-weight: 600;
+
+}
+
+.GroupMembersContantExam {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    margin: 15px 0%;
+    font-size: 13px;
+    /* text-align: center; */
+}
+
+.ExamNameDivExam {
+    width: 100px;
+    margin-left: 10px;
+}
+
+.groupMemberExam {
+    width: 100px;
+    margin-left: 10px;
+}
+
+.groupCode {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+    margin-top: 10px;
+    font-weight: 600;
+    color: #1e1e1e;
+    gap: 5px;
+}
+
+.codeGroup {
+    color: #5f51a9;
+}
+
+@media (max-width: 800px) {
+    .AddMemberSection {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.ButtonResultADelete {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #5f51a9;
+    padding: 5px 0px;
+    width: 70px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #1e1e1e;
+    font-size: 14px;
+    cursor: pointer;
+
+}
+
+.ButtonResultADelete:hover {
+    background-color: #5f51a9;
+    color: white;
+    border-color: #5f51a9;
+}
+
+.messages {
+    margin-bottom: 20px;
+    color: white;
+    background-color: rgba(88, 255, 88, 0.5);
+    padding: 10px;
+    border-radius: 5px;
+    width: clamp(300px, 55vw, 900px);
+    transition: all 0.5s ease-in-out;
+}
+
+.marginbottom {
+    margin-bottom: 20px;
+}
+
+.divButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.ButtonSavetheAnswer {
+    width: 150px;
+    padding: 5px;
+    color: white;
+    background-color: transparent;
+    border-radius: 10px;
+    outline: none;
+    height: 30px;
+    border: 2px solid #5f51a9;
+    cursor: pointer;
+}
+
+.ButtonSavetheAnswer:hover {
+    background-color: #5f51a9;
+}
+
+.WaitingGraded {
+    margin-top: 20px;
+}
+
+.numberPointsInput {
+    font-weight: 600;
+}
+
+.QuestionConTe {
+    margin-top: 10px;
+    margin-left: 10px;
+    padding: 8px;
+    background-color: #ffffff;
+    width: 95%;
+    border-radius: 10px;
+
+}
+
+.NoStudent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.toppp {
+    margin-top: 20px;
+}
+
+.topppp {
+    margin-top: 40px;
+}
+
+.CorrectAnswerDisplayy {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+}
+
+
+
+.numberPointsInputtt {
+    border: 1.5px solid #5f51a9;
+    outline: none;
+    width: 40px;
+    height: 17px;
+    border-radius: 5px;
+    padding: 2px;
+}
+
+.numberPointsInputtt::-webkit-outer-spin-button,
+.numberPointsInputtt::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Remove arrows in Firefox */
+.numberPointsInputtt[type="number"] {
+    -moz-appearance: textfield;
+}
+
+
+
+
+

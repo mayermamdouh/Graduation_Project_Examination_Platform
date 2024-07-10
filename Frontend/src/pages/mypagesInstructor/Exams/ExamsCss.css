@@ -13,7 +13,11 @@
 
 /* Main style */
 
+.NoExams {
+  font-size: 18px;
+  color: white;
 
+}
 
 .MainPage {
 
@@ -60,6 +64,7 @@
   border-radius: 10px;
   transition: opacity 0.6s ease-in-out, max-height 0.6s ease-in-out;
   overflow: hidden;
+  margin-top: 20px;
 }
 
 
@@ -103,6 +108,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin: 15px 0%;
 }
 
 
@@ -126,19 +132,19 @@
   justify-content: center;
   cursor: pointer;
   user-select: none;
-  width: 100px;
+  width: 90px;
   height: 30px;
   border: 1px solid #5f51a9;
   font-family: "Inter-Bold", Helvetica;
   background-color: transparent;
   border-radius: 5px;
-  font-weight: 600;
-  font-size: 12px;
+  font-weight: bold;
+  font-size: 11px;
   background-color: #5f51a9;
   color: whitesmoke;
   position: relative;
   text-decoration: none;
-  margin-left: 10px;
+
 
 
 }
@@ -166,6 +172,7 @@
   color: gray;
   margin-left: 10px;
   margin-left: auto;
+  margin-right: 5px;
 
 }
 
@@ -202,6 +209,8 @@
 .activeHome {
   text-decoration: none;
   position: relative;
+  color: #5f51a9;
+  font-weight: bold;
 }
 
 .activeHome:after {
@@ -265,13 +274,13 @@
   display: flex;
   border: 2px solid white;
   border-radius: 50%;
-  width: 4vw;
-  height: 2vw;
+  width: 60px;
+  height: 30px;
   align-items: center;
   justify-content: center;
   background-color: transparent;
   color: white;
-  font-size: 1.3vw;
+  font-size: 15px;
 
 }
 
@@ -309,7 +318,7 @@
 .nameOfExam {
   font-size: 17px;
   color: #1e1e1e;
-  font-weight: 500;
+  font-weight: 700;
   font-family: "Inter-Bold", Helvetica;
 }
 
@@ -368,7 +377,7 @@
   width: 400px;
   height: auto;
   background-color: white;
-  margin: 150px 20px;
+  margin: 60px 20px;
   border-radius: 10px;
 
 }
@@ -459,9 +468,10 @@
 .MainDivContantSettings {
   display: flex;
   flex-direction: column;
-  margin: 10px auto;
-  width: clamp(300px, 80vw, 1000px);
-  background-color: rgba(238, 238, 238, 1);
+  /* margin: 10px auto; */
+
+  width: clamp(300px, 90vw, 100%);
+  background-color: whitesmoke;
   border-radius: 10px;
 }
 
@@ -475,16 +485,18 @@
   width: 100%;
 }
 
+
+
 .iconFile {
   width: 30px;
   height: 30px;
-
 
 }
 
 .ContantSettingsTwo {
   padding: 10px;
   display: flex;
+  width: 90%;
   flex-direction: column;
   justify-content: center;
 
@@ -581,7 +593,7 @@
   color: #1e1e1e;
   border-radius: 5px;
   font-weight: 700;
-  margin-left: auto;
+
 
 }
 
@@ -620,8 +632,11 @@
   color: #1e1e1e;
   font-weight: 700;
   user-select: none;
-  font-size: 20px;
+  font-size: 18px;
   padding-left: 10px;
+  display: flex;
+  align-items: center;
+  text-align: center;
 }
 
 
@@ -865,4 +880,115 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.optionalFields {
+  color: rgb(172, 172, 172);
+  font-size: 14px;
+  margin-left: 5px;
+}
+
+.margindown {
+  margin-bottom: 15px;
+  width: clamp(300px, 60vw, 1000px);
+}
+
+
+
+
+.TrueFalseSetting {
+  margin-top: 10px;
+
+}
+
+.textalignSetting {
+  display: flex;
+  align-items: center;
+  height: auto;
+  margin-bottom: 10px;
+  width: fit-content;
+
+}
+
+.radiosetting {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid black;
+  border-radius: 50%;
+  color: #1e1e1e;
+  position: relative;
+
+}
+
+
+.radiosetting:checked::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  background-color: #5f51a9;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+}
+
+.valueTrueFalsesetting {
+  margin-left: 20px;
+  cursor: pointer;
+  color: #1e1e1e;
+}
+
+.label {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  cursor: pointer;
+}
+
+@media (max-width: 550px) {
+  .sectionsIsAssignStep1 {
+    flex-direction: column;
+
+  }
+}
+
+.width {
+  width: 150px;
+  font-size: 15px;
+  -moz-appearance: 'textfield'
+}
+
+.width:focus {
+  border: 1px solid #5f51a9;
+  outline: none;
+}
+
+.width::-webkit-inner-spin-button,
+.width::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.noExamsAdd {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loaderrr {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.nameExams{
+  color: #1e1e1e;
+  background-color: red;
 }

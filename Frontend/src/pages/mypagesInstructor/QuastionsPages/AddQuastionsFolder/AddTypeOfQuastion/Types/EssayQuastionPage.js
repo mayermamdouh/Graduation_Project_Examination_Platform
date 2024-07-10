@@ -24,7 +24,7 @@ function EssayQuationPage() {
   );
 
   const [PointsValue, setPointsValue] = useState(
-    selectedItem ? `${selectedItem.pointsValue}` : ""
+    selectedItem ? `${selectedItem.points}` : ""
   );
 
   const saveResponse = () => {
@@ -35,9 +35,9 @@ function EssayQuationPage() {
         ? storedResponses[storedResponses.length - 1].examId
         : null;
     const response = {
-      type: "Essay",
-      question: textArea1Value,
-      pointsValue: PointsValue,
+      question_type: "Essay",
+      question: textArea1Value.replace(/<[^>]+>/g, ""),
+      points: PointsValue,
     };
 
     let updatedResponses = [...storedResponses];
@@ -55,19 +55,9 @@ function EssayQuationPage() {
         return item;
       });
     }
-
     localStorage.setItem("userResponses", JSON.stringify(updatedResponses));
   };
 
-  // useEffect(() => {
-  //   // Load existing data for editing
-
-  //   if (selectedItem) {
-  //     setTextArea1Value(selectedItem.question);
-  //     setPointsValue(selectedItem.pointsValue);
-  //     setEditMode(true);
-  //   }
-  // }, [index]);
 
   const handlePointsChange = (e) => {
     setPointsValue(e.target.value);
@@ -82,7 +72,7 @@ function EssayQuationPage() {
       <section className="MainSectionMultiple">
         <div className="MainDivMultiple">
           <div className="Row1">
-            <Link to="/Home/ExamName/AddQuaType" className="DivNextButton">
+            <Link to="/ExamName/AddQuaType" className="DivNextButton">
               <img className="ArrowClass BackArrow" src={Arrow_Right} alt="" />
               <div className="NextButtonBack">Back</div>
             </Link>
@@ -136,7 +126,7 @@ function EssayQuationPage() {
               {" "}
               <div className="MainDivButton">
                 <Link
-                  to="/Home/ExamName/AddQuaType/ExamQuations"
+                  to="/ExamName/AddQuaType/ExamQuations"
                   className="ButtonAddNewQuastion"
                   onClick={saveResponse}
                 >
@@ -149,7 +139,7 @@ function EssayQuationPage() {
               {" "}
               <div className="MainDivButton">
                 <Link
-                  to="/Home/ExamName/AddQuaType/ExamQuations"
+                  to="/ExamName/AddQuaType/ExamQuations"
                   className="ButtonAddNewQuastion"
                   onClick={saveResponse}
                 >

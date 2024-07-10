@@ -1,8 +1,7 @@
 .containerAppBar {
   display: flex;
   align-items: center;
-
-  align-items: center;
+  justify-content: center;
   padding: 10px;
   background-color: #1e1e1e;
   color: white;
@@ -19,8 +18,8 @@
   align-items: center;
   margin-left: 10px;
   user-select: none;
-  width: 55px;
-  height: 55px;
+  width: 120px;
+  height: 30px;
 
   margin-right: 80px;
 }
@@ -67,7 +66,7 @@
   margin-left: auto;
   display: flex;
   align-items: center;
-  cursor: pointer;
+  /* cursor: pointer; */
   margin-right: 15px;
 }
 
@@ -84,16 +83,16 @@
   width: 40px;
   height: 40px;
   margin-right: 10px;
+  cursor: pointer;
 }
 
-.userDropdown {
+.userDropdownTeacher {
   position: absolute;
   border-radius: 5px;
   top: 70px;
   right: 20px;
   background-color: whitesmoke;
   box-shadow: 0 0 5px #5f51a9;
-
   min-width: 180px;
   display: none;
   max-height: 0%;
@@ -101,9 +100,10 @@
   opacity: 0;
   transition: opacity 0.2s, max-height 0.2s;
 
+
 }
 
-.userDropdown.open {
+.userDropdownTeacher.open {
   max-height: 300px;
   opacity: 1;
   display: flex;
@@ -112,12 +112,12 @@
   align-items: center;
 }
 
-.userDropdown.hidden {
+.userDropdownTeacher.hidden {
   opacity: 0;
   max-height: 0;
 }
 
-.userDropdown::before {
+.userDropdownTeacher::before {
   content: '';
   position: absolute;
   top: -5px;
@@ -132,9 +132,8 @@
 
 
 
-.userDropdown a {
+.userDropdownTeacher a {
   border-radius: 5px;
-  /* padding: 10px; */
   text-decoration: none;
   color: #333;
   transition: background-color 0.1s;
@@ -213,31 +212,34 @@
 .hrDrawer {
   margin-block-start: 0em;
   margin-block-end: 0em;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.activeDrawer {
+  color: #5f51a9;
+  border-radius: 10px;
 }
 
 .linkDrawer {
   text-decoration: none;
   color: white;
-  font-size: 22px;
+  font-size: 20px;
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 10px;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .linkDrawer:hover {
   background-color: rgb(226, 226, 226);
-  ;
   color: #1e1e1e;
   border-radius: 5px;
 }
 
-.paddingDrawer:hover {
-  background-color: rgb(226, 226, 226);
-  color: #1e1e1e;
-  border-radius: 5px;
-  margin: 5px 0px;
-}
+
 
 .LinksuserDropdown {
   width: 89%;
@@ -247,6 +249,8 @@
   padding: 10px;
   margin: 1px;
   font-weight: 400;
+  color: #1e1e1e;
+  cursor: pointer;
 
 }
 
@@ -270,12 +274,14 @@
 
   }
 
-  .userDropdown::before {
+
+  .userDropdownTeacher::before {
     right: 40px;
   }
 
   .menu_toggle {
     display: flex;
+    margin-bottom: 8px;
   }
 
   .ulAppBar {
@@ -292,6 +298,8 @@
 
   .logo {
     margin-right: auto;
+    width: 100px;
+    height: 25px;
   }
 
   .mainUser {
