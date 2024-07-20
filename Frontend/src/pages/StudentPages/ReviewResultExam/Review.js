@@ -40,9 +40,7 @@ function Review() {
       navigate("/userType");
     }
   }, []);
-  const handleAnswers = () => {
-    setDisplayAnswers(true);
-  };
+ 
   // console.log("");
   const [showDetailsArray, setShowDetailsArray] = useState(false);
   const [showDetails, setshowDetails] = useState(false);
@@ -139,7 +137,7 @@ function Review() {
         <NavBarStudent />
         <div className="MianPageStudent">
           <div className="MyGroupsWord">Review</div>
-          <div className="MianPageStudentTestsReview1 ">
+          {/* <div className="MianPageStudentTestsReview1 ">
             <div className="makePadding">
               <div className="firstColumn">
                 <div className="NameOfInformation">
@@ -182,17 +180,8 @@ function Review() {
                 </div>
               </div>
             </div>
-          </div>
-          <div className="MyGroupsWordReview marginTopReview">
-            <div
-              className={`AllQuestion ${
-                displayAnswers ? "selectedReview" : ""
-              }`}
-              onClick={handleAnswers}
-            >
-              Answers
-            </div>
-          </div>
+          </div> */}
+       
 
           <div
             className={`MianPageStudentTestsReview2  ${

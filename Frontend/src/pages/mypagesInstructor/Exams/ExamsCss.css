@@ -383,7 +383,7 @@
 }
 
 .contnatAssignStep2 {
-
+  border-radius: 10px;
   width: 100%;
   padding: 10px;
 }
@@ -407,18 +407,25 @@
 .sentLinkText {
   font-weight: 700;
   font-size: 18px;
-  font-family: "Inter-Bold", Helvetica;
+  font-family: "Inter-Bold", Helvetica, sans-serif;
+  /* Added sans-serif as a fallback */
   margin-bottom: 10px;
+  max-width: 80%;
+  /* Ensure the text container is responsive */
+  word-wrap: break-word;
+  /* Break long words to ensure they wrap */
 }
+
+
 
 .userRegistration {
   font-size: 15px;
   color: #5f51a9;
 }
 
-.sendTheOne {
+/* .sendTheOne {
   font-size: 13px;
-}
+} */
 
 .textInBlockAssign {
   display: flex;
@@ -665,9 +672,9 @@
 
 .inputTime {
   margin-left: 10px;
-  width: 200px;
+  width: 180px;
   padding: 8px;
-  font-size: 14px;
+  font-size: 13px;
   border: 1px solid #5f51a9;
   border-radius: 5px;
   height: 20px;
@@ -786,10 +793,13 @@
 }
 
 .textGive {
-  margin-top: 20px;
   font-size: 16px;
+  margin: 0 5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
-
 .examNamesection {
   margin-top: 15px;
   display: flex;
@@ -829,12 +839,21 @@
 
 
 .sectiongroup {
-  /* padding-top: 20px; */
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.6s ease;
-
+  
 }
+
+/* Media query for mobile screens */
+@media (max-width: 700px) {
+  .sectiongroup {
+    max-height: 1000px;
+    margin: 0 10%;
+    /* Set a large enough value to show the content */
+  }
+}
+
 
 .apper {
   margin-top: 10px;
@@ -950,7 +969,7 @@
   cursor: pointer;
 }
 
-@media (max-width: 550px) {
+@media (max-width: 700px) {
   .sectionsIsAssignStep1 {
     flex-direction: column;
 
@@ -988,7 +1007,7 @@
 
 }
 
-.nameExams{
+.nameExams {
   color: #1e1e1e;
   background-color: red;
 }

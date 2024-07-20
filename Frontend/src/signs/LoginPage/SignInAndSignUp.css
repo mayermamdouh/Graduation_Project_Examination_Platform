@@ -12,7 +12,7 @@
   display: flex;
   flex-direction: column;
   margin: auto;
-  /* margin-top: 10%; */
+  margin-top: 10%;
   background-color: #fff;
   padding-bottom: 30px;
   min-width: 350px;
@@ -20,9 +20,11 @@
   border-radius: 10px;
   margin-bottom: 70px;
 }
-.notunsderline{
+
+.notunsderline {
   text-decoration: none;
 }
+
 .Header {
   display: flex;
   flex-direction: column;
@@ -56,35 +58,53 @@
   display: flex;
   align-items: center;
   margin: auto;
-  width: 480px;
+  width: 90%;
+  max-width: 480px;
   height: 60px;
   background-color: #eaeaea;
   border-radius: 6px;
+  padding: 0 10px;
+  box-sizing: border-box;
 }
 
 .inputLogin img {
-  margin: 0 30px;
   width: 25px;
   height: 25px;
 }
 
 .inputLogin input {
-  height: 20px;
-  width: 400px;
- 
+  flex: 1;
   background: transparent;
   border: none;
   outline: none;
   font-size: 17px;
   color: #797979;
-
+  margin: 0 10px;
 }
 
 .eyes {
-  margin-left: auto;
-  width: 20px;
+  width: 25px;
   height: 25px;
   cursor: pointer;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 600px) {
+  .inputLogin {
+    height: 50px;
+    /* Adjust height for smaller screens */
+  }
+
+  .inputLogin img,
+  .eyes {
+    width: 20px;
+    height: 20px;
+  }
+
+  .inputLogin input {
+    font-size: 15px;
+    /* Adjust font size for smaller screens */
+  }
 }
 
 .forget-password {
@@ -133,7 +153,7 @@
   padding-bottom: 1px;
 }
 
-.LinkLogin:hover{
+.LinkLogin:hover {
   border-bottom: 1.5px solid #8351ba;
 }
 
@@ -251,6 +271,7 @@
     /* Add some spacing between the buttons */
   }
 }
+
 .pooostionDiv {
   width: 100%;
   display: flex;
@@ -258,10 +279,10 @@
   justify-content: center;
   margin-top: 100px;
 }
-.postionmessage{
+
+.postionmessage {
   display: flex;
   align-items: center;
   justify-content: center;
-  
-}
 
+}

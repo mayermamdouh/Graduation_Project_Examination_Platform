@@ -12,36 +12,46 @@ export function StepIndicator() {
 
   return (
     <div className="step-indicator">
-      <div className={`step ${isStepActive("/ExamSettings") ? "active" : ""}`}>
+      <div className={`step ${isStepActive("/ExamName") ? "active" : ""}`}>
         1
       </div>
-      <div className="line"></div>
+      <div
+        className={`line ${isStepActive("/ExamName") ? "lineactive" : ""}`}
+      ></div>
       <div
         className={`step ${
-          isStepActive("/ExamSettings/AddQuaType") ? "active" : ""
+          isStepActive("/ExamName/AddQuaType") ? "active" : ""
         }`}
       >
         2
       </div>
-      <div className="line"></div>
+      <div
+        className={`line ${
+          isStepActive("/ExamName/AddQuaType") ? "lineactive" : ""
+        }`}
+      ></div>
       <div
         className={`step ${
-          isStepActive("/ExamSettings/AddQuaType/MultipleChoice") ||
-          isStepActive("/ExamSettings/AddQuaType/Trueandfalse") ||
-          isStepActive("/ExamSettings/AddQuaType/Essay") ||
-          isStepActive("/ExamSettings/AddQuaType/FreeText") ||
-          isStepActive("/ExamSettings/AddQuaType/FillGabs") ||
-          isStepActive("/ExamSettings/AddQuaType/ExamQuations")
+          isStepActive("/ExamName/AddQuaType/MultipleChoice") ||
+          isStepActive("/ExamName/AddQuaType/Trueandfalse") ||
+          isStepActive("/ExamName/AddQuaType/Essay") ||
+          isStepActive("/ExamName/AddQuaType/FreeText") ||
+          isStepActive("/ExamName/AddQuaType/FillGabs") ||
+          isStepActive("/ExamName/AddQuaType/ExamQuations")
             ? "active"
             : ""
         }`}
       >
         3
       </div>
-      <div className="line"></div>
+      <div
+        className={`line ${
+          isStepActive("/ExamName/AddQuaType/ExamQuations") ? "lineactive" : ""
+        }`}
+      ></div>
       <div
         className={`step ${
-          isStepActive("/ExamSettings/AddQuaType/ExamQuations") ? "active" : ""
+          isStepActive("/ExamName/AddQuaType/ExamQuations") ? "active" : ""
         }`}
       >
         4
@@ -100,7 +110,7 @@ export const updateToken = async (token) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/auth/token/refresh/",
+        "http://127.0.0.1:8000/auth/token/refresh/",
         formData,
         {
           headers: {
@@ -154,7 +164,7 @@ export const AuthWrapper = ({ children }) => {
           localStorage.clear(); // Clear localStorage on error
           navigate("/usertype"); // Navigate to /usertype on error
         });
-      }, 180000); // 3 minutes in milliseconds
+      }, 120000); // 2 minutes in milliseconds
 
       return () => clearInterval(interval);
     }

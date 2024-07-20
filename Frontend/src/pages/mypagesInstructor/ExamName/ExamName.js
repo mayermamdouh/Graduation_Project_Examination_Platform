@@ -37,9 +37,9 @@ function ExamSettings() {
       name: examName,
       examId: examId,
     };
-    console.log(examId);
+    // console.log(examId);
     const updatedResponses = [...storedResponses, Response];
-    console.log(updatedResponses);
+    // console.log(updatedResponses);
     localStorage.setItem("userResponses", JSON.stringify(updatedResponses));
   };
 

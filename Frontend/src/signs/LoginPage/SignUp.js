@@ -43,10 +43,10 @@ function SignUp() {
   //     navigate("/student");
   //   }
   // }, [statusSuccess, typeOfUserTeacher, typeOfUserStudent]);
-
+  const [showLoader, setShowLoader] = useState(false);
   const handleSignUp = async (e) => {
     // e.preventDefault();
-
+    setShowLoader(true);
     const formData = new FormData();
     formData.append("username", username);
     formData.append("email", email);
@@ -70,18 +70,8 @@ function SignUp() {
       if (response.status === 200 || response.status === 201) {
         console.log("User signed up successfully!");
         setStatusSuccess(true);
-        // const studentData = response.data.data.is_student;
-        // const TeacherData = response.data.data.is_instructor;
-        // console.log("studentData: ", studentData);
-        // console.log("TeacherData: ", TeacherData);
-
-         navigate(`/userType/SignIn?type=${userType}&signup=true`);
-        // console.log("response: ", response);
-        // if (studentData) {
-        //   setTypeOfUserStudent(studentData);
-        // } else if (TeacherData) {
-        //   setTypeOfUserTeacher(TeacherData);
-        // }
+        setShowLoader(false);
+        navigate(`/userType/SignIn?type=${userType}&signup=true`);
 
         const tokens = {
           access_token: response.data.access_token,
@@ -99,146 +89,153 @@ function SignUp() {
 
   return (
     <div className="BodyLogin">
-
-      <div className="containerLogin">
-        <div className="Header">
-          <div className="text">Sign up</div>
-          <div className="underline"></div>
+      {showLoader ? (
+        <div className="loaderrr">
+          <div className="loader"></div>
         </div>
-        <div className="inputs">
-          <div className="inputLogin">
-            <img src={PersonIcon} alt="" loading="lazy" />
-            <input
-              type="text"
-              className="placeholder"
-              placeholder="Write Your User Name.."
-              value={username}
-              onChange={(e) => {
-                setUserName(e.target.value);
-              }}
-            />
-          </div>
-          <div className="inputLogin">
-            <img src={PersonIcon} alt="" loading="lazy" />
-            <input
-              type="text"
-              className="placeholder"
-              placeholder="Write Your First Name.."
-              value={first_name}
-              onChange={(e) => {
-                setfirst_name(e.target.value);
-              }}
-            />
-          </div>
-          <div className="inputLogin">
-            <img src={PersonIcon} alt="" loading="lazy" />
-            <input
-              type="text"
-              className="placeholder"
-              placeholder="Write Your Last Name.."
-              value={last_name}
-              onChange={(e) => {
-                setlast_name(e.target.value);
-              }}
-            />
-          </div>
+      ) : (
+        <>
+          <div className="containerLogin">
+            <div className="Header">
+              <div className="text">Sign up</div>
+              <div className="underline"></div>
+            </div>
+            <div className="inputs">
+              <div className="inputLogin">
+                <img src={PersonIcon} alt="" loading="lazy" />
+                <input
+                  type="text"
+                  className="placeholder"
+                  placeholder="Write Your User Name.."
+                  value={username}
+                  onChange={(e) => {
+                    setUserName(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="inputLogin">
+                <img src={PersonIcon} alt="" loading="lazy" />
+                <input
+                  type="text"
+                  className="placeholder"
+                  placeholder="Write Your First Name.."
+                  value={first_name}
+                  onChange={(e) => {
+                    setfirst_name(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="inputLogin">
+                <img src={PersonIcon} alt="" loading="lazy" />
+                <input
+                  type="text"
+                  className="placeholder"
+                  placeholder="Write Your Last Name.."
+                  value={last_name}
+                  onChange={(e) => {
+                    setlast_name(e.target.value);
+                  }}
+                />
+              </div>
 
-          <div className="inputLogin">
-            <img src={EmailIcon} alt="" loading="lazy" />
-            <input
-              type="email"
-              placeholder="Write Your Email.."
-              className="placeholder"
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-            />
-          </div>
-          <div className="inputLogin">
-            <img src={PasswordIcon} alt="" loading="lazy" />
-            <input
-              type={actionPass === OpenEyesIcon ? "text" : "password"}
-              placeholder="Write Your Password.."
-              className="placeholder"
-              value={password1}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-            />
-            <img
-              src={actionPass}
-              loading="lazy"
-              alt=""
-              className="eyes"
-              onClick={toggleEyes}
-            />
-          </div>
-          <div className="inputLogin">
-            <img src={PasswordIcon} alt="" loading="lazy" />
-            <input
-              type={actionPass === OpenEyesIcon ? "text" : "password"}
-              placeholder="Confirm Password.."
-              className="placeholder"
-              value={password2}
-              onChange={(e) => {
-                setConfirmPassword(e.target.value);
-              }}
-            />
-            {/* <img
+              <div className="inputLogin">
+                <img src={EmailIcon} alt="" loading="lazy" />
+                <input
+                  type="email"
+                  placeholder="Write Your Email.."
+                  className="placeholder"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="inputLogin">
+                <img src={PasswordIcon} alt="" loading="lazy" />
+                <input
+                  type={actionPass === OpenEyesIcon ? "text" : "password"}
+                  placeholder="Write Your Password.."
+                  className="placeholder"
+                  value={password1}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
+                />
+                <img
+                  src={actionPass}
+                  loading="lazy"
+                  alt=""
+                  className="eyes"
+                  onClick={toggleEyes}
+                />
+              </div>
+              <div className="inputLogin">
+                <img src={PasswordIcon} alt="" loading="lazy" />
+                <input
+                  type={actionPass === OpenEyesIcon ? "text" : "password"}
+                  placeholder="Confirm Password.."
+                  className="placeholder"
+                  value={password2}
+                  onChange={(e) => {
+                    setConfirmPassword(e.target.value);
+                  }}
+                />
+                {/* <img
               src={actionPass}
               loading="lazy"
               alt=""
               className="eyes"
               onClick={toggleEyes}
             /> */}
-          </div>
-        </div>
+              </div>
+            </div>
 
-        <div className="submit-container">
-          {/* <div className="submit" onClick={handleActionClick}>
+            <div className="submit-container">
+              {/* <div className="submit" onClick={handleActionClick}>
             Sign UP
           </div> */}
-          {/* <Link to="/Home" className="removeUnderline"> */}
-          <div className="submit" onClick={handleSignUp}>
-            Sign up
-          </div>
-          {/* </Link> */}
-          <div className="haveAccount">
-            Already have an account?{" "}
-            <Link
-              className="LinkLogin"
-              to={`/userType/SignIn?type=${userType}`}
-            >
-              Login
-            </Link>
-          </div>
-        </div>
+              {/* <Link to="/Home" className="removeUnderline"> */}
+              <div className="submit" onClick={handleSignUp}>
+                Sign up
+              </div>
+              {/* </Link> */}
+              <div className="haveAccount">
+                Already have an account?{" "}
+                <Link
+                  className="LinkLogin"
+                  to={`/userType/SignIn?type=${userType}`}
+                >
+                  Login
+                </Link>
+              </div>
+            </div>
 
-        <div className="BreakLine"></div>
-        <div className="OptionsToLogin">
-          <div className="Loginmicrosoft">
-            <img
-              src={microsoft}
-              alt=""
-              className="Iconmicrosoft"
-              loading="lazy"
-            />
-            <div className="OptionsToLoginLine"></div>
-            <div className="TextIcon">sign up with Microsoft</div>
+            <div className="BreakLine"></div>
+            <div className="OptionsToLogin">
+              <div className="Loginmicrosoft">
+                <img
+                  src={microsoft}
+                  alt=""
+                  className="Iconmicrosoft"
+                  loading="lazy"
+                />
+                <div className="OptionsToLoginLine"></div>
+                <div className="TextIcon">sign up with Microsoft</div>
+              </div>
+              <div className="Loginmicrosoft">
+                <img
+                  src={IconGoogle}
+                  alt=""
+                  className="Iconmicrosoft"
+                  loading="lazy"
+                />
+                <div className="OptionsToLoginLine"></div>
+                <div className="TextIcon">sign up with Google</div>
+              </div>
+            </div>
           </div>
-          <div className="Loginmicrosoft">
-            <img
-              src={IconGoogle}
-              alt=""
-              className="Iconmicrosoft"
-              loading="lazy"
-            />
-            <div className="OptionsToLoginLine"></div>
-            <div className="TextIcon">sign up with Google</div>
-          </div>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 }

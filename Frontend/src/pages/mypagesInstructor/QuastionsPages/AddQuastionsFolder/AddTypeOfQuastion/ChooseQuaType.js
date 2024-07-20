@@ -1,12 +1,11 @@
 import "./ChooseQuaType.css";
 import Multiple_Choice from "../../../../../Assets/Multiple_Choice.svg";
-// import Match_Answer_Icon from "../../../../../Assets/Match_Answer_Icon.svg";
 import Fill_Gap_Icon from "../../../../../Assets/Fill_Gap_Icon.png";
 import Essay_Quat_Icon from "../../../../../Assets/Free_Tect_Icon.svg";
-import Free_Tect_Icon from "../../../../../Assets/FreeQuaIcon.svg";
 import True_False_Icon from "../../../../../Assets/True_False_Icon.png";
 import { Link } from "react-router-dom";
 import { StepIndicator } from "../../../component/file";
+
 
 function ChoosesQuaType() {
   return (
@@ -17,10 +16,7 @@ function ChoosesQuaType() {
             <StepIndicator />
           </div>
           <div className="DivForTypes">
-            <Link
-              to="/ExamName/AddQuaType/MultipleChoice"
-              className="Box1"
-            >
+            <Link to="/ExamName/AddQuaType/MultipleChoice" className="Box1">
               <div className="Box1Content">
                 <div className="appearanceInTypeQua">
                   <div className="textInApper">A</div>
@@ -29,7 +25,7 @@ function ChoosesQuaType() {
               </div>
               <div className="textTypeQua"> Multiple choice</div>
             </Link>
-           
+
             <Link to="/ExamName/AddQuaType/FillGabs" className="Box3">
               <div className="Box1Content">
                 <div className="appearanceInTypeQua">

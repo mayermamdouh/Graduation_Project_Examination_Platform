@@ -7,14 +7,20 @@
   height: 100vh;
   flex-direction: column;
 
+
 }
 
 .MainDivType {
   display: flex;
+  justify-content: center;
+  align-items: center;
   flex-direction: row;
   gap: 120px;
   padding: 10px;
+
+
 }
+
 .MainBlock1,
 .MainBlock2 {
   display: flex;
@@ -33,7 +39,7 @@
   box-shadow: 0 0 30px rgba(95, 81, 169, 0.7);
 }
 
-.removeUnderline{
+.removeUnderline {
   text-decoration: none;
 }
 

@@ -74,7 +74,8 @@
 .step-indicator {
   display: flex;
   align-items: center;
-  display: flex;
+justify-content: center;
+margin-bottom: 60px;
 }
 
 .step {
@@ -100,6 +101,11 @@
   height: 2px;
   width: 40px;
   background-color: white;
+}
+.lineactive {
+  height: 2px;
+  width: 40px;
+  background-color: #7b1fa2;
 }
 
 .DivForTypes {

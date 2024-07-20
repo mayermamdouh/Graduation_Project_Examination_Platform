@@ -191,7 +191,7 @@ function ExamDetails() {
                           Assign Exam
                         </div>
                       </Link>
-                      <div className="NumberOfQuastion">4 Questions</div>
+                      {/* <div className="NumberOfQuastion">4 Questions</div> */}
                       <div
                         className="EditButtonDetails"
                         onClick={handleDeleteGroup}

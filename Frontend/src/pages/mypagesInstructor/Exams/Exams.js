@@ -17,6 +17,7 @@ import Navbar from "../Navbar/AppBar";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { getAuthHeaders } from "../component/file";
+import { flatten } from "mathjs";
 
 function Exams() {
   const location = useLocation();
@@ -163,6 +164,7 @@ function Exams() {
   }, []);
 
   const [showLoader, setShowLoader] = useState(false);
+  const [showLoader2, setShowLoader2] = useState(false);
 // console.log("", Exams);
   const handleViewExams = async (e) => {
     setShowLoader(true);
@@ -259,6 +261,7 @@ function Exams() {
 
       // Extract the access token
       const accessToken = authTokens ? authTokens.access : null;
+      setShowLoader2(true);
       try {
         const response = await axios.put(
           `http://127.0.0.1:8000/exam/${exam_idd ? exam_idd : exam_id}/`,
@@ -273,6 +276,7 @@ function Exams() {
         if (response.status === 200 || response.status === 201) {
           setMessage("Exam update success");
           handleAssignExamApi();
+          setShowLoader2(false);
         } else {
           console.log("Failed to update group");
         }
@@ -384,7 +388,7 @@ function Exams() {
                 Question Bank
               </div>
 
-              <div className="ItemFour">Ai Detection</div>
+              {/* <div className="ItemFour">Ai Detection</div> */}
             </div>
             <div
               className={`MainDivAllExams ${isAllExams ? "appear" : "hidden"}`}
@@ -455,7 +459,7 @@ function Exams() {
                   value={valueSearchEngin}
                   onChange={(e) => setvalueSearchEngin(e.target.value)}
                 ></input>
-                <div className="NumberOfQuestion">4 Questions </div>
+                {/* <div className="NumberOfQuestion">4 Questions </div> */}
                 <div className="sectionButtonNewExam">
                   <div className="iconPlueNewExam">+</div>
                   <div> Add Question </div>
@@ -670,299 +674,346 @@ function Exams() {
                   isAssignStep3 ? "appaer" : "hidden"
                 }`}
               >
-                <div className="MainDivAssignStep3">
-                  <div className="MainDivContantSettings margindown">
-                    <div className="ContantSettingsTwo">
-                      <div className="scheduleTextIcon">
-                        <img className="iconFile" src={icon_intro} alt=""></img>
-                        <div className="avaliabilityText">
-                          Exam Description{" "}
-                          <span className="optionalFields">(optional)</span>
-                        </div>
-                      </div>
-                      <div
-                        className="sectionAddIns"
-                        onClick={() => AddBoxToRightIntroductionn()}
-                      >
-                        <img
-                          src={iconPlus}
-                          className="AddInsrationIcon"
-                          alt=""
-                        ></img>
-                        <div className="ExamInstructTextAdd">
-                          Add Description
-                        </div>
-                      </div>
-                      <div
-                        className={`AddTextIntro ${
-                          isWantIntro ? "" : "hidden"
-                        }`}
-                      >
-                        <input
-                          value={editExamDescriptionValue}
-                          className="InputIntro"
-                          placeholder="Write Your Intro..."
-                          onChange={handleIntroValue}
-                        ></input>
-                        {/* <button
+                {showLoader2 ? (
+                  <div className="loaderrr">
+                    <div className="loader"></div>
+                  </div>
+                ) : (
+                  <>
+                    {" "}
+                    <div className="MainDivAssignStep3">
+                      <div className="MainDivContantSettings margindown">
+                        <div className="ContantSettingsTwo">
+                          <div className="scheduleTextIcon">
+                            <img
+                              className="iconFile"
+                              src={icon_intro}
+                              alt=""
+                            ></img>
+                            <div className="avaliabilityText">
+                              Exam Description{" "}
+                              <span className="optionalFields">(optional)</span>
+                            </div>
+                          </div>
+                          <div
+                            className="sectionAddIns"
+                            onClick={() => AddBoxToRightIntroductionn()}
+                          >
+                            <img
+                              src={iconPlus}
+                              className="AddInsrationIcon"
+                              alt=""
+                            ></img>
+                            <div className="ExamInstructTextAdd">
+                              Add Description
+                            </div>
+                          </div>
+                          <div
+                            className={`AddTextIntro ${
+                              isWantIntro ? "" : "hidden"
+                            }`}
+                          >
+                            <input
+                              value={editExamDescriptionValue}
+                              className="InputIntro"
+                              placeholder="Write Your Intro..."
+                              onChange={handleIntroValue}
+                            ></input>
+                            {/* <button
                           className="ButtonSaveIntro marginSettings"
                           onClick={handleAddButtonIntro}
                         >
                           Add
                         </button> */}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="MainDivContantSettings margindown">
-                    <div className="ExamPasswordSection">
-                      <div className="scheduleTextIcon">
-                        <img
-                          className="iconFile"
-                          src={icon_password}
-                          alt=""
-                        ></img>
-                        <div className="avaliabilityText">
-                          Exam Password{" "}
-                          <span className="optionalFields">(optional)</span>
+                          </div>
                         </div>
                       </div>
-                      <div
-                        className="sectionAddIns"
-                        onClick={() => AddBoxToRightPassword()}
-                      >
-                        <img
-                          src={iconPlus}
-                          className="AddInsrationIcon"
-                          alt=""
-                        ></img>
-                        <div className="ExamInstructTextAdd">Add Password</div>
-                      </div>
-                      <div
-                        className={`AddTextIntro ${isWantPass ? "" : "hidden"}`}
-                      >
-                        <input
-                          value={editExamPassValue}
-                          className="InputIntro width"
-                          placeholder="Write Your Password..."
-                          onChange={handlePassValue}
-                        ></input>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="MainDivContantSettings margindown">
-                    <div className="sectionAvaliability">
-                      <div className="scheduleTextIcon">
-                        <img
-                          className="iconFile"
-                          src={schedule_icon}
-                          alt=""
-                        ></img>
-                        <div className="avaliabilityText">
-                          Avaliability{" "}
-                          <span className="optionalFields">(Mandatory)</span>
+                      <div className="MainDivContantSettings margindown">
+                        <div className="ExamPasswordSection">
+                          <div className="scheduleTextIcon">
+                            <img
+                              className="iconFile"
+                              src={icon_password}
+                              alt=""
+                            ></img>
+                            <div className="avaliabilityText">
+                              Exam Password{" "}
+                              <span className="optionalFields">(optional)</span>
+                            </div>
+                          </div>
+                          <div
+                            className="sectionAddIns"
+                            onClick={() => AddBoxToRightPassword()}
+                          >
+                            <img
+                              src={iconPlus}
+                              className="AddInsrationIcon"
+                              alt=""
+                            ></img>
+                            <div className="ExamInstructTextAdd">
+                              Add Password
+                            </div>
+                          </div>
+                          <div
+                            className={`AddTextIntro ${
+                              isWantPass ? "" : "hidden"
+                            }`}
+                          >
+                            <input
+                              value={editExamPassValue}
+                              className="InputIntro width"
+                              placeholder="Write Your Password..."
+                              onChange={handlePassValue}
+                            ></input>
+                          </div>
                         </div>
                       </div>
 
-                      <div
-                        className="sectionAddIns"
-                        onClick={() => AddBoxToRightSchedule()}
-                      >
-                        <img
-                          src={iconPlus}
-                          className="AddInsrationIcon"
-                          alt=""
-                        ></img>
-                        <div className="ExamInstructTextAdd">Add Schedule</div>
-                      </div>
-                      <div
-                        className={`AddTextIntro ${
-                          isWantSchedule ? "" : "hidden"
-                        }`}
-                      >
-                        <div className="sectionPutTheTime">
-                          <div className="RowTime">
-                            <label className="textTime">Avaliable from:</label>
-                            <input
-                              className="inputTime"
-                              type="datetime-local"
-                              id="date"
-                              name="date"
-                              value={fromDate}
-                              onChange={(e) => setFromDate(e.target.value)}
-                            ></input>
+                      <div className="MainDivContantSettings margindown">
+                        <div className="sectionAvaliability">
+                          <div className="scheduleTextIcon">
+                            <img
+                              className="iconFile"
+                              src={schedule_icon}
+                              alt=""
+                            ></img>
+                            <div className="avaliabilityText">
+                              Avaliability{" "}
+                              <span className="optionalFields">
+                                (Mandatory)
+                              </span>
+                            </div>
                           </div>
 
-                          <div className="RowTime">
-                            <label className="textTime">Avaliable until:</label>
-                            <input
-                              className="inputTime marginAvaliableUntil"
-                              type="datetime-local"
-                              id="time"
-                              name="time"
-                              value={untilDate}
-                              onChange={(e) => setUntilDate(e.target.value)}
-                            ></input>
+                          <div
+                            className="sectionAddIns"
+                            onClick={() => AddBoxToRightSchedule()}
+                          >
+                            <img
+                              src={iconPlus}
+                              className="AddInsrationIcon"
+                              alt=""
+                            ></img>
+                            <div className="ExamInstructTextAdd">
+                              Add Schedule
+                            </div>
                           </div>
-                          {/* <button
+                          <div
+                            className={`AddTextIntro ${
+                              isWantSchedule ? "" : "hidden"
+                            }`}
+                          >
+                            <div className="sectionPutTheTime">
+                              <div className="RowTime">
+                                <label className="textTime">
+                                  Avaliable from:
+                                </label>
+                                <input
+                                  className="inputTime"
+                                  type="datetime-local"
+                                  id="date"
+                                  name="date"
+                                  value={fromDate}
+                                  onChange={(e) => setFromDate(e.target.value)}
+                                ></input>
+                              </div>
+
+                              <div className="RowTime">
+                                <label className="textTime">
+                                  Avaliable until:
+                                </label>
+                                <input
+                                  className="inputTime marginAvaliableUntil"
+                                  type="datetime-local"
+                                  id="time"
+                                  name="time"
+                                  value={untilDate}
+                                  onChange={(e) => setUntilDate(e.target.value)}
+                                ></input>
+                              </div>
+                              {/* <button
                             className="ButtonSaveIntro marginSettings"
                             onClick={handleSetButtonAvalibility}
                           >
                             Set
                           </button> */}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="MainDivContantSettings margindown">
-                    <div className="sectionAvaliability">
-                      <div className="scheduleTextIcon">
-                        <img className="iconFile" src={icon_time} alt=""></img>
-                        <div className="avaliabilityText">
-                          Time Limit
-                          <span className="optionalFields"> (Mandatory)</span>
-                        </div>
-                      </div>
-
-                      <div
-                        className="sectionAddIns"
-                        onClick={() => AddBoxToRightTimeLimit()}
-                      >
-                        <img
-                          src={iconPlus}
-                          className="AddInsrationIcon"
-                          alt=""
-                        ></img>
-                        <div className="ExamInstructTextAdd">
-                          Add Time Limit
-                        </div>
-                      </div>
-                      <div
-                        className={`AddTextIntro ${
-                          isWantTimeLimit ? "" : "hidden"
-                        }`}
-                      >
-                        <div className="sectionTimeLimit">
-                          <div className="textMinutes">Minutes: </div>
-                          <input
-                            type="number"
-                            className="inputTimeLimit"
-                            value={untilTimeLimit}
-                            onChange={(e) => setuntilTimeLimit(e.target.value)}
-                          ></input>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="MainDivContantSettings margindown">
-                    <div className="sectionAvaliability">
-                      <div className="scheduleTextIcon">
-                        <img
-                          className="iconFile"
-                          src={icon_review}
-                          alt=""
-                        ></img>
-                        <div className="avaliabilityText">
-                          Student Review Result
-                          <span className="optionalFields"> (Mandatory)</span>
-                        </div>
-                      </div>
-
-                      <div
-                        className="sectionAddIns"
-                        onClick={() => AddBoxStudentReview()}
-                      >
-                        <img
-                          src={iconPlus}
-                          className="AddInsrationIcon"
-                          alt=""
-                        ></img>
-                        <div className="ExamInstructTextAdd">Review</div>
-                      </div>
-                      <div
-                        className={`AddTextIntro ${
-                          isWanStudentReview ? "" : "hidden"
-                        }`}
-                      >
-                        <div className="TrueFalseSetting">
-                          <div className="textalignSetting">
-                            <input
-                              type="radio"
-                              value="True"
-                              id={`answer_true`}
-                              className="radiosetting"
-                              checked={valueReviewOrNot === "True"}
-                              onChange={(e) => handleTrueFalseChange(e)}
-                            />
-                            <label
-                              htmlFor={`answer_true`}
-                              className="valueTrueFalsesetting"
-                            >
-                              Review
-                            </label>
-                          </div>
-                          <div className="textalignSetting">
-                            <input
-                              type="radio"
-                              value="False"
-                              id={`answer_false`}
-                              className="radiosetting"
-                              checked={valueReviewOrNot === "False"}
-                              onChange={(e) => handleTrueFalseChange(e)}
-                            />
-                            <label
-                              htmlFor={`answer_false`}
-                              className="valueTrueFalsesetting"
-                            >
-                              Not Review
-                            </label>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                  <div className="MainDivContantSettings margindown">
-                    <div className="sectionAvaliability">
-                      <div className="scheduleTextIcon">
-                        <img className="iconFile" src={iconGrade} alt=""></img>
-                        <div className="avaliabilityText">
-                          Exam Total Grades
-                          <span className="optionalFields"> (Mandatory)</span>
+                      <div className="MainDivContantSettings margindown">
+                        <div className="sectionAvaliability">
+                          <div className="scheduleTextIcon">
+                            <img
+                              className="iconFile"
+                              src={icon_time}
+                              alt=""
+                            ></img>
+                            <div className="avaliabilityText">
+                              Time Limit
+                              <span className="optionalFields">
+                                {" "}
+                                (Mandatory)
+                              </span>
+                            </div>
+                          </div>
+
+                          <div
+                            className="sectionAddIns"
+                            onClick={() => AddBoxToRightTimeLimit()}
+                          >
+                            <img
+                              src={iconPlus}
+                              className="AddInsrationIcon"
+                              alt=""
+                            ></img>
+                            <div className="ExamInstructTextAdd">
+                              Add Time Limit
+                            </div>
+                          </div>
+                          <div
+                            className={`AddTextIntro ${
+                              isWantTimeLimit ? "" : "hidden"
+                            }`}
+                          >
+                            <div className="sectionTimeLimit">
+                              <div className="textMinutes">Minutes: </div>
+                              <input
+                                type="number"
+                                className="inputTimeLimit"
+                                value={untilTimeLimit}
+                                onChange={(e) =>
+                                  setuntilTimeLimit(e.target.value)
+                                }
+                              ></input>
+                            </div>
+                          </div>
                         </div>
                       </div>
+                      <div className="MainDivContantSettings margindown">
+                        <div className="sectionAvaliability">
+                          <div className="scheduleTextIcon">
+                            <img
+                              className="iconFile"
+                              src={icon_review}
+                              alt=""
+                            ></img>
+                            <div className="avaliabilityText">
+                              Student Review Result
+                              <span className="optionalFields">
+                                {" "}
+                                (Mandatory)
+                              </span>
+                            </div>
+                          </div>
 
-                      <div
-                        className="sectionAddIns"
-                        onClick={() => AddBoxToRightGrades()}
-                      >
-                        <img
-                          src={iconPlus}
-                          className="AddInsrationIcon"
-                          alt=""
-                        ></img>
-                        <div className="ExamInstructTextAdd">Grades</div>
+                          <div
+                            className="sectionAddIns"
+                            onClick={() => AddBoxStudentReview()}
+                          >
+                            <img
+                              src={iconPlus}
+                              className="AddInsrationIcon"
+                              alt=""
+                            ></img>
+                            <div className="ExamInstructTextAdd">Review</div>
+                          </div>
+                          <div
+                            className={`AddTextIntro ${
+                              isWanStudentReview ? "" : "hidden"
+                            }`}
+                          >
+                            <div className="TrueFalseSetting">
+                              <div className="textalignSetting">
+                                <input
+                                  type="radio"
+                                  value="True"
+                                  id={`answer_true`}
+                                  className="radiosetting"
+                                  checked={valueReviewOrNot === "True"}
+                                  onChange={(e) => handleTrueFalseChange(e)}
+                                />
+                                <label
+                                  htmlFor={`answer_true`}
+                                  className="valueTrueFalsesetting"
+                                >
+                                  Review
+                                </label>
+                              </div>
+                              <div className="textalignSetting">
+                                <input
+                                  type="radio"
+                                  value="False"
+                                  id={`answer_false`}
+                                  className="radiosetting"
+                                  checked={valueReviewOrNot === "False"}
+                                  onChange={(e) => handleTrueFalseChange(e)}
+                                />
+                                <label
+                                  htmlFor={`answer_false`}
+                                  className="valueTrueFalsesetting"
+                                >
+                                  Not Review
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
+                      <div className="MainDivContantSettings margindown">
+                        <div className="sectionAvaliability">
+                          <div className="scheduleTextIcon">
+                            <img
+                              className="iconFile"
+                              src={iconGrade}
+                              alt=""
+                            ></img>
+                            <div className="avaliabilityText">
+                              Exam Total Grades
+                              <span className="optionalFields">
+                                {" "}
+                                (Mandatory)
+                              </span>
+                            </div>
+                          </div>
 
+                          <div
+                            className="sectionAddIns"
+                            onClick={() => AddBoxToRightGrades()}
+                          >
+                            <img
+                              src={iconPlus}
+                              className="AddInsrationIcon"
+                              alt=""
+                            ></img>
+                            <div className="ExamInstructTextAdd">Grades</div>
+                          </div>
+
+                          <div
+                            className={`AddTextIntro ${
+                              isWantGrades ? "" : "hidden"
+                            }`}
+                          >
+                            <input
+                              value={editExamGradesValue}
+                              className="InputIntro width"
+                              placeholder="Write Total Grades..."
+                              onChange={handleGradesValue}
+                              type="number"
+                            ></input>
+                          </div>
+                        </div>
+                      </div>
+                      {message ? <div className="messages">{message}</div> : ""}
                       <div
-                        className={`AddTextIntro ${
-                          isWantGrades ? "" : "hidden"
-                        }`}
+                        className="sectionButton"
+                        onClick={handleSaveSettings}
                       >
-                        <input
-                          value={editExamGradesValue}
-                          className="InputIntro width"
-                          placeholder="Write Total Grades..."
-                          onChange={handleGradesValue}
-                          type="number"
-                        ></input>
+                        <div className="textButtonsave">Assign</div>
                       </div>
                     </div>
-                  </div>
-                  {message ? <div className="messages">{message}</div> : ""}
-                  <div className="sectionButton" onClick={handleSaveSettings}>
-                    <div className="textButtonsave">Assign</div>
-                  </div>
-                </div>
+                  </>
+                )}
               </div>
               <div
                 className={`sectionsIsAssignStep1 ${
